@@ -1,162 +1,226 @@
-// Supabase connection
 const SUPABASE_URL = "https://xzptxrarzdgawilymmhu.supabase.co";
-const SUPABASE_KEY = "sb_publishable_t856nqE72fz3X3RFJstmDQ_K5nkoftv";
+
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6cHR4cmFyemRnYXdpbHltbWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzODc0NjYsImV4cCI6MjA4ODk2MzQ2Nn0.5n833vgZmdN3Rr4s_jja8R6qLy4DN34DPbRw6DzuDbg";
+
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// DOM elements
+
 const registerBtn = document.getElementById("registerBtn");
 const loginBtn = document.getElementById("loginBtn");
+
 const dashboard = document.getElementById("dashboard");
 const auth = document.getElementById("auth");
+
 const username = document.getElementById("username");
 const trialInfo = document.getElementById("trialInfo");
 const lessonsDiv = document.getElementById("lessons");
 
 let currentUser;
 
-// --- REGISTER ---
+
+// REGISTER
 registerBtn.addEventListener("click", async () => {
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
 
-  if(!name || !email || !password){
-    alert("Fill all fields");
-    return;
-  }
+const name = document.getElementById("name").value;
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-  const { data, error } = await supabase.from("users").insert([{
-    name:name,
-    email:email,
-    password:password,
-    signup_date:new Date(),
-    payment_status:"trial",
-    progress:0
-  }]).select().single();
+if(!name || !email || !password){
+alert("Fill all fields");
+return;
+}
 
-  if(error){
-    console.error("Register error:", error);
-    alert("Registration failed");
-    return;
-  }
+const { data, error } = await supabase
+.from("users")
+.insert([
+{
+name:name,
+email:email,
+password:password,
+signup_date:new Date(),
+payment_status:"trial"
+}
+])
+.select()
+.single();
 
-  currentUser = data;
-  showDashboard();
+if(error){
+console.log(error);
+alert("Registration failed");
+return;
+}
+
+currentUser = data;
+
+showDashboard();
+
 });
 
-// --- LOGIN ---
+
+
+// LOGIN
 loginBtn.addEventListener("click", async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
 
-  const { data, error } = await supabase
-    .from("users")
-    .select("*")
-    .eq("email", email)
-    .eq("password", password)
-    .single();
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
 
-  if(error){
-    console.error("Login error:", error);
-    alert("Login failed");
-    return;
-  }
+const { data, error } = await supabase
+.from("users")
+.select("*")
+.eq("email", email)
+.eq("password", password)
+.single();
 
-  currentUser = data;
-  showDashboard();
+if(error){
+alert("Login failed");
+return;
+}
+
+currentUser = data;
+
+showDashboard();
+
 });
 
-// --- DASHBOARD ---
+
+
+// DASHBOARD
 function showDashboard(){
-  auth.style.display = "none";
-  dashboard.style.display = "block";
-  username.textContent = currentUser.name;
 
-  const signup = new Date(currentUser.signup_date);
-  const now = new Date();
-  const days = (now - signup) / (1000*60*60*24);
+auth.style.display="none";
+dashboard.style.display="block";
 
-  lessonsDiv.innerHTML="";
+username.textContent=currentUser.name;
 
-  if(days < 2){
-    trialInfo.textContent = "Free Trial Active";
-    showLessons(false);
-  } else {
-    if(currentUser.payment_status==="paid"){
-      trialInfo.textContent = "Payment Verified";
-      showLessons(true);
-    } else if(currentUser.payment_status==="pending"){
-      trialInfo.textContent = "Payment Pending Verification";
-      lessonsDiv.innerHTML="<p>We are verifying your payment.</p>";
-    } else {
-      trialInfo.textContent = "Trial Expired";
-      lessonsDiv.innerHTML=`
-        <h3>Pay 200 KSh</h3>
-        <p>Send via M-Pesa to:</p>
-        <h2>0798880808</h2>
-        <p>Enter M-Pesa Transaction Code</p>
-        <input id="mpesaCode">
-        <button id="submitPayment">Submit</button>
-      `;
-      document.getElementById("submitPayment").addEventListener("click", submitPayment);
-    }
-  }
+const signupDate = new Date(currentUser.signup_date);
+const now = new Date();
 
-  // DEBUG: log current user
-  console.log("Current User:", currentUser);
+const days = (now - signupDate) / (1000*60*60*24);
+
+lessonsDiv.innerHTML="";
+
+if(days < 2){
+
+trialInfo.textContent="Free trial active";
+
+showLessons(false);
+
+}else{
+
+if(currentUser.payment_status === "paid"){
+
+trialInfo.textContent="Payment verified";
+
+showLessons(true);
+
+}else{
+
+trialInfo.textContent="Trial expired";
+
+lessonsDiv.innerHTML=`
+<h3>Pay 200 KSh</h3>
+<p>Send money to:</p>
+<h2>0798880808</h2>
+
+<p>Enter M-Pesa Code</p>
+
+<input id="mpesaCode">
+
+<button onclick="submitPayment()">Submit</button>
+`;
+
 }
 
-// --- PAYMENT SUBMIT ---
+}
+
+}
+
+
+
+// PAYMENT
 async function submitPayment(){
-  const code = document.getElementById("mpesaCode").value;
-  if(!code){ alert("Enter transaction code"); return; }
 
-  const { error } = await supabase.from("users").update({
-    payment_status:"pending",
-    mpesa_code:code
-  }).eq("id", currentUser.id);
+const code = document.getElementById("mpesaCode").value;
 
-  if(error){
-    console.error("Payment submit error:", error);
-    alert("Payment submission failed");
-    return;
-  }
+const { error } = await supabase
+.from("users")
+.update({
+payment_status:"pending",
+mpesa_code:code
+})
+.eq("id", currentUser.id);
 
-  alert("Payment submitted for verification");
-  currentUser.payment_status="pending";
-  showDashboard();
+if(error){
+
+alert("Error submitting payment");
+
+return;
+
 }
 
-// --- LESSONS ---
+alert("Payment sent for verification");
+
+}
+
+
+
+// LESSONS
 function showLessons(paid){
-  const lessons = [
-    {title:"Forex Basics",type:"notes"},
-    {title:"Trading Psychology",type:"notes"},
-    {title:"Chart Analysis",type:"video",video:"dQw4w9WgXcQ"},
-    {title:"Web Development Intro",type:"notes"},
-    {title:"HTML & CSS",type:"video",video:"UB1O30fR-EE"},
-    {title:"JavaScript Basics",type:"video",video:"W6NZfCO5SIk"}
-  ];
 
-  lessons.forEach(l=>{
-    if(l.type==="video" && !paid) return;
-    const div = document.createElement("div");
-    if(l.type==="video"){
-      div.innerHTML = `
-        <h3>${l.title}</h3>
-        <iframe width="100%" height="200" src="https://www.youtube.com/embed/${l.video}" frameborder="0" allowfullscreen></iframe>
-      `;
-    } else {
-      div.innerHTML = `<h3>${l.title}</h3><p>Course notes available during trial.</p>`;
-    }
-    lessonsDiv.appendChild(div);
-  });
+const lessons = [
+
+{
+title:"Forex Basics",
+type:"text"
+},
+
+{
+title:"Trading Psychology",
+type:"text"
+},
+
+{
+title:"Chart Analysis",
+type:"video",
+video:"dQw4w9WgXcQ"
+},
+
+{
+title:"Web Development Intro",
+type:"text"
+},
+
+{
+title:"HTML & CSS",
+type:"video",
+video:"UB1O30fR-EE"
 }
 
-// --- TEST SUPABASE CONNECTION ---
-async function testSupabase(){
-  const { data, error } = await supabase.from('users').select('*');
-  console.log("Users table:", data);
-  if(error) console.error("Supabase error:", error);
+];
+
+lessons.forEach(l => {
+
+if(l.type === "video" && !paid) return;
+
+const div = document.createElement("div");
+
+if(l.type === "video"){
+
+div.innerHTML = `
+<h3>${l.title}</h3>
+<iframe width="100%" height="200"
+src="https://www.youtube.com/embed/${l.video}"
+frameborder="0" allowfullscreen></iframe>
+`;
+
+}else{
+
+div.innerHTML = `<h3>${l.title}</h3><p>Course notes available during trial.</p>`;
+
 }
-testSupabase();
+
+lessonsDiv.appendChild(div);
+
+});
+
+}
