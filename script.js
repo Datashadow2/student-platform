@@ -16,24 +16,41 @@ const lessonsDiv = document.getElementById("lessons");
 
 let currentUser;
 
-// --- Register ---
+// --- Register with Auto-login ---
 registerBtn.addEventListener("click", async () => {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  if(!name || !email || !password){ alert("Fill all fields"); return; }
+  if(!name || !email || !password){ 
+    alert("Fill all fields"); 
+    return; 
+  }
 
+  // Insert new user into Supabase
   const { data, error } = await supabase
     .from("users")
     .insert([{ 
-      name, email, password, signup_date: new Date(), 
-      paid_200k: false, paid_500k_certificate:false,
-      progress:0, streak:0, badges: []
-    }]);
+      name, 
+      email, 
+      password, 
+      signup_date: new Date(), 
+      paid_200k: false, 
+      paid_500k_certificate:false,
+      progress:0, 
+      streak:0, 
+      badges: []
+    }])
+    .select() // Return the inserted row
+    .single();
 
-  if(error) alert("Error: "+error.message);
-  else alert("Registered! Login now.");
+  if(error) {
+    alert("Error: "+error.message);
+  } else {
+    alert("Registered successfully! Logging you in...");
+    currentUser = data; // Set current user to the newly created user
+    showDashboard(); // Automatically show dashboard
+  }
 });
 
 // --- Login ---
@@ -68,6 +85,8 @@ function showDashboard(){
   const now = new Date();
   const diff = (now - signupDate)/(1000*60*60*24); // in days
 
+  lessonsDiv.innerHTML = ""; // clear lessons
+
   if(diff < 2 || currentUser.paid_200k){
     trialInfo.textContent = `Trial active. Day ${Math.floor(diff)+1}`;
 
@@ -79,11 +98,10 @@ function showDashboard(){
     showLessons(currentUser.paid_200k);
   } else {
     trialInfo.textContent = "Trial expired. Please pay 200 KSh to continue learning.";
-    lessonsDiv.innerHTML = "";
 
     // Show placeholder payment button
     const payDiv = document.createElement("div");
-    payDiv.innerHTML = `<button id="pay200Btn">Pay 200 KSh</button>`;
+    payDiv.innerHTML = `<button id="pay200Btn">Pay 200 KSh to Unlock Lessons</button>`;
     lessonsDiv.appendChild(payDiv);
 
     document.getElementById("pay200Btn").addEventListener("click", async () => {
@@ -134,7 +152,6 @@ function showDashboard(){
 
 // --- Show Lessons ---
 function showLessons(paid){
-  lessonsDiv.innerHTML = "";
   const lessons = [
     { title:"Forex Basics", type:"notes" },
     { title:"Trading Strategies", type:"notes" },
@@ -152,7 +169,7 @@ function showLessons(paid){
     const lessonDiv = document.createElement("div");
     lessonDiv.className = "lesson";
     lessonDiv.innerHTML = `<h3>${lesson.title}</h3>
-      ${lesson.type==="video"? "<iframe width='100%' height='200' src='https://www.youtube.com/embed/https://youtu.be/2LmsEdusex0 frameborder='0' allowfullscreen></iframe>" : "<p>Notes content here...</p>"}`;
+      ${lesson.type==="video"? "<iframe width='100%' height='200' src='https://www.youtube.com/embed/https://youtu.be/nmjdaBaZe8Y frameborder='0' allowfullscreen></iframe>" : "<p>Notes content here...</p>"}`;
     lessonsDiv.appendChild(lessonDiv);
   });
 }
