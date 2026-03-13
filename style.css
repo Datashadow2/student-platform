@@ -1,71 +1,97 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f0f4f8;
-  color: #333;
-  text-align: center;
-  padding: 20px;
+body{
+
+font-family:Arial;
+
+background:#f4f6fb;
+
+margin:0;
+
 }
 
-.container {
-  max-width: 700px;
-  margin: 0 auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+.container{
+
+max-width:900px;
+
+margin:auto;
+
+padding:20px;
+
 }
 
-input {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 80%;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+.card{
+
+background:white;
+
+padding:20px;
+
+margin-top:20px;
+
+border-radius:10px;
+
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+
 }
 
-button {
-  padding: 10px 20px;
-  margin: 5px;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+input{
+
+display:block;
+
+width:100%;
+
+padding:10px;
+
+margin-top:10px;
+
+border:1px solid #ccc;
+
+border-radius:5px;
+
 }
 
-.progress-container {
-  margin: 20px 0;
+button{
+
+margin-top:10px;
+
+padding:10px 20px;
+
+background:#4CAF50;
+
+border:none;
+
+color:white;
+
+border-radius:5px;
+
+cursor:pointer;
+
 }
 
-.progress-bar {
-  width: 80%;
-  height: 20px;
-  background: #ddd;
-  margin: 0 auto;
-  border-radius: 10px;
-  overflow: hidden;
+button:hover{
+
+background:#43a047;
+
 }
 
-#progressFill {
-  height: 100%;
-  width: 0%;
-  background: #4a90e2;
-  transition: width 0.5s;
+.progressBar{
+
+width:100%;
+
+height:20px;
+
+background:#ddd;
+
+border-radius:10px;
+
+overflow:hidden;
+
 }
 
-.badge {
-  display: inline-block;
-  padding: 5px 10px;
-  margin: 5px;
-  background: #ffcc00;
-  border-radius: 5px;
-}
+#progressFill{
 
-.lesson {
-  margin: 20px 0;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: #fafafa;
+height:100%;
+
+width:0%;
+
+background:#4CAF50;
+
 }
