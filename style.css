@@ -1,97 +1,50 @@
 body{
-
-font-family:Arial;
-
-background:#f4f6fb;
-
-margin:0;
-
+  font-family: Arial;
+  background:#f4f6fb;
+  margin:0;
 }
-
 .container{
-
-max-width:900px;
-
-margin:auto;
-
-padding:20px;
-
+  max-width:900px;
+  margin:auto;
+  padding:20px;
 }
-
 .card{
-
-background:white;
-
-padding:20px;
-
-margin-top:20px;
-
-border-radius:10px;
-
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
-
+  background:white;
+  padding:20px;
+  margin-top:20px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
-
 input{
-
-display:block;
-
-width:100%;
-
-padding:10px;
-
-margin-top:10px;
-
-border:1px solid #ccc;
-
-border-radius:5px;
-
+  display:block;
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:1px solid #ccc;
+  border-radius:5px;
 }
-
 button{
-
-margin-top:10px;
-
-padding:10px 20px;
-
-background:#4CAF50;
-
-border:none;
-
-color:white;
-
-border-radius:5px;
-
-cursor:pointer;
-
+  margin-top:10px;
+  padding:10px 20px;
+  background:#4CAF50;
+  border:none;
+  color:white;
+  border-radius:5px;
+  cursor:pointer;
 }
-
 button:hover{
-
-background:#43a047;
-
+  background:#43a047;
 }
-
 .progressBar{
-
-width:100%;
-
-height:20px;
-
-background:#ddd;
-
-border-radius:10px;
-
-overflow:hidden;
-
+  width:100%;
+  height:20px;
+  background:#ddd;
+  border-radius:10px;
+  overflow:hidden;
 }
-
 #progressFill{
-
-height:100%;
-
-width:0%;
-
-background:#4CAF50;
-
+  height:100%;
+  width:0%;
+  background:#4CAF50;
 }
+
