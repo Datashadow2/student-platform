@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Student Skill Platform</title>
-
 <link rel="stylesheet" href="style.css">
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<!-- Load Supabase JS first -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -30,7 +30,6 @@
 
 </div>
 
-
 <div id="dashboard" style="display:none;">
 
 <h2>Welcome <span id="username"></span></h2>
@@ -43,12 +42,13 @@
 <div class="card">
 <h3>Lessons</h3>
 <div id="lessons"></div>
-
 </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</div>
+
+<!-- Load script.js last -->
 <script src="script.js"></script>
 
 </body>
