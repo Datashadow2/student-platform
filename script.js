@@ -1,175 +1,260 @@
-// --- Supabase setup ---
 const SUPABASE_URL = "https://xzptxrarzdgawilymmhu.supabase.co";
 const SUPABASE_KEY = "sb_publishable_t856nqE72fz3X3RFJstmDQ_K5nkoftv";
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// DOM elements
+const supabase = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
 const registerBtn = document.getElementById("registerBtn");
 const loginBtn = document.getElementById("loginBtn");
+
 const dashboard = document.getElementById("dashboard");
 const auth = document.getElementById("auth");
-const usernameSpan = document.getElementById("username");
+
+const username = document.getElementById("username");
+
 const trialInfo = document.getElementById("trialInfo");
-const progressFill = document.getElementById("progressFill");
-const badgesContainer = document.getElementById("badgesContainer");
+
 const lessonsDiv = document.getElementById("lessons");
 
 let currentUser;
 
-// --- Register with Auto-login ---
-registerBtn.addEventListener("click", async () => {
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+// REGISTER
+registerBtn.addEventListener("click",async()=>{
 
-  if(!name || !email || !password){ 
-    alert("Fill all fields"); 
-    return; 
-  }
+const name=document.getElementById("name").value;
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
 
-  // Insert new user into Supabase
-  const { data, error } = await supabase
-    .from("users")
-    .insert([{ 
-      name, 
-      email, 
-      password, 
-      signup_date: new Date(), 
-      paid_200k: false, 
-      paid_500k_certificate:false,
-      progress:0, 
-      streak:0, 
-      badges: []
-    }])
-    .select() // Return the inserted row
-    .single();
+if(!name||!email||!password){
 
-  if(error) {
-    alert("Error: "+error.message);
-  } else {
-    alert("Registered successfully! Logging you in...");
-    currentUser = data; // Set current user to the newly created user
-    showDashboard(); // Automatically show dashboard
-  }
+alert("Fill all fields");
+
+return;
+
+}
+
+const {data,error}=await supabase
+.from("users")
+.insert([{
+
+name:name,
+email:email,
+password:password,
+signup_date:new Date(),
+payment_status:"trial",
+progress:0
+
+}])
+.select()
+.single();
+
+if(error){
+
+alert(error.message);
+return;
+
+}
+
+currentUser=data;
+
+showDashboard();
+
 });
 
-// --- Login ---
-loginBtn.addEventListener("click", async () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+// LOGIN
+loginBtn.addEventListener("click",async()=>{
 
-  if(!email || !password){ alert("Fill all fields"); return; }
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
 
-  const { data, error } = await supabase
-    .from("users")
-    .select("*")
-    .eq("email", email)
-    .eq("password", password)
-    .single();
+const {data,error}=await supabase
+.from("users")
+.select("*")
+.eq("email",email)
+.eq("password",password)
+.single();
 
-  if(error) alert("Login failed: "+error.message);
-  else {
-    currentUser = data;
-    showDashboard();
-  }
+if(error){
+
+alert("Login failed");
+
+return;
+
+}
+
+currentUser=data;
+
+showDashboard();
+
 });
 
-// --- Show Dashboard ---
+// DASHBOARD
 function showDashboard(){
-  auth.style.display = "none";
-  dashboard.style.display = "block";
-  usernameSpan.textContent = currentUser.name;
 
-  // --- Trial calculation ---
-  const signupDate = new Date(currentUser.signup_date);
-  const now = new Date();
-  const diff = (now - signupDate)/(1000*60*60*24); // in days
+auth.style.display="none";
 
-  lessonsDiv.innerHTML = ""; // clear lessons
+dashboard.style.display="block";
 
-  if(diff < 2 || currentUser.paid_200k){
-    trialInfo.textContent = `Trial active. Day ${Math.floor(diff)+1}`;
+username.textContent=currentUser.name;
 
-    // Trial reminders
-    if(diff > 1.5 && !currentUser.paid_200k){
-      alert("Reminder: Your trial ends soon. Pay 200 KSh to continue access!");
-    }
+const signup=new Date(currentUser.signup_date);
 
-    showLessons(currentUser.paid_200k);
-  } else {
-    trialInfo.textContent = "Trial expired. Please pay 200 KSh to continue learning.";
+const now=new Date();
 
-    // Show placeholder payment button
-    const payDiv = document.createElement("div");
-    payDiv.innerHTML = `<button id="pay200Btn">Pay 200 KSh to Unlock Lessons</button>`;
-    lessonsDiv.appendChild(payDiv);
+const days=(now-signup)/(1000*60*60*24);
 
-    document.getElementById("pay200Btn").addEventListener("click", async () => {
-      alert("Payment placeholder: Marking account as paid 200 KSh...");
-      // Update Supabase
-      const { error } = await supabase
-        .from("users")
-        .update({ paid_200k: true })
-        .eq("id", currentUser.id);
-      if(error) alert("Error: "+error.message);
-      else {
-        currentUser.paid_200k = true;
-        showDashboard();
-      }
-    });
-  }
+lessonsDiv.innerHTML="";
 
-  // --- Progress & badges ---
-  progressFill.style.width = currentUser.progress+"%";
-  badgesContainer.innerHTML = "";
-  currentUser.badges.forEach(b => {
-    const badge = document.createElement("span");
-    badge.className = "badge";
-    badge.textContent = b;
-    badgesContainer.appendChild(badge);
-  });
+if(days<2){
 
-  // --- Certificate button ---
-  if(currentUser.progress >= 100 && !currentUser.paid_500k_certificate){
-    const certDiv = document.createElement("div");
-    certDiv.innerHTML = `<button id="pay500Btn">Pay 500 KSh for Certificate</button>`;
-    dashboard.appendChild(certDiv);
+trialInfo.innerHTML="Free Trial Active";
 
-    document.getElementById("pay500Btn").addEventListener("click", async () => {
-      alert("Payment placeholder: Certificate unlocked!");
-      const { error } = await supabase
-        .from("users")
-        .update({ paid_500k_certificate: true })
-        .eq("id", currentUser.id);
-      if(error) alert("Error: "+error.message);
-      else {
-        currentUser.paid_500k_certificate = true;
-        alert("Congratulations! You can now download your certificate.");
-      }
-    });
-  }
+showLessons(false);
+
 }
 
-// --- Show Lessons ---
+else{
+
+if(currentUser.payment_status==="paid"){
+
+trialInfo.innerHTML="Payment Verified";
+
+showLessons(true);
+
+}
+
+else if(currentUser.payment_status==="pending"){
+
+trialInfo.innerHTML="Payment Pending Verification";
+
+lessonsDiv.innerHTML="<p>We are verifying your payment.</p>";
+
+}
+
+else{
+
+trialInfo.innerHTML="Trial Expired";
+
+lessonsDiv.innerHTML=`
+
+<h3>Pay 200 KSh</h3>
+
+<p>Send via M-Pesa to:</p>
+
+<h2>0798880808</h2>
+
+<p>Enter M-Pesa Transaction Code</p>
+
+<input id="mpesaCode">
+
+<button id="submitPayment">Submit</button>
+
+`;
+
+document
+.getElementById("submitPayment")
+.addEventListener("click",submitPayment);
+
+}
+
+}
+
+}
+
+// PAYMENT SUBMIT
+async function submitPayment(){
+
+const code=document.getElementById("mpesaCode").value;
+
+if(!code){
+
+alert("Enter transaction code");
+
+return;
+
+}
+
+const {error}=await supabase
+.from("users")
+.update({
+
+payment_status:"pending",
+mpesa_code:code
+
+})
+.eq("id",currentUser.id);
+
+if(error){
+
+alert(error.message);
+return;
+
+}
+
+alert("Payment submitted for verification");
+
+currentUser.payment_status="pending";
+
+showDashboard();
+
+}
+
+// LESSONS
 function showLessons(paid){
-  const lessons = [
-    { title:"Forex Basics", type:"notes" },
-    { title:"Trading Strategies", type:"notes" },
-    { title:"Chart Reading", type:"video" },
-    { title:"Risk Management", type:"video" },
-    { title:"Web Development Basics", type:"notes" },
-    { title:"HTML & CSS", type:"video" },
-    { title:"JavaScript Fundamentals", type:"video" },
-    { title:"Graphic Design Intro", type:"notes" },
-    { title:"Online Freelancing Tips", type:"video" }
-  ];
 
-  lessons.forEach(lesson => {
-    if(lesson.type==="video" && !paid) return; // hide videos until payment
-    const lessonDiv = document.createElement("div");
-    lessonDiv.className = "lesson";
-    lessonDiv.innerHTML = `<h3>${lesson.title}</h3>
-      ${lesson.type==="video"? "<iframe width='100%' height='200' src='https://www.youtube.com/embed/https://youtu.be/nmjdaBaZe8Y frameborder='0' allowfullscreen></iframe>" : "<p>Notes content here...</p>"}`;
-    lessonsDiv.appendChild(lessonDiv);
-  });
+const lessons=[
+
+{title:"Forex Basics",type:"notes"},
+
+{title:"Trading Psychology",type:"notes"},
+
+{title:"Chart Analysis",type:"video",video:"dQw4w9WgXcQ"},
+
+{title:"Web Development Intro",type:"notes"},
+
+{title:"HTML & CSS",type:"video",video:"UB1O30fR-EE"},
+
+{title:"JavaScript Basics",type:"video",video:"W6NZfCO5SIk"}
+
+];
+
+lessons.forEach(l=>{
+
+if(l.type==="video"&&!paid) return;
+
+const div=document.createElement("div");
+
+if(l.type==="video"){
+
+div.innerHTML=`
+
+<h3>${l.title}</h3>
+
+<iframe width="100%" height="200"
+
+src="https://www.youtube.com/embed/${l.video}"
+
+frameborder="0" allowfullscreen></iframe>
+
+`;
+
 }
+
+else{
+
+div.innerHTML=`
+
+<h3>${l.title}</h3>
+
+<p>Course notes available during trial.</p>
+
+`;
+
+}
+
+lessonsDiv.appendChild(div);
+
+});
+
+}
+    
+
