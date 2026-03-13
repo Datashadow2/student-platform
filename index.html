@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-
-<title>Skill Learning Platform</title>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Learning Platform</title>
 <link rel="stylesheet" href="style.css">
 
+<!-- Load Supabase first -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
 </head>
 
 <body>
@@ -16,57 +16,35 @@
 <div class="container">
 
 <h1>Learn Skills That Make Money</h1>
-
 <p>Forex • Web Development • Freelancing</p>
 
+<!-- Authentication -->
 <div id="auth">
-
 <h2>Register / Login</h2>
-
 <input id="name" placeholder="Name">
-
 <input id="email" placeholder="Email">
-
 <input id="password" type="password" placeholder="Password">
-
 <button id="registerBtn">Register</button>
-
 <button id="loginBtn">Login</button>
-
 </div>
 
-<div id="dashboard" style="display:none">
-
+<!-- Dashboard -->
+<div id="dashboard" style="display:none;">
 <h2>Welcome <span id="username"></span></h2>
 
 <div class="card">
-
 <h3>Trial Status</h3>
-
 <p id="trialInfo"></p>
-
 </div>
 
 <div class="card">
-
 <h3>Progress</h3>
-
-<div class="progressBar">
-
-<div id="progressFill"></div>
-
-</div>
-
+<div class="progressBar"><div id="progressFill"></div></div>
 </div>
 
 <div class="card">
-
 <h3>Lessons</h3>
-
 <div id="lessons"></div>
-
-</div>
-
 </div>
 
 </div>
@@ -74,5 +52,4 @@
 <script src="script.js"></script>
 
 </body>
-
 </html>
