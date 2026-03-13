@@ -19,7 +19,7 @@ let currentUser;
 
 
 // REGISTER
-registerBtn.addEventListener("click", async () => {
+registerBtn.onclick = async () => {
 
 const name = document.getElementById("name").value;
 const email = document.getElementById("email").value;
@@ -32,15 +32,13 @@ return;
 
 const { data, error } = await supabase
 .from("users")
-.insert([
-{
+.insert([{
 name:name,
 email:email,
 password:password,
 signup_date:new Date(),
 payment_status:"trial"
-}
-])
+}])
 .select()
 .single();
 
@@ -54,12 +52,12 @@ currentUser = data;
 
 showDashboard();
 
-});
+};
 
 
 
 // LOGIN
-loginBtn.addEventListener("click", async () => {
+loginBtn.onclick = async () => {
 
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
@@ -72,6 +70,7 @@ const { data, error } = await supabase
 .single();
 
 if(error){
+console.log(error);
 alert("Login failed");
 return;
 }
@@ -80,7 +79,7 @@ currentUser = data;
 
 showDashboard();
 
-});
+};
 
 
 
@@ -169,32 +168,11 @@ function showLessons(paid){
 
 const lessons = [
 
-{
-title:"Forex Basics",
-type:"text"
-},
-
-{
-title:"Trading Psychology",
-type:"text"
-},
-
-{
-title:"Chart Analysis",
-type:"video",
-video:"dQw4w9WgXcQ"
-},
-
-{
-title:"Web Development Intro",
-type:"text"
-},
-
-{
-title:"HTML & CSS",
-type:"video",
-video:"UB1O30fR-EE"
-}
+{title:"Forex Basics",type:"text"},
+{title:"Trading Psychology",type:"text"},
+{title:"Chart Analysis",type:"video",video:"dQw4w9WgXcQ"},
+{title:"Web Development Intro",type:"text"},
+{title:"HTML & CSS",type:"video",video:"UB1O30fR-EE"}
 
 ];
 
