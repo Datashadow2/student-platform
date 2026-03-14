@@ -12,475 +12,666 @@ let currentUserData = null;
 let countdownInterval = null;
 let currentFlashcardIndex = 0;
 let currentFlashcardSet = [];
-let knownCards = [];
-let reviewCards = [];
+let cardMastery = {}; // Tracks how well user knows each card
+let currentQuizQuestions = [];
 let currentQuizIndex = 0;
 let quizScore = 0;
 let selectedQuizOption = null;
+let userXP = 0;
+let userLevel = 1;
 
-// ===== COURSE CONTENT =====
+// ===== RICH COURSE CONTENT =====
 const courseContent = {
     forex: {
         title: "Forex Trading Mastery",
         icon: "chart-line",
+        color: "#4CAF50",
         lessons: [
-            { 
-                title: "Introduction to Forex", 
-                description: "Learn Forex basics, market hours, and currency pairs",
-                content: "Forex (Foreign Exchange) is the global market for trading currencies. Daily volume: $6.6 trillion. Market hours: 24/5 from Sunday 5pm to Friday 5pm EST. Major pairs: EUR/USD, GBP/USD, USD/JPY, USD/CHF."
+            {
+                title: "Chapter 1: What is Forex?",
+                description: "Understanding the largest financial market",
+                pages: [
+                    {
+                        title: "Introduction to Forex",
+                        content: `
+                            <div class="lesson-page">
+                                <h2>🌍 The Foreign Exchange Market</h2>
+                                <p>Forex (Foreign Exchange) is the global marketplace for trading national currencies against one another.</p>
+                                
+                                <div class="highlight-box">
+                                    <h3>📊 Key Facts:</h3>
+                                    <ul>
+                                        <li><strong>Daily Volume:</strong> $6.6 TRILLION (largest market in the world)</li>
+                                        <li><strong>Market Hours:</strong> 24 hours a day, 5 days a week</li>
+                                        <li><strong>Participants:</strong> Banks, institutions, hedge funds, retail traders</li>
+                                        <li><strong>Liquidity:</strong> Extremely high - you can buy/sell instantly</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="image-placeholder" style="background: linear-gradient(135deg, #667eea, #764ba2); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white;">
+                                    <i class="fas fa-chart-line" style="font-size: 4rem;"></i>
+                                    <span style="margin-left: 1rem;">Forex Market Chart Visualization</span>
+                                </div>
+                                
+                                <h3>🎯 Why Trade Forex?</h3>
+                                <ul>
+                                    <li>✅ Low barriers to entry (start with as little as $10)</li>
+                                    <li>✅ Trade from anywhere in the world</li>
+                                    <li>✅ Profit in rising OR falling markets</li>
+                                    <li>✅ Leverage available (but be careful!)</li>
+                                </ul>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Currency Pairs Explained",
+                        content: `
+                            <div class="lesson-page">
+                                <h2>💱 Understanding Currency Pairs</h2>
+                                <p>Currencies are always traded in pairs. You're buying one and selling the other simultaneously.</p>
+                                
+                                <div class="example-box" style="background: #f0f8ff; padding: 20px; border-radius: 10px;">
+                                    <h3>📝 Example: EUR/USD</h3>
+                                    <p><strong>Base Currency:</strong> EUR (the one you're buying/selling)</p>
+                                    <p><strong>Quote Currency:</strong> USD (the one you're using to buy)</p>
+                                    <p>If EUR/USD = 1.1000, it means 1 Euro = 1.10 US Dollars</p>
+                                </div>
+                                
+                                <h3>Major Currency Pairs:</h3>
+                                <table style="width:100%; border-collapse: collapse;">
+                                    <tr style="background: #667eea; color: white;">
+                                        <th style="padding: 10px;">Pair</th>
+                                        <th style="padding: 10px;">Nickname</th>
+                                        <th style="padding: 10px;">Spread</th>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #ddd;">
+                                        <td style="padding: 10px;">EUR/USD</td>
+                                        <td style="padding: 10px;">"Fiber"</td>
+                                        <td style="padding: 10px;">Lowest</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #ddd;">
+                                        <td style="padding: 10px;">GBP/USD</td>
+                                        <td style="padding: 10px;">"Cable"</td>
+                                        <td style="padding: 10px;">Low</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #ddd;">
+                                        <td style="padding: 10px;">USD/JPY</td>
+                                        <td style="padding: 10px;">"Gopher"</td>
+                                        <td style="padding: 10px;">Low</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px;">USD/CHF</td>
+                                        <td style="padding: 10px;">"Swissie"</td>
+                                        <td style="padding: 10px;">Low</td>
+                                    </tr>
+                                </table>
+                                
+                                <div class="warning-box" style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                                    <i class="fas fa-exclamation-triangle" style="color: #856404;"></i>
+                                    <strong>Remember:</strong> The first currency is the BASE. You're always buying/selling the base currency.
+                                </div>
+                            </div>
+                        `
+                    },
+                    {
+                        title: "Pips and Lots",
+                        content: `
+                            <div class="lesson-page">
+                                <h2>📏 Understanding Pips and Lots</h2>
+                                
+                                <div class="definition-box" style="background: #e3f2fd; padding: 20px; border-radius: 10px;">
+                                    <h3>🔍 What is a PIP?</h3>
+                                    <p>PIP = Percentage in Point. It's the smallest price movement in Forex.</p>
+                                    <p><strong>For most pairs:</strong> 1 pip = 0.0001</p>
+                                    <p><strong>For JPY pairs:</strong> 1 pip = 0.01</p>
+                                    <p class="example">Example: If EUR/USD moves from 1.1000 to 1.1001, that's 1 pip.</p>
+                                </div>
+                                
+                                <h3>💰 Calculating Pip Value</h3>
+                                <p>For a standard lot (100,000 units):</p>
+                                <ul>
+                                    <li>EUR/USD: 1 pip = $10</li>
+                                    <li>USD/JPY: 1 pip = ~$9.09 (varies with rate)</li>
+                                </ul>
+                                
+                                <div class="interactive-example" style="background: #f3e5f5; padding: 20px; border-radius: 10px;">
+                                    <h4>🎮 Try It Yourself:</h4>
+                                    <p>If you buy 1 standard lot of EUR/USD at 1.1000 and it moves to 1.1010:</p>
+                                    <p>Movement = 10 pips</p>
+                                    <p>Profit = 10 pips × $10 = <strong>$100</strong></p>
+                                </div>
+                                
+                                <h3>📊 Lot Sizes:</h3>
+                                <table style="width:100%;">
+                                    <tr><td>Standard Lot</td><td>100,000 units</td><td>$10 per pip</td></tr>
+                                    <tr><td>Mini Lot</td><td>10,000 units</td><td>$1 per pip</td></tr>
+                                    <tr><td>Micro Lot</td><td>1,000 units</td><td>$0.10 per pip</td></tr>
+                                    <tr><td>Nano Lot</td><td>100 units</td><td>$0.01 per pip</td></tr>
+                                </table>
+                            </div>
+                        `
+                    }
+                ],
+                questionBank: [
+                    {
+                        question: "What is the daily trading volume of the Forex market?",
+                        options: ["$660 billion", "$6.6 trillion", "$66 trillion", "$660 million"],
+                        correct: 1,
+                        explanation: "Forex trades $6.6 TRILLION daily - it's the world's largest financial market!"
+                    },
+                    {
+                        question: "In the currency pair EUR/USD, which is the base currency?",
+                        options: ["USD", "EUR", "Both", "Neither"],
+                        correct: 1,
+                        explanation: "EUR is the base currency. You're buying or selling Euros, using US Dollars."
+                    },
+                    {
+                        question: "What is a pip in most currency pairs?",
+                        options: ["0.1", "0.01", "0.001", "0.0001"],
+                        correct: 3,
+                        explanation: "For most pairs, 1 pip = 0.0001. For JPY pairs, it's 0.01."
+                    },
+                    {
+                        question: "How much is 1 pip worth on a standard lot of EUR/USD?",
+                        options: ["$1", "$10", "$100", "$1000"],
+                        correct: 1,
+                        explanation: "A standard lot is 100,000 units, so each pip movement is worth $10."
+                    },
+                    {
+                        question: "Which of these is NOT a major currency pair?",
+                        options: ["EUR/USD", "GBP/USD", "USD/TRY", "USD/JPY"],
+                        correct: 2,
+                        explanation: "USD/TRY (Turkish Lira) is an exotic pair, not a major."
+                    },
+                    {
+                        question: "When does the Forex market open?",
+                        options: ["Monday 12am", "Sunday 5pm EST", "24/7", "Weekdays 9-5"],
+                        correct: 1,
+                        explanation: "Forex opens Sunday 5pm EST and runs until Friday 5pm EST."
+                    },
+                    {
+                        question: "What is a micro lot size?",
+                        options: ["100,000 units", "10,000 units", "1,000 units", "100 units"],
+                        correct: 2,
+                        explanation: "Micro lot = 1,000 units, worth about $0.10 per pip."
+                    },
+                    {
+                        question: "If EUR/USD moves from 1.1050 to 1.1075, how many pips did it move?",
+                        options: ["25 pips", "2.5 pips", "250 pips", "0.25 pips"],
+                        correct: 0,
+                        explanation: "1.1075 - 1.1050 = 0.0025 = 25 pips"
+                    }
+                ]
             },
-            { 
-                title: "Technical Analysis", 
-                description: "Master charts, indicators, and price action",
-                content: "Technical analysis involves studying price charts to predict future movements. Key concepts: Support and Resistance, Trend Lines, Chart Patterns (Head and Shoulders, Double Tops), Indicators (RSI, MACD, Moving Averages)."
-            },
-            { 
-                title: "Risk Management", 
-                description: "Position sizing, stop losses, and risk-reward",
-                content: "Never risk more than 1-2% of your account per trade. Use stop losses to protect capital. Aim for risk-reward ratios of at least 1:2. Position size = (Account Size × Risk %) / Stop Loss in pips."
-            },
-            { 
-                title: "Trading Psychology", 
-                description: "Master emotions and develop winning habits",
-                content: "The market is a battle of emotions. Fear causes selling at bottoms, greed causes buying at tops. Develop a trading plan and stick to it. Keep a trading journal. Embrace losses as learning opportunities."
+            {
+                title: "Chapter 2: Technical Analysis",
+                description: "Reading charts and identifying trends",
+                pages: [
+                    {
+                        title: "Introduction to Charts",
+                        content: `
+                            <div class="lesson-page">
+                                <h2>📊 Types of Charts</h2>
+                                
+                                <h3>1. Line Charts</h3>
+                                <p>Simply connect closing prices. Good for seeing overall trends.</p>
+                                
+                                <div class="chart-example" style="height: 150px; background: linear-gradient(45deg, #667eea20, #764ba220); margin: 10px 0; position: relative;">
+                                    <svg width="100%" height="150" viewBox="0 0 300 150">
+                                        <polyline points="20,130 70,100 120,110 170,80 220,90 270,40" stroke="#667eea" stroke-width="3" fill="none"/>
+                                    </svg>
+                                </div>
+                                
+                                <h3>2. Bar Charts</h3>
+                                <p>Show open, high, low, close for each period.</p>
+                                
+                                <h3>3. Candlestick Charts</h3>
+                                <p>Most popular. Green/white = price went up, Red/black = price went down.</p>
+                                
+                                <div class="candlestick-demo" style="display: flex; gap: 10px; justify-content: center;">
+                                    <div style="width: 20px; height: 60px; background: #4CAF50; border-radius: 3px;"></div>
+                                    <div style="width: 20px; height: 40px; background: #f44336; border-radius: 3px;"></div>
+                                    <div style="width: 20px; height: 55px; background: #4CAF50; border-radius: 3px;"></div>
+                                </div>
+                            </div>
+                        `
+                    }
+                ],
+                questionBank: [
+                    {
+                        question: "What does a green candlestick indicate?",
+                        options: ["Price went down", "Price went up", "Price didn't change", "Market closed"],
+                        correct: 1,
+                        explanation: "Green/white candlesticks mean the closing price was higher than the opening price."
+                    },
+                    {
+                        question: "What is support in technical analysis?",
+                        options: ["Price ceiling", "Price floor", "Trading volume", "Market news"],
+                        correct: 1,
+                        explanation: "Support is a price level where buying pressure is strong enough to prevent price from falling further."
+                    }
+                ]
             }
         ],
-        flashcards: [
-            { front: "What is Forex?", back: "Foreign Exchange - trading currencies globally" },
-            { front: "What is a Pip?", back: "Percentage in Point - smallest price movement (0.0001)" },
-            { front: "Major currency pairs?", back: "EUR/USD, GBP/USD, USD/JPY, USD/CHF" },
-            { front: "Market hours?", back: "24/5 from Sunday 5pm to Friday 5pm EST" },
-            { front: "Bullish market?", back: "Prices are rising/expected to rise" },
-            { front: "Bearish market?", back: "Prices are falling/expected to fall" }
-        ],
-        quizzes: [
-            {
-                question: "What does a Pip represent?",
-                options: ["Price movement", "Currency pair", "Trading platform", "Broker fee"],
-                correct: 0
-            },
-            {
-                question: "Which is a major currency pair?",
-                options: ["EUR/USD", "USD/TRY", "EUR/TRY", "GBP/ZAR"],
-                correct: 0
-            },
-            {
-                question: "Forex market is open 24/7",
-                options: ["True", "False"],
-                correct: 1
-            }
+        flashcardBank: [
+            { front: "What is Forex?", back: "Foreign Exchange - trading currencies globally", difficulty: 1 },
+            { front: "What is a Pip?", back: "Percentage in Point - smallest price movement (0.0001 for most pairs)", difficulty: 1 },
+            { front: "Major currency pairs?", back: "EUR/USD, GBP/USD, USD/JPY, USD/CHF, AUD/USD, USD/CAD", difficulty: 1 },
+            { front: "What is a standard lot?", back: "100,000 units of base currency", difficulty: 2 },
+            { front: "What is leverage?", back: "Borrowed capital to increase potential returns (and losses)", difficulty: 2 },
+            { front: "What is a stop loss?", back: "Order to close trade at predetermined loss level", difficulty: 2 },
+            { front: "What is RSI?", back: "Relative Strength Index - measures overbought/oversold conditions", difficulty: 3 },
+            { front: "What is MACD?", back: "Moving Average Convergence Divergence - trend-following momentum indicator", difficulty: 3 },
+            { front: "What is a bullish market?", back: "Prices are rising or expected to rise", difficulty: 1 },
+            { front: "What is a bearish market?", back: "Prices are falling or expected to fall", difficulty: 1 }
         ]
     },
     webdev: {
         title: "Web Development Bootcamp",
         icon: "laptop-code",
+        color: "#2196F3",
         lessons: [
-            { 
-                title: "HTML Fundamentals", 
-                description: "Structure web pages with semantic HTML",
-                content: "HTML (HyperText Markup Language) is the foundation of all websites. Key elements: <html>, <head>, <body>, <h1>-<h6> for headings, <p> for paragraphs, <a> for links, <img> for images, <div> and <span> for containers."
-            },
-            { 
-                title: "CSS Styling", 
-                description: "Create beautiful layouts with modern CSS",
-                content: "CSS (Cascading Style Sheets) makes websites look good. Selectors target HTML elements. Properties control colors, fonts, spacing. Flexbox and Grid create layouts. Responsive design with media queries."
-            },
-            { 
-                title: "JavaScript Essentials", 
-                description: "Add interactivity to your websites",
-                content: "JavaScript brings websites to life. Variables store data. Functions perform tasks. DOM manipulation changes page content. Events handle user interactions. APIs fetch external data."
-            },
-            { 
-                title: "Responsive Design", 
-                description: "Build websites that work on all devices",
-                content: "Responsive design ensures websites look great on phones, tablets, and desktops. Use viewport meta tag, fluid grids, flexible images, and media queries. Mobile-first approach designs for small screens first."
-            }
-        ],
-        flashcards: [
-            { front: "What is HTML?", back: "HyperText Markup Language - structure of web pages" },
-            { front: "What is CSS?", back: "Cascading Style Sheets - makes websites beautiful" },
-            { front: "What is JavaScript?", back: "Programming language for interactive websites" },
-            { front: "What is a tag?", back: "<div>, <p>, <h1> - elements that define content" }
-        ],
-        quizzes: [
             {
-                question: "What does HTML stand for?",
-                options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyper Transfer Markup Language", "Home Tool Markup Language"],
-                correct: 0
-            },
-            {
-                question: "Which tag is used for the largest heading?",
-                options: ["<h1>", "<heading>", "<h6>", "<head>"],
-                correct: 0
-            }
-        ]
-    },
-    ai: {
-        title: "AI & Automation",
-        icon: "robot",
-        lessons: [
-            { 
-                title: "AI Fundamentals", 
-                description: "Understand artificial intelligence basics",
-                content: "AI (Artificial Intelligence) enables machines to mimic human intelligence. Machine Learning is a subset of AI where systems learn from data. Deep Learning uses neural networks. Natural Language Processing (NLP) handles text and speech."
-            },
-            { 
-                title: "Automation Tools", 
-                description: "Explore popular AI automation platforms",
-                content: "Popular AI tools: ChatGPT for conversation, Midjourney for images, Zapier for workflow automation, TensorFlow for ML models, PyTorch for research, AutoGPT for autonomous tasks."
-            },
-            { 
-                title: "Machine Learning", 
-                description: "Learn how machines learn from data",
-                content: "Machine Learning types: Supervised (labeled data), Unsupervised (patterns in data), Reinforcement (reward-based). Algorithms: Linear Regression, Decision Trees, Neural Networks, K-Means Clustering."
-            },
-            { 
-                title: "AI Applications", 
-                description: "Real-world AI applications in business",
-                content: "AI in business: Customer service chatbots, Predictive analytics, Fraud detection, Personalized recommendations, Process automation, Sentiment analysis, Image recognition."
-            }
-        ],
-        flashcards: [
-            { front: "What is AI?", back: "Artificial Intelligence - machines mimicking human intelligence" },
-            { front: "What is Machine Learning?", back: "Algorithms that learn from data" },
-            { front: "What is Automation?", back: "Using technology to automate tasks" }
-        ],
-        quizzes: [
-            {
-                question: "What does AI stand for?",
-                options: ["Artificial Intelligence", "Automated Interface", "Advanced Integration", "Algorithmic Input"],
-                correct: 0
-            }
-        ]
-    },
-    business: {
-        title: "Online Business Mastery",
-        icon: "briefcase",
-        lessons: [
-            { 
-                title: "Business Models", 
-                description: "Choose the right online business model",
-                content: "Online business models: E-commerce (selling products), Dropshipping (no inventory), Affiliate marketing (commission on sales), Digital products (courses, ebooks), SaaS (software subscription), Membership sites (recurring revenue)."
-            },
-            { 
-                title: "Digital Marketing", 
-                description: "Market your business effectively online",
-                content: "Digital marketing channels: SEO (organic search), PPC (paid ads), Social media marketing, Email marketing, Content marketing, Influencer marketing. Track metrics: CTR, Conversion rate, ROI, Customer acquisition cost."
-            },
-            { 
-                title: "Sales Funnels", 
-                description: "Build high-converting sales funnels",
-                content: "Sales funnel stages: Awareness (TOFU) → Interest → Consideration → Intent → Evaluation → Purchase (BOFU). Lead magnets attract prospects. Email sequences nurture leads. Upsells and cross-sells increase order value."
-            },
-            { 
-                title: "Scaling Strategies", 
-                description: "Scale your business to 6 figures",
-                content: "Scaling strategies: Automate processes, Outsource tasks, Expand product lines, Enter new markets, Increase prices, Build partnerships, Create systems and SOPs, Focus on high-value activities."
+                title: "Chapter 1: HTML Fundamentals",
+                description: "Build the structure of websites",
+                pages: [
+                    {
+                        title: "HTML Document Structure",
+                        content: `
+                            <div class="lesson-page">
+                                <h2>🏗️ Basic HTML Template</h2>
+                                
+                                <pre style="background: #1e1e1e; color: #d4d4d4; padding: 20px; border-radius: 10px;">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My First Page&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Hello World!&lt;/h1&gt;
+        &lt;p&gt;This is my first paragraph.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+                                </pre>
+                                
+                                <h3>📝 Explanation:</h3>
+                                <ul>
+                                    <li><strong>&lt;!DOCTYPE html&gt;</strong> - Tells browser it's HTML5</li>
+                                    <li><strong>&lt;html&gt;</strong> - Root element of the page</li>
+                                    <li><strong>&lt;head&gt;</strong> - Contains meta information</li>
+                                    <li><strong>&lt;body&gt;</strong> - Contains visible content</li>
+                                </ul>
+                                
+                                <div class="code-playground" style="background: #f0f0f0; padding: 20px; border-radius: 10px;">
+                                    <h4>🎮 Try it yourself:</h4>
+                                    <textarea id="htmlPlayground" style="width:100%; height:150px; font-family: monospace; padding:10px;">
+&lt;h1&gt;My Heading&lt;/h1&gt;
+&lt;p&gt;My paragraph&lt;/p&gt;
+                                    </textarea>
+                                    <button onclick="previewHTML()" class="btn-primary" style="margin-top:10px;">Preview</button>
+                                    <div id="htmlPreview" style="background:white; padding:20px; margin-top:10px; border-radius:5px;"></div>
+                                </div>
+                            </div>
+                        `
+                    }
+                ],
+                questionBank: [
+                    {
+                        question: "What does HTML stand for?",
+                        options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyper Transfer Markup Language", "Home Tool Markup Language"],
+                        correct: 0,
+                        explanation: "HTML = HyperText Markup Language, the standard language for creating web pages."
+                    },
+                    {
+                        question: "Which tag is used for the largest heading?",
+                        options: ["<h1>", "<heading>", "<h6>", "<head>"],
+                        correct: 0,
+                        explanation: "<h1> is the largest heading, <h6> is the smallest."
+                    }
+                ]
             }
         ],
-        flashcards: [
-            { front: "What is a business model?", back: "How a company creates and delivers value" },
-            { front: "What is digital marketing?", back: "Marketing through digital channels" },
-            { front: "What is a sales funnel?", back: "Customer journey from awareness to purchase" }
-        ],
-        quizzes: [
-            {
-                question: "What is a business model?",
-                options: ["How company makes money", "Company logo", "Office location", "Employee count"],
-                correct: 0
-            }
+        flashcardBank: [
+            { front: "What is HTML?", back: "HyperText Markup Language - structure of web pages", difficulty: 1 },
+            { front: "What is CSS?", back: "Cascading Style Sheets - makes websites beautiful", difficulty: 1 },
+            { front: "What is JavaScript?", back: "Programming language for interactive websites", difficulty: 1 },
+            { front: "What is a tag?", back: "<div>, <p>, <h1> - elements that define content", difficulty: 1 },
+            { front: "What is the DOM?", back: "Document Object Model - programming interface for HTML", difficulty: 2 },
+            { front: "What is responsive design?", back: "Websites that work on all devices", difficulty: 2 }
         ]
     }
 };
 
-// ===== YOUTUBE TEACHERS (Hidden until payment) =====
-const youtubeTeachers = {
-    forex: [
-        { name: "Rayner Teo", channel: "@RaynerTeo", url: "https://youtube.com/@RaynerTeo", specialty: "Price Action", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
-        { name: "ForexSignals", channel: "@ForexSignals", url: "https://youtube.com/@ForexSignals", specialty: "Daily Analysis", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
-        { name: "Trading Rush", channel: "@TradingRush", url: "https://youtube.com/@TradingRush", specialty: "Beginners", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" }
-    ],
-    webdev: [
-        { name: "Kevin Powell", channel: "@KevinPowell", url: "https://youtube.com/@KevinPowell", specialty: "CSS Master", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
-        { name: "Traversy Media", channel: "@TraversyMedia", url: "https://youtube.com/@TraversyMedia", specialty: "Full Stack", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
-        { name: "Web Dev Simplified", channel: "@WebDevSimplified", url: "https://youtube.com/@WebDevSimplified", specialty: "JavaScript", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" }
-    ],
-    ai: [
-        { name: "Sentdex", channel: "@sentdex", url: "https://youtube.com/@sentdex", specialty: "Python AI", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
-        { name: "Two Minute Papers", channel: "@TwoMinutePapers", url: "https://youtube.com/@TwoMinutePapers", specialty: "AI Research", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
-        { name: "Nicholas Renotte", channel: "@nicholasrenotte", url: "https://youtube.com/@nicholasrenotte", specialty: "AI Projects", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" }
-    ],
-    business: [
-        { name: "Alex Hormozi", channel: "@AlexHormozi", url: "https://youtube.com/@AlexHormozi", specialty: "Scaling", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
-        { name: "Grant Cardone", channel: "@GrantCardone", url: "https://youtube.com/@GrantCardone", specialty: "Sales", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
-        { name: "GaryVee", channel: "@GaryVee", url: "https://youtube.com/@GaryVee", specialty: "Marketing", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" }
-    ]
-};
-
-// ===== INITIALIZATION =====
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Page loaded, checking session...');
-    checkSession();
-});
-
-// ===== SESSION MANAGEMENT =====
-async function checkSession() {
-    try {
-        const savedEmail = localStorage.getItem("student");
-        
-        if (savedEmail) {
-            currentUser = savedEmail;
-            await loadUser();
-        } else {
-            showAuthForms();
-        }
-    } catch (error) {
-        console.error('Session error:', error);
-        showAuthForms();
-    }
-}
-
-// ===== UI HELPERS =====
-function showAuthForms() {
-    document.getElementById('auth').style.display = 'grid';
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'none';
-}
-
-function showDashboard() {
-    document.getElementById('auth').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-}
-
-function showLogin() {
-    document.getElementById('registerCard').style.display = 'none';
-    document.getElementById('loginCard').style.display = 'block';
-}
-
-function showRegister() {
-    document.getElementById('loginCard').style.display = 'none';
-    document.getElementById('registerCard').style.display = 'block';
-}
-
-// ===== TOAST NOTIFICATIONS =====
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toastContainer');
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `
-        <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
-        ${message}
-    `;
-    container.appendChild(toast);
+// ===== SMART FLASHCARD SYSTEM (Spaced Repetition) =====
+function loadFlashcards() {
+    const cards = courseContent[currentUserData.course]?.flashcardBank || [];
     
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
+    // Initialize mastery from localStorage or database
+    if (!cardMastery[currentUserData.course]) {
+        cardMastery[currentUserData.course] = {};
+        cards.forEach((_, index) => {
+            cardMastery[currentUserData.course][index] = 0; // 0 = never seen, 1 = learning, 2 = almost there, 3 = mastered
+        });
+    }
+    
+    // Sort cards by mastery (lowest mastery first) for spaced repetition
+    currentFlashcardSet = [...cards].sort((a, b) => {
+        const masteryA = cardMastery[currentUserData.course][cards.indexOf(a)] || 0;
+        const masteryB = cardMastery[currentUserData.course][cards.indexOf(b)] || 0;
+        return masteryA - masteryB;
+    });
+    
+    currentFlashcardIndex = 0;
+    displayFlashcard();
 }
 
-// ===== REGISTRATION =====
-async function register() {
+function displayFlashcard() {
+    if (currentFlashcardSet.length === 0) return;
+    
+    const card = currentFlashcardSet[currentFlashcardIndex];
+    const originalIndex = courseContent[currentUserData.course].flashcardBank.indexOf(card);
+    const mastery = cardMastery[currentUserData.course][originalIndex] || 0;
+    
+    // Show mastery stars
+    const stars = '★'.repeat(mastery) + '☆'.repeat(3 - mastery);
+    
+    document.getElementById('flashcardContainer').innerHTML = `
+        <div class="flashcard" onclick="flipCard()">
+            <div class="flashcard-content" id="flashcardContent">
+                ${card.front}
+            </div>
+            <div class="flashcard-difficulty">${stars}</div>
+        </div>
+    `;
+    
+    updateFlashcardProgress();
+}
+
+function markKnown() {
+    const card = currentFlashcardSet[currentFlashcardIndex];
+    const originalIndex = courseContent[currentUserData.course].flashcardBank.indexOf(card);
+    
+    // Increase mastery (max 3)
+    cardMastery[currentUserData.course][originalIndex] = Math.min(3, (cardMastery[currentUserData.course][originalIndex] || 0) + 1);
+    
+    // Add XP
+    addXP(10);
+    
+    nextFlashcard();
+}
+
+function markReview() {
+    const card = currentFlashcardSet[currentFlashcardIndex];
+    const originalIndex = courseContent[currentUserData.course].flashcardBank.indexOf(card);
+    
+    // Decrease mastery if needed
+    cardMastery[currentUserData.course][originalIndex] = Math.max(0, (cardMastery[currentUserData.course][originalIndex] || 1) - 1);
+    
+    nextFlashcard();
+}
+
+function updateFlashcardProgress() {
+    const total = currentFlashcardSet.length;
+    const mastered = Object.values(cardMastery[currentUserData.course] || {}).filter(m => m >= 3).length;
+    document.getElementById('flashcardProgress').innerHTML = `
+        <div class="progress-bar" style="height: 10px;">
+            <div class="progress-fill" style="width: ${(mastered/total)*100}%"></div>
+        </div>
+        <p>Mastered: ${mastered}/${total} cards</p>
+    `;
+}
+
+// ===== DYNAMIC QUIZ SYSTEM (Always different) =====
+function loadQuiz() {
+    const questionBank = courseContent[currentUserData.course]?.lessons[currentUserData.completed_lessons?.length || 0]?.questionBank || 
+                        courseContent[currentUserData.course]?.lessons[0]?.questionBank || [];
+    
+    // Randomly select 5 questions from the bank
+    const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+    currentQuizQuestions = shuffled.slice(0, 5);
+    currentQuizIndex = 0;
+    quizScore = 0;
+    displayQuiz();
+}
+
+function displayQuiz() {
+    if (currentQuizQuestions.length === 0) return;
+    
+    const quiz = currentQuizQuestions[currentQuizIndex];
+    let optionsHtml = '';
+    
+    // Randomize options order
+    const optionsWithIndices = quiz.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
+    const shuffledOptions = [...optionsWithIndices].sort(() => 0.5 - Math.random());
+    
+    shuffledOptions.forEach((option, displayIndex) => {
+        optionsHtml += `
+            <div class="quiz-option" onclick="selectQuizOption(${displayIndex}, ${option.originalIndex})" id="opt_${displayIndex}">
+                ${option.text}
+            </div>
+        `;
+    });
+    
+    document.getElementById('quizContainer').innerHTML = `
+        <div class="quiz-header">
+            <span class="quiz-progress">Question ${currentQuizIndex + 1}/${currentQuizQuestions.length}</span>
+            <span class="quiz-score">Score: ${quizScore}/${currentQuizQuestions.length}</span>
+        </div>
+        <div class="quiz-question">${quiz.question}</div>
+        <div class="quiz-options">
+            ${optionsHtml}
+        </div>
+        <div class="quiz-explanation" id="quizExplanation"></div>
+    `;
+    
+    selectedQuizOption = null;
+}
+
+function selectQuizOption(displayIndex, originalIndex) {
+    // Remove previous selection
+    document.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.classList.remove('selected');
+    });
+    
+    // Add selection
+    document.getElementById(`opt_${displayIndex}`).classList.add('selected');
+    selectedQuizOption = { displayIndex, originalIndex };
+}
+
+function checkQuizAnswer() {
+    if (selectedQuizOption === null) {
+        showToast("Please select an answer", "error");
+        return;
+    }
+    
+    const quiz = currentQuizQuestions[currentQuizIndex];
+    const selectedEl = document.getElementById(`opt_${selectedQuizOption.displayIndex}`);
+    const isCorrect = selectedQuizOption.originalIndex === quiz.correct;
+    
+    // Show correct/incorrect
+    if (isCorrect) {
+        selectedEl.classList.add('correct');
+        quizScore++;
+        
+        // Add XP
+        addXP(20);
+        
+        // Show explanation
+        document.getElementById('quizExplanation').innerHTML = `
+            <div class="correct-explanation">
+                <i class="fas fa-check-circle"></i> ✅ Correct! ${quiz.explanation || ''}
+            </div>
+        `;
+    } else {
+        selectedEl.classList.add('wrong');
+        
+        // Highlight correct answer
+        document.querySelectorAll('.quiz-option').forEach((opt, idx) => {
+            if (idx === quiz.correct) {
+                opt.classList.add('correct');
+            }
+        });
+        
+        document.getElementById('quizExplanation').innerHTML = `
+            <div class="wrong-explanation">
+                <i class="fas fa-times-circle"></i> ❌ Not quite. ${quiz.explanation || 'Try again next time!'}
+            </div>
+        `;
+    }
+    
+    document.getElementById('quizScore').textContent = `Score: ${quizScore}/${currentQuizQuestions.length}`;
+}
+
+// ===== XP AND LEVELING SYSTEM =====
+function addXP(amount) {
+    userXP += amount;
+    
+    // Level up every 100 XP
+    const newLevel = Math.floor(userXP / 100) + 1;
+    if (newLevel > userLevel) {
+        userLevel = newLevel;
+        showToast(`🎉 Level Up! You're now level ${userLevel}!`, "success");
+    }
+    
+    // Update UI
+    updateXPDisplay();
+}
+
+function updateXPDisplay() {
+    const xpElement = document.getElementById('xpDisplay');
+    if (xpElement) {
+        const nextLevelXP = userLevel * 100;
+        const currentLevelXP = (userLevel - 1) * 100;
+        const progress = ((userXP - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100;
+        
+        xpElement.innerHTML = `
+            <div class="xp-bar">
+                <div class="xp-fill" style="width: ${progress}%"></div>
+            </div>
+            <span>Level ${userLevel} • ${userXP} XP</span>
+        `;
+    }
+}
+
+// ===== RENDER LESSONS WITH MULTIPLE PAGES =====
+function renderLessons() {
+    const course = courseContent[currentUserData.course];
+    const lessons = course?.lessons || [];
+    const completed = currentUserData.completed_lessons || [];
+    
+    let html = '';
+    lessons.forEach((lesson, lessonIndex) => {
+        const isCompleted = completed.includes(lessonIndex);
+        const isLocked = lessonIndex > 0 && !completed.includes(lessonIndex - 1) && !completed.includes(lessonIndex);
+        
+        // Get current page for this lesson (stored in user progress)
+        const currentPage = currentUserData[`lesson_${lessonIndex}_page`] || 0;
+        
+        html += `
+            <div class="lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}">
+                <div class="lesson-header" onclick="toggleLesson(${lessonIndex})">
+                    <div class="lesson-icon">
+                        <i class="fas fa-${course.icon}"></i>
+                    </div>
+                    <div class="lesson-title">
+                        <h4>${lesson.title}</h4>
+                        <p>${lesson.description}</p>
+                    </div>
+                    <div class="lesson-status">
+                        <span class="status-badge ${isCompleted ? 'status-completed' : isLocked ? 'status-locked' : 'status-pending'}">
+                            ${isCompleted ? '✓ Completed' : isLocked ? '🔒 Locked' : `Page ${currentPage + 1}/${lesson.pages.length}`}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="lesson-content" id="lesson_${lessonIndex}_content" style="display: ${lessonIndex === 0 ? 'block' : 'none'};">
+                    ${lesson.pages[currentPage]?.content || ''}
+                    
+                    <div class="lesson-navigation">
+                        ${currentPage > 0 ? `<button class="btn-secondary" onclick="prevPage(${lessonIndex})">◀ Previous</button>` : ''}
+                        ${currentPage < lesson.pages.length - 1 ? 
+                            `<button class="btn-primary" onclick="nextPage(${lessonIndex})">Next Page ▶</button>` : 
+                            `<button class="btn-success" onclick="completeLesson(${lessonIndex})">Complete Lesson ✓</button>`
+                        }
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    document.getElementById('lessonsGrid').innerHTML = html;
+}
+
+// ===== PAGE NAVIGATION =====
+async function nextPage(lessonIndex) {
+    const currentPage = currentUserData[`lesson_${lessonIndex}_page`] || 0;
+    const newPage = currentPage + 1;
+    
+    await supabaseClient
+        .from("users")
+        .update({ [`lesson_${lessonIndex}_page`]: newPage })
+        .eq("email", currentUser);
+    
+    currentUserData[`lesson_${lessonIndex}_page`] = newPage;
+    renderLessons();
+}
+
+async function prevPage(lessonIndex) {
+    const currentPage = currentUserData[`lesson_${lessonIndex}_page`] || 0;
+    const newPage = Math.max(0, currentPage - 1);
+    
+    await supabaseClient
+        .from("users")
+        .update({ [`lesson_${lessonIndex}_page`]: newPage })
+        .eq("email", currentUser);
+    
+    currentUserData[`lesson_${lessonIndex}_page`] = newPage;
+    renderLessons();
+}
+
+// ===== COMPLETE LESSON =====
+async function completeLesson(lessonIndex) {
     try {
-        const name = document.getElementById("reg_name")?.value;
-        const email = document.getElementById("reg_email")?.value;
-        const pass = document.getElementById("reg_pass")?.value;
-        const course = document.getElementById("reg_course")?.value;
-
-        if (!name || !email || !pass || !course) {
-            showToast("Please fill all fields", "error");
+        const completed = currentUserData.completed_lessons || [];
+        
+        if (completed.includes(lessonIndex)) {
+            showToast("Lesson already completed!", "info");
             return;
         }
-
-        if (pass.length < 6) {
-            showToast("Password must be at least 6 characters", "error");
-            return;
-        }
-
-        // Check if user exists
-        const { data: existing } = await supabaseClient
-            .from("users")
-            .select("email")
-            .eq("email", email);
-
-        if (existing && existing.length > 0) {
-            showToast("Email already registered", "error");
-            return;
-        }
-
-        // Calculate trial dates (2 days from now)
-        const now = new Date();
-        const trialEnd = new Date(now);
-        trialEnd.setDate(trialEnd.getDate() + 2);
-
-        // Insert new user
+        
+        const newCompleted = [...completed, lessonIndex].sort((a, b) => a - b);
+        const totalLessons = courseContent[currentUserData.course]?.lessons.length || 4;
+        const newProgress = Math.round((newCompleted.length / totalLessons) * 100);
+        
+        // Add XP for completing lesson
+        addXP(50);
+        
         const { error } = await supabaseClient
             .from("users")
-            .insert([{
-                name: name,
-                email: email,
-                password: pass,
-                course: course,
-                progress: 0,
-                completed_lessons: [],
-                payment_status: 'trial',
-                trial_start: now.toISOString(),
-                trial_end: trialEnd.toISOString(),
-                created_at: now.toISOString()
-            }]);
-
-        if (error) throw error;
-
-        localStorage.setItem("student", email);
-        currentUser = email;
-        
-        showToast("Registration successful! 2-day trial started!", "success");
-        
-        // Clear fields
-        document.getElementById("reg_name").value = '';
-        document.getElementById("reg_email").value = '';
-        document.getElementById("reg_pass").value = '';
-        document.getElementById("reg_course").value = '';
-        
-        await loadUser();
-        
-    } catch (error) {
-        console.error('Registration error:', error);
-        showToast(error.message, "error");
-    }
-}
-
-// ===== LOGIN =====
-async function login() {
-    try {
-        const email = document.getElementById("log_email")?.value;
-        const pass = document.getElementById("log_pass")?.value;
-
-        if (!email || !pass) {
-            showToast("Please enter email and password", "error");
-            return;
-        }
-
-        const { data, error } = await supabaseClient
-            .from("users")
-            .select("*")
-            .eq("email", email)
-            .eq("password", pass);
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-            showToast("Invalid email or password", "error");
-            return;
-        }
-
-        localStorage.setItem("student", email);
-        currentUser = email;
-        
-        showToast("Login successful!", "success");
-        
-        document.getElementById("log_email").value = '';
-        document.getElementById("log_pass").value = '';
-        
-        await loadUser();
-        
-    } catch (error) {
-        console.error('Login error:', error);
-        showToast(error.message, "error");
-    }
-}
-
-// ===== LOGOUT =====
-function logout() {
-    localStorage.removeItem("student");
-    currentUser = null;
-    currentUserData = null;
-    if (countdownInterval) clearInterval(countdownInterval);
-    showAuthForms();
-    showToast("Logged out successfully", "success");
-}
-
-// ===== LOAD USER =====
-async function loadUser() {
-    try {
-        if (!currentUser) return;
-
-        const { data, error } = await supabaseClient
-            .from("users")
-            .select("*")
+            .update({ 
+                completed_lessons: newCompleted,
+                progress: newProgress
+            })
             .eq("email", currentUser);
-
+            
         if (error) throw error;
-
-        if (!data || data.length === 0) {
-            showToast("User not found", "error");
-            logout();
-            return;
-        }
-
-        currentUserData = data[0];
         
-        // Check if user is admin
-        if (currentUserData.email === 'admin@skillforge.com') {
-            loadAdminPanel();
-            return;
-        }
+        currentUserData.completed_lessons = newCompleted;
+        currentUserData.progress = newProgress;
         
-        renderDashboard();
+        updateProgress();
+        renderLessons();
+        loadQuiz(); // Load next lesson's quiz
+        
+        showToast(`🎉 Lesson ${lessonIndex + 1} completed! +50 XP`, "success");
         
     } catch (error) {
-        console.error('Load user error:', error);
-        showToast("Failed to load user", "error");
+        console.error('Error:', error);
+        showToast("Failed to complete lesson", "error");
     }
 }
 
-// ===== CHECK ACCESS =====
-function checkAccess(user) {
-    const now = new Date();
-    const trialEnd = new Date(user.trial_end);
-    
-    // Check if trial expired
-    if (now > trialEnd && user.payment_status !== 'paid' && user.payment_status !== 'certified') {
-        return {
-            canAccess: false,
-            status: 'locked',
-            message: 'Trial ended. Pay KSH 200 to unlock.'
-        };
-    }
-    
-    // Check if paid
-    if (user.payment_status === 'paid' || user.payment_status === 'certified') {
-        return {
-            canAccess: true,
-            status: 'paid',
-            message: 'Lifetime access',
-            showYouTube: true
-        };
-    }
-    
-    // Still in trial
-    return {
-        canAccess: true,
-        status: 'trial',
-        message: `Trial ends in ${getRemainingTime(trialEnd)}`,
-        showYouTube: false
-    };
-}
-
-// ===== GET REMAINING TIME =====
-function getRemainingTime(endDate) {
-    const now = new Date();
-    const diff = endDate - now;
-    
-    if (diff <= 0) return 'Expired';
-    
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    
-    return `${days}d ${hours}h ${minutes}m`;
-}
-
-// ===== RENDER DASHBOARD =====
+// ===== RENDER DASHBOARD (Updated with XP) =====
 function renderDashboard() {
     showDashboard();
     
@@ -488,10 +679,13 @@ function renderDashboard() {
     
     // Update header
     document.getElementById('userAvatar').textContent = currentUserData.name.charAt(0).toUpperCase();
-    document.getElementById('welcome').textContent = `Welcome, ${currentUserData.name}!`;
+    document.getElementById('welcome').innerHTML = `Welcome, ${currentUserData.name}! <span id="xpDisplay"></span>`;
+    
+    // Initialize XP display
+    updateXPDisplay();
     
     const courseInfo = courseContent[currentUserData.course] || courseContent.webdev;
-    document.getElementById('courseTitle').innerHTML = `<i class="fas fa-${courseInfo.icon}"></i> ${courseInfo.title}`;
+    document.getElementById('courseTitle').innerHTML = `<i class="fas fa-${courseInfo.icon}" style="color: ${courseInfo.color}"></i> ${courseInfo.title}`;
     
     // Show/hide trial timer
     if (access.status === 'trial') {
@@ -533,512 +727,139 @@ function renderDashboard() {
     }
 }
 
-// ===== RENDER LOCKED PROGRESS =====
-function renderLockedProgress() {
-    document.getElementById('lockedProgressBar').style.width = `${currentUserData.progress || 0}%`;
-    document.getElementById('lockedProgressBar').textContent = `${currentUserData.progress || 0}%`;
-    
-    const lessons = courseContent[currentUserData.course]?.lessons || [];
-    const completed = currentUserData.completed_lessons || [];
-    
-    let html = '';
-    lessons.forEach((lesson, index) => {
-        const isCompleted = completed.includes(index);
-        html += `
-            <div class="locked-lesson-item">
-                <span>${isCompleted ? '✅' : '📘'} ${lesson.title}</span>
-                <span>${isCompleted ? 'Completed' : index === 0 ? '50% done' : '🔒 Locked'}</span>
-            </div>
-        `;
-    });
-    
-    document.getElementById('lockedLessons').innerHTML = html;
-}
-
-// ===== RENDER YOUTUBE TEACHERS =====
-function renderYouTubeTeachers() {
-    const teachers = youtubeTeachers[currentUserData.course] || youtubeTeachers.webdev;
-    
-    let html = '';
-    teachers.forEach(teacher => {
-        html += `
-            <div class="teacher-card">
-                <img src="${teacher.image}" alt="${teacher.name}">
-                <h4>${teacher.name}</h4>
-                <p>${teacher.specialty}</p>
-                <a href="${teacher.url}" target="_blank" class="btn-youtube">
-                    <i class="fab fa-youtube"></i> Visit Channel
-                </a>
-            </div>
-        `;
-    });
-    
-    document.getElementById('teacherGrid').innerHTML = html;
-}
-
-// ===== RENDER LESSONS =====
-function renderLessons() {
-    const lessons = courseContent[currentUserData.course]?.lessons || [];
-    const completed = currentUserData.completed_lessons || [];
-    
-    let html = '';
-    lessons.forEach((lesson, index) => {
-        const isCompleted = completed.includes(index);
-        const isLocked = index > 0 && !completed.includes(index - 1) && !completed.includes(index);
-        
-        html += `
-            <div class="lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}">
-                <div class="lesson-icon">
-                    <i class="fas fa-${courseContent[currentUserData.course]?.icon}"></i>
-                </div>
-                <h4>${lesson.title}</h4>
-                <p>${lesson.description}</p>
-                <div class="lesson-content">
-                    <p>${lesson.content}</p>
-                </div>
-                <div class="lesson-status">
-                    <span class="status-badge ${isCompleted ? 'status-completed' : isLocked ? 'status-locked' : 'status-pending'}">
-                        ${isCompleted ? '✓ Completed' : isLocked ? '🔒 Locked' : '▶ In Progress'}
-                    </span>
-                </div>
-            </div>
-        `;
-    });
-    
-    document.getElementById('lessonsGrid').innerHTML = html;
-}
-
-// ===== UPDATE PROGRESS =====
-function updateProgress() {
-    const progress = currentUserData.progress || 0;
-    document.getElementById('progressBar').style.width = `${progress}%`;
-    document.getElementById('progressBar').textContent = `${progress}%`;
-    document.getElementById('progressPercent').textContent = `${progress}%`;
-}
-
-// ===== COMPLETE LESSON =====
-async function completeLesson() {
-    try {
-        const completed = currentUserData.completed_lessons || [];
-        const totalLessons = courseContent[currentUserData.course]?.lessons.length || 4;
-        
-        // Find next incomplete lesson
-        let nextLesson = 0;
-        while (completed.includes(nextLesson) && nextLesson < totalLessons) {
-            nextLesson++;
-        }
-        
-        if (nextLesson >= totalLessons) {
-            showToast("Congratulations! You've completed all lessons!", "success");
-            return;
-        }
-        
-        const newCompleted = [...completed, nextLesson];
-        const newProgress = Math.round((newCompleted.length / totalLessons) * 100);
-        
-        const { error } = await supabaseClient
-            .from("users")
-            .update({ 
-                completed_lessons: newCompleted,
-                progress: newProgress
-            })
-            .eq("email", currentUser);
-            
-        if (error) throw error;
-        
-        currentUserData.completed_lessons = newCompleted;
-        currentUserData.progress = newProgress;
-        
-        updateProgress();
-        renderLessons();
-        
-        showToast(`✅ Lesson ${nextLesson + 1} completed!`, "success");
-        
-    } catch (error) {
-        console.error('Error:', error);
-        showToast("Failed to complete lesson", "error");
-    }
-}
-
-// ===== FLASHCARDS =====
-function loadFlashcards() {
-    const cards = courseContent[currentUserData.course]?.flashcards || [];
-    currentFlashcardSet = cards;
-    currentFlashcardIndex = 0;
-    knownCards = [];
-    reviewCards = [];
-    displayFlashcard();
-}
-
-function displayFlashcard() {
-    if (currentFlashcardSet.length === 0) return;
-    
-    const card = currentFlashcardSet[currentFlashcardIndex];
-    document.getElementById('flashcardContainer').innerHTML = `
-        <div class="flashcard" onclick="flipCard()">
-            <div class="flashcard-content" id="flashcardContent">
-                ${card.front}
-            </div>
-        </div>
-    `;
-    document.getElementById('flashcardProgress').textContent = 
-        `Progress: ${knownCards.length}/${currentFlashcardSet.length} mastered`;
-}
-
-function flipCard() {
-    const card = currentFlashcardSet[currentFlashcardIndex];
-    const content = document.getElementById('flashcardContent');
-    const flashcard = document.querySelector('.flashcard');
-    
-    if (content.textContent === card.front) {
-        content.textContent = card.back;
-        flashcard.classList.add('flipped');
-    } else {
-        content.textContent = card.front;
-        flashcard.classList.remove('flipped');
-    }
-}
-
-function markKnown() {
-    if (!knownCards.includes(currentFlashcardIndex)) {
-        knownCards.push(currentFlashcardIndex);
-    }
-    nextFlashcard();
-}
-
-function markReview() {
-    if (!reviewCards.includes(currentFlashcardIndex)) {
-        reviewCards.push(currentFlashcardIndex);
-    }
-    nextFlashcard();
-}
-
-function nextFlashcard() {
-    if (currentFlashcardIndex < currentFlashcardSet.length - 1) {
-        currentFlashcardIndex++;
-        displayFlashcard();
-    } else {
-        showToast("🎉 You've reviewed all flashcards!", "success");
-    }
-}
-
-// ===== QUIZ =====
-function loadQuiz() {
-    const quizzes = courseContent[currentUserData.course]?.quizzes || [];
-    currentQuizIndex = 0;
-    quizScore = 0;
-    displayQuiz();
-}
-
-function displayQuiz() {
-    const quizzes = courseContent[currentUserData.course]?.quizzes || [];
-    if (quizzes.length === 0) return;
-    
-    const quiz = quizzes[currentQuizIndex];
-    let optionsHtml = '';
-    
-    quiz.options.forEach((option, index) => {
-        optionsHtml += `
-            <div class="quiz-option" onclick="selectQuizOption(${index})" id="opt_${index}">
-                ${option}
-            </div>
-        `;
-    });
-    
-    document.getElementById('quizContainer').innerHTML = `
-        <div class="quiz-question">${quiz.question}</div>
-        <div class="quiz-options">
-            ${optionsHtml}
-        </div>
-    `;
-    
-    document.getElementById('quizScore').textContent = `Score: ${quizScore}/${quizzes.length}`;
-    selectedQuizOption = null;
-}
-
-function selectQuizOption(index) {
-    // Remove previous selection
-    document.querySelectorAll('.quiz-option').forEach(opt => {
-        opt.classList.remove('selected');
-    });
-    
-    // Add selection
-    document.getElementById(`opt_${index}`).classList.add('selected');
-    selectedQuizOption = index;
-}
-
-function checkQuizAnswer() {
-    if (selectedQuizOption === null) {
-        showToast("Please select an answer", "error");
-        return;
+// Add this CSS to your style.css
+const additionalStyles = `
+    .lesson-page {
+        padding: 20px;
+        line-height: 1.8;
     }
     
-    const quizzes = courseContent[currentUserData.course]?.quizzes || [];
-    const quiz = quizzes[currentQuizIndex];
-    
-    const selectedEl = document.getElementById(`opt_${selectedQuizOption}`);
-    const correctEl = document.getElementById(`opt_${quiz.correct}`);
-    
-    if (selectedQuizOption === quiz.correct) {
-        selectedEl.classList.add('correct');
-        quizScore++;
-        showToast("✅ Correct!", "success");
-    } else {
-        selectedEl.classList.add('wrong');
-        correctEl.classList.add('correct');
-        showToast("❌ Incorrect. Try again!", "error");
+    .lesson-page h2 {
+        color: #667eea;
+        margin-bottom: 20px;
     }
     
-    document.getElementById('quizScore').textContent = `Score: ${quizScore}/${quizzes.length}`;
-}
-
-function nextQuizQuestion() {
-    const quizzes = courseContent[currentUserData.course]?.quizzes || [];
-    
-    if (currentQuizIndex < quizzes.length - 1) {
-        currentQuizIndex++;
-        displayQuiz();
-    } else {
-        const passScore = Math.ceil(quizzes.length * 0.7); // 70% to pass
-        if (quizScore >= passScore) {
-            showToast("🎉 Quiz passed! You can complete the lesson!", "success");
-            document.getElementById('completeLessonBtn').disabled = false;
-        } else {
-            showToast(`You need ${passScore}/${quizzes.length} to pass. Try again!`, "error");
-        }
-    }
-}
-
-// ===== PAYMENT =====
-async function submitPayment() {
-    try {
-        const code = document.getElementById('mpesa_wall')?.value;
-        
-        if (!code || code.length < 5) {
-            showToast("Please enter a valid M-PESA code", "error");
-            return;
-        }
-        
-        // Insert payment record
-        const { error } = await supabaseClient
-            .from("payments")
-            .insert([{
-                email: currentUser,
-                code: code,
-                amount: 200,
-                type: 'course',
-                status: 'pending',
-                created_at: new Date()
-            }]);
-            
-        if (error) throw error;
-        
-        showToast("Payment submitted! Admin will verify shortly.", "success");
-        document.getElementById('mpesa_wall').value = '';
-        
-    } catch (error) {
-        console.error('Payment error:', error);
-        showToast("Payment submission failed", "error");
-    }
-}
-
-// ===== CERTIFICATE PURCHASE =====
-async function purchaseCertificate() {
-    try {
-        const code = document.getElementById('cert_mpesa')?.value;
-        
-        if (!code || code.length < 5) {
-            showToast("Please enter a valid M-PESA code", "error");
-            return;
-        }
-        
-        const { error } = await supabaseClient
-            .from("payments")
-            .insert([{
-                email: currentUser,
-                code: code,
-                amount: 500,
-                type: 'certificate',
-                status: 'pending',
-                created_at: new Date()
-            }]);
-            
-        if (error) throw error;
-        
-        showToast("Certificate payment submitted! You'll receive your PDF soon.", "success");
-        document.getElementById('cert_mpesa').value = '';
-        
-    } catch (error) {
-        console.error('Certificate error:', error);
-        showToast("Failed to process certificate payment", "error");
-    }
-}
-
-// ===== COUNTDOWN TIMER =====
-function startCountdown(endDate) {
-    if (countdownInterval) clearInterval(countdownInterval);
-    
-    countdownInterval = setInterval(() => {
-        const now = new Date();
-        const diff = endDate - now;
-        
-        if (diff <= 0) {
-            clearInterval(countdownInterval);
-            document.getElementById('countdown').textContent = 'Expired';
-            // Auto-lock the account
-            if (currentUserData) {
-                renderDashboard(); // This will show the payment wall
-            }
-            return;
-        }
-        
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        
-        document.getElementById('countdown').textContent = `${days}d ${hours}h ${minutes}m`;
-        document.getElementById('trialDays').textContent = days;
-    }, 60000); // Update every minute
-}
-
-// ===== ADMIN PANEL =====
-async function loadAdminPanel() {
-    document.getElementById('auth').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
-    
-    await loadPendingPayments();
-    await loadAllUsers();
-}
-
-async function loadPendingPayments() {
-    const { data, error } = await supabaseClient
-        .from("payments")
-        .select("*")
-        .eq("status", "pending")
-        .order("created_at", { ascending: false });
-        
-    if (error) {
-        console.error('Error loading payments:', error);
-        return;
+    .lesson-page h3 {
+        color: #764ba2;
+        margin: 20px 0 10px;
     }
     
-    let html = '';
-    data.forEach(payment => {
-        html += `
-            <div class="payment-request">
-                <div>
-                    <strong>${payment.email}</strong><br>
-                    Code: ${payment.code} | Amount: KSH ${payment.amount} | Type: ${payment.type}
-                </div>
-                <div>
-                    <button class="btn-approve" onclick="approvePayment('${payment.id}', '${payment.email}', ${payment.amount})">Approve</button>
-                    <button class="btn-reject" onclick="rejectPayment('${payment.id}')">Reject</button>
-                </div>
-            </div>
-        `;
-    });
-    
-    document.getElementById('pendingPaymentsList').innerHTML = html || '<p>No pending payments</p>';
-}
-
-async function loadAllUsers() {
-    const { data, error } = await supabaseClient
-        .from("users")
-        .select("*")
-        .order("created_at", { ascending: false });
-        
-    if (error) {
-        console.error('Error loading users:', error);
-        return;
+    .highlight-box {
+        background: linear-gradient(135deg, #667eea10, #764ba210);
+        border-left: 4px solid #667eea;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 0 10px 10px 0;
     }
     
-    let html = '<table style="width:100%; border-collapse: collapse;">';
-    html += '<tr><th>Name</th><th>Email</th><th>Course</th><th>Status</th><th>Progress</th></tr>';
-    
-    data.forEach(user => {
-        html += `
-            <tr style="border-bottom:1px solid #e0e0e0;">
-                <td style="padding:10px;">${user.name}</td>
-                <td style="padding:10px;">${user.email}</td>
-                <td style="padding:10px;">${user.course}</td>
-                <td style="padding:10px;">${user.payment_status}</td>
-                <td style="padding:10px;">${user.progress || 0}%</td>
-            </tr>
-        `;
-    });
-    
-    html += '</table>';
-    document.getElementById('usersList').innerHTML = html;
-}
-
-async function approvePayment(paymentId, userEmail, amount) {
-    try {
-        // Update payment status
-        const { error: paymentError } = await supabaseClient
-            .from("payments")
-            .update({ status: 'approved' })
-            .eq("id", paymentId);
-            
-        if (paymentError) throw paymentError;
-        
-        // Update user status based on payment type
-        if (amount === 200) {
-            await supabaseClient
-                .from("users")
-                .update({ payment_status: 'paid' })
-                .eq("email", userEmail);
-        } else if (amount === 500) {
-            await supabaseClient
-                .from("users")
-                .update({ payment_status: 'certified' })
-                .eq("email", userEmail);
-        }
-        
-        showToast(`Payment approved for ${userEmail}`, "success");
-        loadPendingPayments();
-        
-    } catch (error) {
-        console.error('Approval error:', error);
-        showToast("Failed to approve payment", "error");
+    .example-box {
+        background: #f0f8ff;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
     }
-}
-
-async function rejectPayment(paymentId) {
-    try {
-        await supabaseClient
-            .from("payments")
-            .update({ status: 'rejected' })
-            .eq("id", paymentId);
-            
-        showToast("Payment rejected", "success");
-        loadPendingPayments();
-        
-    } catch (error) {
-        console.error('Rejection error:', error);
-        showToast("Failed to reject payment", "error");
+    
+    .warning-box {
+        background: #fff3cd;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 20px 0;
     }
-}
+    
+    .interactive-example {
+        background: #f3e5f5;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+    }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    
+    th {
+        background: #667eea;
+        color: white;
+        padding: 12px;
+    }
+    
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .lesson-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        cursor: pointer;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+    }
+    
+    .lesson-navigation {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 30px;
+    }
+    
+    .quiz-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+    
+    .quiz-explanation {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    
+    .correct-explanation {
+        background: #d4edda;
+        color: #155724;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    
+    .wrong-explanation {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    
+    .xp-bar {
+        width: 100px;
+        height: 6px;
+        background: #e0e0e0;
+        border-radius: 3px;
+        display: inline-block;
+        margin: 0 10px;
+    }
+    
+    .xp-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #ffd700, #ffa500);
+        border-radius: 3px;
+    }
+    
+    .flashcard-difficulty {
+        text-align: center;
+        margin-top: 10px;
+        color: #ffc107;
+        font-size: 1.2rem;
+    }
+`;
 
-function logoutAdmin() {
-    logout();
-}
-
-// ===== MAKE FUNCTIONS GLOBAL =====
-window.register = register;
-window.login = login;
-window.logout = logout;
-window.showLogin = showLogin;
-window.showRegister = showRegister;
-window.submitPayment = submitPayment;
-window.completeLesson = completeLesson;
-window.flipCard = flipCard;
-window.markKnown = markKnown;
-window.markReview = markReview;
-window.selectQuizOption = selectQuizOption;
-window.checkQuizAnswer = checkQuizAnswer;
-window.nextQuizQuestion = nextQuizQuestion;
-window.purchaseCertificate = purchaseCertificate;
-window.approvePayment = approvePayment;
-window.rejectPayment = rejectPayment;
-window.logoutAdmin = logoutAdmin;
+// Add styles to document
+const styleSheet = document.createElement("style");
+styleSheet.textContent = additionalStyles;
+document.head.appendChild(styleSheet);
