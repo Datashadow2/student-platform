@@ -5,533 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillForge Academy - Master Digital Skills</title>
     
-    <!-- Font Awesome for icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            color: #333;
-        }
-
-        /* Header Styles */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #666;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #667eea;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
-        /* Auth Section */
-        #auth {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: slideUp 0.5s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
-        }
-
-        .card h3 {
-            color: #667eea;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card h3 i {
-            font-size: 2rem;
-        }
-
-        .input-group {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-
-        .input-group i {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #999;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 1rem 1rem 1rem 45px;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: #667eea;
-            background: white;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
-
-        button {
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #f8f9fa;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-
-        .btn-secondary:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3);
-        }
-
-        /* Dashboard Styles */
-        #dashboard {
-            background: white;
-            border-radius: 30px;
-            padding: 2rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            animation: slideUp 0.5s ease;
-        }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid #f0f0f0;
-        }
-
-        .welcome-section {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .welcome-text h2 {
-            color: #333;
-            font-size: 1.8rem;
-        }
-
-        .welcome-text p {
-            color: #666;
-            font-size: 1rem;
-        }
-
-        /* Progress Bar */
-        .progress-section {
-            background: #f8f9fa;
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .progress-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .progress-title {
-            font-weight: 600;
-            color: #667eea;
-        }
-
-        .progress-percentage {
-            font-weight: 700;
-            color: #764ba2;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 20px;
-            background: #e0e0e0;
-            border-radius: 30px;
-            overflow: hidden;
-            margin-bottom: 0.5rem;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 30px;
-            transition: width 0.5s ease;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 10px;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        /* Lessons Grid */
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .lesson-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .lesson-card:hover {
-            transform: translateY(-5px);
-            border-color: #667eea;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
-        }
-
-        .lesson-card.completed {
-            background: linear-gradient(135deg, #667eea10, #764ba210);
-            border-color: #28a745;
-        }
-
-        .lesson-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .lesson-icon i {
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .lesson-title {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .lesson-description {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .lesson-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .status-badge {
-            padding: 0.25rem 1rem;
-            border-radius: 50px;
-            font-weight: 500;
-            font-size: 0.8rem;
-        }
-
-        .status-completed {
-            background: #28a74520;
-            color: #28a745;
-        }
-
-        .status-pending {
-            background: #ffc10720;
-            color: #ffc107;
-        }
-
-        /* Payment Card */
-        #paymentCard {
-            background: linear-gradient(135deg, #667eea10, #764ba210);
-            border: 2px solid #667eea;
-            margin-top: 2rem;
-        }
-
-        .payment-details {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-        }
-
-        .payment-instruction {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .payment-instruction i {
-            font-size: 2rem;
-            color: #28a745;
-        }
-
-        .phone-number {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #667eea;
-            letter-spacing: 2px;
-        }
-
-        /* Toast Notifications */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            color: white;
-            font-weight: 500;
-            z-index: 9999;
-            animation: slideIn 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .toast.success {
-            background: linear-gradient(135deg, #28a745, #20c997);
-        }
-
-        .toast.error {
-            background: linear-gradient(135deg, #dc3545, #c82333);
-        }
-
-        .toast.info {
-            background: linear-gradient(135deg, #17a2b8, #138496);
-        }
-
-        /* Loading Spinner */
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        /* Animations */
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem;
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .nav-links {
-                gap: 1rem;
-            }
-            
-            .container {
-                padding: 0 1rem;
-            }
-            
-            #auth {
-                grid-template-columns: 1fr;
-            }
-            
-            .dashboard-header {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-            
-            .welcome-section {
-                flex-direction: column;
-            }
-        }
-
-        /* Utility Classes */
-        .text-center { text-align: center; }
-        .mt-2 { margin-top: 1rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .hidden { display: none !important; }
-    </style>
+    <link rel="stylesheet" href="style.css">
     
     <!-- Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="logo">
             <i class="fas fa-code"></i> SkillForge Academy
         </div>
-        <div class="nav-links">
-            <a href="#"><i class="fas fa-home"></i> Home</a>
-            <a href="#"><i class="fas fa-graduation-cap"></i> Courses</a>
-            <a href="#"><i class="fas fa-envelope"></i> Contact</a>
+        <div class="trial-badge" id="trialHeaderBadge" style="display: none;">
+            <i class="fas fa-clock"></i> <span id="trialDays">2</span>d trial
         </div>
     </header>
 
     <div class="container">
-        <!-- Registration & Login Section -->
+        <!-- AUTH SECTION (Login/Register) -->
         <div id="auth">
             <!-- Register Card -->
-            <div class="card">
+            <div class="card" id="registerCard">
                 <h3>
                     <i class="fas fa-user-plus"></i>
-                    Create Account
+                    Start 2-Day Trial
                 </h3>
+                <div class="trial-offer">
+                    <i class="fas fa-gift"></i>
+                    <span>FREE for 2 days • Then KSH 200 lifetime</span>
+                </div>
+                
                 <div class="input-group">
                     <i class="fas fa-user"></i>
-                    <input type="text" id="reg_name" placeholder="Full Name" autocomplete="off">
+                    <input type="text" id="reg_name" placeholder="Full Name" required>
                 </div>
+                
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" id="reg_email" placeholder="Email Address" autocomplete="off">
+                    <input type="email" id="reg_email" placeholder="Email Address" required>
                 </div>
+                
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="reg_pass" placeholder="Password (min. 6 characters)">
+                    <input type="password" id="reg_pass" placeholder="Password (min. 6 chars)" required>
                 </div>
+                
                 <div class="input-group">
                     <i class="fas fa-book"></i>
-                    <select id="reg_course">
+                    <select id="reg_course" required>
                         <option value="" disabled selected>Select Your Course</option>
                         <option value="forex">📈 Forex Trading</option>
                         <option value="webdev">💻 Web Development</option>
@@ -539,589 +67,237 @@
                         <option value="business">💼 Online Business</option>
                     </select>
                 </div>
+                
                 <button class="btn-primary" onclick="register()">
-                    <i class="fas fa-rocket"></i> Register Now
+                    <i class="fas fa-rocket"></i> Start Free Trial
                 </button>
-                <p class="text-center mt-2" style="color: #666;">
-                    Already have an account? <a href="#" onclick="showLogin()" style="color: #667eea;">Login</a>
+                
+                <p class="auth-switch">
+                    Already have an account? <a href="#" onclick="showLogin()">Login</a>
                 </p>
             </div>
 
             <!-- Login Card -->
-            <div class="card" id="loginCard">
+            <div class="card" id="loginCard" style="display: none;">
                 <h3>
                     <i class="fas fa-sign-in-alt"></i>
                     Welcome Back
                 </h3>
+                
                 <div class="input-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" id="log_email" placeholder="Email Address">
+                    <input type="email" id="log_email" placeholder="Email Address" required>
                 </div>
+                
                 <div class="input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="log_pass" placeholder="Password">
+                    <input type="password" id="log_pass" placeholder="Password" required>
                 </div>
+                
                 <button class="btn-primary" onclick="login()">
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
-                <p class="text-center mt-2" style="color: #666;">
-                    New student? <a href="#" onclick="showRegister()" style="color: #667eea;">Create account</a>
+                
+                <p class="auth-switch">
+                    New student? <a href="#" onclick="showRegister()">Start free trial</a>
                 </p>
             </div>
         </div>
 
-        <!-- Dashboard Section -->
+        <!-- MAIN DASHBOARD -->
         <div id="dashboard" style="display: none;">
+            <!-- Dashboard Header -->
             <div class="dashboard-header">
-                <div class="welcome-section">
+                <div class="user-info">
                     <div class="user-avatar" id="userAvatar">S</div>
-                    <div class="welcome-text">
-                        <h2 id="welcome">Welcome, Student!</h2>
-                        <p id="courseTitle">Course: Not Selected</p>
+                    <div>
+                        <h2 id="welcome">Welcome back!</h2>
+                        <p id="courseTitle"></p>
                     </div>
                 </div>
-                <button class="btn-secondary" onclick="logout()">
+                
+                <!-- Trial Timer (visible during trial) -->
+                <div class="trial-timer" id="trialTimer">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span>Trial ends in: <strong id="countdown">2d 0h 0m</strong></span>
+                </div>
+                
+                <button class="btn-logout" onclick="logout()">
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </button>
             </div>
 
-            <!-- Progress Section -->
-            <div class="progress-section">
-                <div class="progress-header">
-                    <span class="progress-title"><i class="fas fa-chart-line"></i> Course Progress</span>
-                    <span class="progress-percentage" id="progressPercentage">0%</span>
+            <!-- PAYMENT WALL (Shown after trial ends) -->
+            <div id="paymentWall" style="display: none;">
+                <div class="wall-header">
+                    <i class="fas fa-lock"></i>
+                    <h2>🔒 Account Locked</h2>
+                    <p>Your 2-day free trial has ended</p>
                 </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="progressBar" style="width: 0%;">0%</div>
-                </div>
-            </div>
-
-            <!-- Lessons Container -->
-            <div id="lessonsContainer"></div>
-
-            <!-- Quiz/Complete Lesson Section -->
-            <div class="card" style="margin-top: 2rem;">
-                <h3><i class="fas fa-question-circle"></i> Quick Actions</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    <button class="btn-primary" onclick="completeLesson()">
-                        <i class="fas fa-check-circle"></i> Complete Lesson
-                    </button>
-                    <button class="btn-secondary" onclick="refreshDashboard()">
-                        <i class="fas fa-sync-alt"></i> Refresh
-                    </button>
-                </div>
-            </div>
-
-            <!-- Payment Card -->
-            <div class="card" id="paymentCard">
-                <h3><i class="fas fa-credit-card"></i> Course Payment</h3>
-                <div class="payment-details">
-                    <div class="payment-instruction">
-                        <i class="fas fa-mobile-alt"></i>
-                        <div>
-                            <p>Send <strong>KSH 200</strong> to:</p>
-                            <p class="phone-number">0789 480 259</p>
+                
+                <div class="wall-content">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        No access to course materials until payment
+                    </div>
+                    
+                    <div class="payment-box">
+                        <h3>KSH 200 - Lifetime Access</h3>
+                        <p>Pay to unlock:</p>
+                        <ul>
+                            <li>✅ Full course access</li>
+                            <li>✅ Expert video tutorials</li>
+                            <li>✅ Interactive games</li>
+                            <li>✅ Lifetime updates</li>
+                        </ul>
+                        
+                        <div class="mpesa-details">
+                            <strong>📱 M-PESA: 0789 480 259</strong>
+                            <small>Use your email as account number</small>
+                        </div>
+                        
+                        <input type="text" 
+                               id="mpesa_wall" 
+                               placeholder="Enter M-PESA transaction code"
+                               class="payment-input">
+                        
+                        <button onclick="submitPayment()" class="btn-unlock">
+                            <i class="fas fa-unlock-alt"></i> Unlock Now
+                        </button>
+                    </div>
+                    
+                    <!-- Show progress during lock -->
+                    <div class="locked-progress">
+                        <h4>Your Trial Progress</h4>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="lockedProgressBar" style="width: 0%;">0%</div>
+                        </div>
+                        
+                        <div class="locked-lessons" id="lockedLessons">
+                            <!-- Dynamically filled -->
                         </div>
                     </div>
-                    <p style="color: #666; margin-bottom: 1rem;">
-                        <i class="fas fa-info-circle"></i> Use your email as the transaction reference
-                    </p>
-                    <div class="input-group">
-                        <i class="fas fa-code"></i>
-                        <input type="text" id="mpesa" placeholder="Enter MPESA Transaction Code">
+                </div>
+            </div>
+
+            <!-- REGULAR DASHBOARD CONTENT (Visible during trial and after payment) -->
+            <div id="dashboardContent">
+                <!-- Progress Section -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <h4><i class="fas fa-chart-line"></i> Your Progress</h4>
+                        <span class="progress-percent" id="progressPercent">0%</span>
                     </div>
-                    <button class="btn-primary" onclick="submitPayment()">
-                        <i class="fas fa-paper-plane"></i> Submit Payment
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressBar" style="width: 0%;">0%</div>
+                    </div>
+                </div>
+
+                <!-- YOUTUBE SECTION (ONLY visible after payment) -->
+                <div id="youtubeSection" style="display: none;">
+                    <div class="section-header">
+                        <h2><i class="fab fa-youtube"></i> Expert Teachers</h2>
+                        <p>🎉 Unlocked! Learn from the best</p>
+                    </div>
+                    <div class="teacher-grid" id="teacherGrid">
+                        <!-- Dynamically filled -->
+                    </div>
+                    <div class="playlists-section" id="playlistsSection">
+                        <!-- Dynamically filled -->
+                    </div>
+                </div>
+
+                <!-- LESSONS SECTION -->
+                <div class="lessons-section">
+                    <h3><i class="fas fa-book-open"></i> Course Lessons</h3>
+                    <div class="lessons-grid" id="lessonsGrid">
+                        <!-- Dynamically filled -->
+                    </div>
+                </div>
+
+                <!-- GAMES SECTION (Flashcards & Quiz) -->
+                <div class="games-section">
+                    <h3><i class="fas fa-gamepad"></i> Interactive Games</h3>
+                    
+                    <!-- Flashcards -->
+                    <div class="game-card" id="flashcardSection">
+                        <h4><i class="fas fa-layer-group"></i> Flashcards</h4>
+                        <div class="flashcard-container" id="flashcardContainer">
+                            <!-- Flashcard will be inserted here -->
+                        </div>
+                        <div class="flashcard-controls">
+                            <button class="btn-flip" onclick="flipCard()">🔄 Flip</button>
+                            <button class="btn-know" onclick="markKnown()">✅ I Know This</button>
+                            <button class="btn-review" onclick="markReview()">🔄 Review Later</button>
+                        </div>
+                        <div class="flashcard-progress" id="flashcardProgress">
+                            Progress: 0/6 mastered
+                        </div>
+                    </div>
+                    
+                    <!-- Quiz -->
+                    <div class="game-card" id="quizSection">
+                        <h4><i class="fas fa-question-circle"></i> Lesson Quiz</h4>
+                        <div class="quiz-container" id="quizContainer">
+                            <!-- Quiz will be inserted here -->
+                        </div>
+                        <div class="quiz-controls">
+                            <button class="btn-quiz" onclick="checkQuizAnswer()">✅ Check Answer</button>
+                            <button class="btn-next" onclick="nextQuizQuestion()">⏩ Next Question</button>
+                        </div>
+                        <div class="quiz-score" id="quizScore">
+                            Score: 0/3
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Complete Lesson Button -->
+                <button class="btn-complete" onclick="completeLesson()" id="completeLessonBtn">
+                    <i class="fas fa-check-circle"></i> Complete Lesson
+                </button>
+
+                <!-- Certificate Section (Shown after course completion) -->
+                <div class="certificate-section" id="certificateSection" style="display: none;">
+                    <h3><i class="fas fa-certificate"></i> Get Your Certificate</h3>
+                    <p>Pay KSH 500 to receive your verified certificate</p>
+                    <div class="certificate-preview">
+                        <img src="https://via.placeholder.com/600x400?text=SkillForge+Certificate" alt="Certificate Preview">
+                    </div>
+                    <input type="text" id="cert_mpesa" placeholder="Enter M-PESA code for certificate">
+                    <button class="btn-certificate" onclick="purchaseCertificate()">
+                        <i class="fas fa-certificate"></i> Pay KSH 500
                     </button>
-                    <p id="paymentStatus" style="margin-top: 1rem; font-weight: 500;"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN PANEL (Hidden - accessible via /admin) -->
+        <div id="adminPanel" style="display: none;">
+            <div class="admin-header">
+                <h2><i class="fas fa-shield-alt"></i> Admin Panel</h2>
+                <button class="btn-logout" onclick="logoutAdmin()">Exit Admin</button>
+            </div>
+            
+            <div class="pending-payments">
+                <h3>Pending Payment Approvals</h3>
+                <div id="pendingPaymentsList">
+                    <!-- Dynamically filled -->
+                </div>
+            </div>
+            
+            <div class="all-users">
+                <h3>All Users</h3>
+                <div id="usersList">
+                    <!-- Dynamically filled -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification Container -->
+    <!-- Toast Container -->
     <div id="toastContainer"></div>
 
-    <!-- JavaScript -->
-    <script>
-        // Supabase Configuration
-        const SUPABASE_URL = "https://xzptxrarzdgawilymmhu.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6cHR4cmFyemRnYXdpbHltbWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzODc0NjYsImV4cCI6MjA4ODk2MzQ2Nn0.5n833vgZmdN3Rr4s_jja8R6qLy4DN34DPbRw6DzuDbg";
-
-        // Initialize Supabase
-        const { createClient } = supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        // Global variables
-        let currentUser = null;
-        let currentUserData = null;
-
-        // Course content
-        const courseContent = {
-            forex: {
-                title: "Forex Trading Mastery",
-                icon: "chart-line",
-                lessons: [
-                    { title: "Introduction to Forex", description: "Learn the basics of Forex trading, market hours, and currency pairs", duration: "15 min" },
-                    { title: "Technical Analysis", description: "Master chart patterns, indicators, and price action", duration: "20 min" },
-                    { title: "Risk Management", description: "Position sizing, stop losses, and risk-reward ratios", duration: "25 min" },
-                    { title: "Trading Psychology", description: "Master your emotions and develop winning habits", duration: "20 min" }
-                ]
-            },
-            webdev: {
-                title: "Web Development Bootcamp",
-                icon: "laptop-code",
-                lessons: [
-                    { title: "HTML5 Fundamentals", description: "Structure web pages with semantic HTML", duration: "20 min" },
-                    { title: "CSS3 Styling", description: "Create beautiful layouts with modern CSS", duration: "25 min" },
-                    { title: "JavaScript Essentials", description: "Add interactivity to your websites", duration: "30 min" },
-                    { title: "Responsive Design", description: "Build websites that work on all devices", duration: "25 min" }
-                ]
-            },
-            ai: {
-                title: "AI & Automation",
-                icon: "robot",
-                lessons: [
-                    { title: "AI Fundamentals", description: "Understand artificial intelligence basics", duration: "15 min" },
-                    { title: "Automation Tools", description: "Explore popular AI automation platforms", duration: "20 min" },
-                    { title: "Build AI Agents", description: "Create your first AI-powered automation", duration: "30 min" },
-                    { title: "AI in Business", description: "Implement AI solutions in real business", duration: "25 min" }
-                ]
-            },
-            business: {
-                title: "Online Business Mastery",
-                icon: "briefcase",
-                lessons: [
-                    { title: "Business Models", description: "Choose the right online business model", duration: "20 min" },
-                    { title: "Digital Marketing", description: "Market your business effectively online", duration: "25 min" },
-                    { title: "Sales Funnels", description: "Build high-converting sales funnels", duration: "20 min" },
-                    { title: "Scaling Strategies", description: "Scale your business to 6 figures", duration: "25 min" }
-                ]
-            }
-        };
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('Page loaded, checking session...');
-            checkSession();
-        });
-
-        // Check for existing session
-        async function checkSession() {
-            try {
-                const savedEmail = localStorage.getItem("student");
-                
-                if (savedEmail) {
-                    currentUser = savedEmail;
-                    await loadUser();
-                } else {
-                    console.log('No active session');
-                    showAuthForms();
-                }
-            } catch (error) {
-                console.error('Session check error:', error);
-                showToast('Failed to check session', 'error');
-                showAuthForms();
-            }
-        }
-
-        // UI Helper Functions
-        function showAuthForms() {
-            const auth = document.getElementById('auth');
-            const dashboard = document.getElementById('dashboard');
-            if (auth) auth.style.display = 'grid';
-            if (dashboard) dashboard.style.display = 'none';
-        }
-
-        function showDashboard() {
-            const auth = document.getElementById('auth');
-            const dashboard = document.getElementById('dashboard');
-            if (auth) auth.style.display = 'none';
-            if (dashboard) dashboard.style.display = 'block';
-        }
-
-        function showRegister() {
-            document.getElementById('loginCard').style.display = 'block';
-        }
-
-        function showLogin() {
-            document.getElementById('loginCard').style.display = 'block';
-        }
-
-        // Toast notification
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
-                ${message}
-            `;
-            
-            const container = document.getElementById('toastContainer');
-            container.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-        }
-
-        // Register new user
-        async function register() {
-            try {
-                const name = document.getElementById("reg_name")?.value;
-                const email = document.getElementById("reg_email")?.value;
-                const pass = document.getElementById("reg_pass")?.value;
-                const course = document.getElementById("reg_course")?.value;
-
-                // Validation
-                if (!name || !email || !pass || !course) {
-                    showToast("Please fill all fields", "error");
-                    return;
-                }
-
-                if (pass.length < 6) {
-                    showToast("Password must be at least 6 characters", "error");
-                    return;
-                }
-
-                if (!email.includes('@')) {
-                    showToast("Please enter a valid email", "error");
-                    return;
-                }
-
-                // Check if user exists
-                const { data: existingUsers, error: checkError } = await supabaseClient
-                    .from("users")
-                    .select("email")
-                    .eq("email", email);
-
-                if (checkError) {
-                    console.error('Error checking existing user:', checkError);
-                }
-
-                if (existingUsers && existingUsers.length > 0) {
-                    showToast("Email already registered. Please login.", "error");
-                    return;
-                }
-
-                // Insert new user
-                const { data, error } = await supabaseClient
-                    .from("users")
-                    .insert([{
-                        name,
-                        email,
-                        password: pass,
-                        course,
-                        progress: 0,
-                        completed_lessons: [],
-                        payment_status: 'pending',
-                        created_at: new Date().toISOString()
-                    }]);
-
-                if (error) throw error;
-
-                localStorage.setItem("student", email);
-                currentUser = email;
-                
-                showToast("Registration successful! Welcome to SkillForge!", "success");
-                
-                // Clear fields
-                document.getElementById("reg_name").value = '';
-                document.getElementById("reg_email").value = '';
-                document.getElementById("reg_pass").value = '';
-                document.getElementById("reg_course").value = '';
-                
-                await loadUser();
-                
-            } catch (error) {
-                console.error('Registration error:', error);
-                showToast(error.message || "Registration failed", "error");
-            }
-        }
-
-        // Login user
-        async function login() {
-            try {
-                const email = document.getElementById("log_email")?.value;
-                const pass = document.getElementById("log_pass")?.value;
-
-                if (!email || !pass) {
-                    showToast("Please enter email and password", "error");
-                    return;
-                }
-
-                const { data, error } = await supabaseClient
-                    .from("users")
-                    .select("*")
-                    .eq("email", email)
-                    .eq("password", pass);
-
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    showToast("Invalid email or password", "error");
-                    return;
-                }
-
-                localStorage.setItem("student", email);
-                currentUser = email;
-                
-                showToast("Login successful! Welcome back!", "success");
-                
-                // Clear fields
-                document.getElementById("log_email").value = '';
-                document.getElementById("log_pass").value = '';
-                
-                await loadUser();
-                
-            } catch (error) {
-                console.error('Login error:', error);
-                showToast(error.message || "Login failed", "error");
-            }
-        }
-
-        // Logout
-        function logout() {
-            localStorage.removeItem("student");
-            currentUser = null;
-            currentUserData = null;
-            showAuthForms();
-            showToast("Logged out successfully", "success");
-        }
-
-        // Load user data
-        async function loadUser() {
-            try {
-                if (!currentUser) {
-                    showAuthForms();
-                    return;
-                }
-
-                const { data, error } = await supabaseClient
-                    .from("users")
-                    .select("*")
-                    .eq("email", currentUser)
-                    .single();
-
-                if (error) throw error;
-
-                if (!data) {
-                    showToast("User not found", "error");
-                    logout();
-                    return;
-                }
-
-                currentUserData = data;
-                openDashboard(data);
-                
-            } catch (error) {
-                console.error('Error loading user:', error);
-                showToast("Failed to load user data", "error");
-            }
-        }
-
-        // Open dashboard
-        function openDashboard(user) {
-            showDashboard();
-            
-            // Update user avatar
-            const avatar = document.getElementById('userAvatar');
-            if (avatar) {
-                avatar.textContent = user.name.charAt(0).toUpperCase();
-            }
-            
-            // Update welcome message
-            document.getElementById("welcome").innerHTML = `Welcome, ${user.name}! <span style="font-size: 1rem; color: #666;">Ready to learn?</span>`;
-            
-            // Update course title
-            const courseInfo = courseContent[user.course] || courseContent.webdev;
-            document.getElementById("courseTitle").innerHTML = `<i class="fas fa-${courseInfo.icon}"></i> ${courseInfo.title}`;
-            
-            // Show/hide payment card
-            const paymentCard = document.getElementById("paymentCard");
-            if (paymentCard) {
-                if (user.payment_status === 'verified') {
-                    paymentCard.style.display = 'none';
-                } else {
-                    paymentCard.style.display = 'block';
-                    const paymentStatus = document.getElementById("paymentStatus");
-                    if (paymentStatus) {
-                        if (user.payment_status === 'pending_verification') {
-                            paymentStatus.innerHTML = '<i class="fas fa-clock"></i> Your payment is being verified';
-                            paymentStatus.style.color = '#ffc107';
-                        } else {
-                            paymentStatus.innerHTML = '';
-                        }
-                    }
-                }
-            }
-            
-            // Load lessons
-            loadLessons(user.course, user.completed_lessons || []);
-            
-            // Update progress
-            updateProgress(user);
-        }
-
-        // Load lessons
-        function loadLessons(course, completedLessons = []) {
-            const container = document.getElementById("lessonsContainer");
-            if (!container) return;
-            
-            const courseData = courseContent[course] || courseContent.webdev;
-            
-            let lessonsHtml = '<div class="lessons-grid">';
-            
-            courseData.lessons.forEach((lesson, index) => {
-                const isCompleted = completedLessons.includes(index);
-                lessonsHtml += `
-                    <div class="lesson-card ${isCompleted ? 'completed' : ''}">
-                        <div class="lesson-icon">
-                            <i class="fas fa-${courseData.icon}"></i>
-                        </div>
-                        <h4 class="lesson-title">${lesson.title}</h4>
-                        <p class="lesson-description">${lesson.description}</p>
-                        <div class="lesson-status">
-                            <i class="fas fa-clock"></i> ${lesson.duration}
-                            <span class="status-badge ${isCompleted ? 'status-completed' : 'status-pending'}">
-                                ${isCompleted ? 'Completed ✓' : 'In Progress'}
-                            </span>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            lessonsHtml += '</div>';
-            container.innerHTML = lessonsHtml;
-        }
-
-        // Complete lesson
-        async function completeLesson() {
-            if (!currentUserData) return;
-            
-            try {
-                const completedLessons = currentUserData.completed_lessons || [];
-                const totalLessons = courseContent[currentUserData.course]?.lessons.length || 4;
-                
-                // Find first incomplete lesson
-                let nextLesson = 0;
-                while (completedLessons.includes(nextLesson) && nextLesson < totalLessons) {
-                    nextLesson++;
-                }
-                
-                if (nextLesson >= totalLessons) {
-                    showToast("Congratulations! You've completed all lessons! 🎉", "success");
-                    return;
-                }
-                
-                // Mark lesson as completed
-                const newCompletedLessons = [...completedLessons, nextLesson].sort((a, b) => a - b);
-                const newProgress = Math.round((newCompletedLessons.length / totalLessons) * 100);
-                
-                const { error } = await supabaseClient
-                    .from("users")
-                    .update({ 
-                        completed_lessons: newCompletedLessons,
-                        progress: newProgress
-                    })
-                    .eq("email", currentUser);
-                    
-                if (error) throw error;
-                
-                // Update local data
-                currentUserData.completed_lessons = newCompletedLessons;
-                currentUserData.progress = newProgress;
-                
-                // Update UI
-                updateProgress(currentUserData);
-                loadLessons(currentUserData.course, newCompletedLessons);
-                
-                showToast(`✅ Lesson ${nextLesson + 1} completed! Keep going!`, "success");
-                
-            } catch (error) {
-                console.error('Error completing lesson:', error);
-                showToast("Failed to complete lesson", "error");
-            }
-        }
-
-        // Update progress display
-        function updateProgress(user) {
-            const progressBar = document.getElementById("progressBar");
-            const progressPercentage = document.getElementById("progressPercentage");
-            
-            if (progressBar && progressPercentage) {
-                const progress = user.progress || 0;
-                progressBar.style.width = progress + "%";
-                progressBar.textContent = progress + "%";
-                progressPercentage.textContent = progress + "% Complete";
-            }
-        }
-
-        // Refresh dashboard
-        async function refreshDashboard() {
-            showToast("Refreshing dashboard...", "info");
-            await loadUser();
-        }
-
-        // Submit payment
-        async function submitPayment() {
-            try {
-                const code = document.getElementById("mpesa")?.value;
-                const paymentStatus = document.getElementById("paymentStatus");
-                
-                if (!code || code.trim() === '') {
-                    showToast("Please enter MPESA code", "error");
-                    return;
-                }
-
-                if (code.length < 5) {
-                    showToast("Please enter a valid MPESA code", "error");
-                    return;
-                }
-                
-                // Insert payment record
-                const { error } = await supabaseClient
-                    .from("payments")
-                    .insert([{
-                        email: currentUser,
-                        code: code.trim(),
-                        status: "pending",
-                        created_at: new Date().toISOString()
-                    }]);
-                    
-                if (error) throw error;
-                
-                // Update user payment status
-                await supabaseClient
-                    .from('users')
-                    .update({ payment_status: 'pending_verification' })
-                    .eq('email', currentUser);
-                
-                if (paymentStatus) {
-                    paymentStatus.innerHTML = '<i class="fas fa-check-circle"></i> Payment submitted for verification!';
-                    paymentStatus.style.color = "#28a745";
-                }
-                
-                // Clear input
-                document.getElementById("mpesa").value = '';
-                
-                showToast("Payment submitted successfully! We'll verify it shortly.", "success");
-                
-            } catch (error) {
-                console.error('Payment error:', error);
-                showToast("Failed to submit payment", "error");
-            }
-        }
-
-        // Make functions globally available
-        window.register = register;
-        window.login = login;
-        window.logout = logout;
-        window.completeLesson = completeLesson;
-        window.submitPayment = submitPayment;
-        window.refreshDashboard = refreshDashboard;
-        window.showLogin = showLogin;
-        window.showRegister = showRegister;
-    </script>
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
