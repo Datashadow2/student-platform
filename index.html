@@ -161,7 +161,7 @@
                                placeholder="Enter M-PESA transaction code"
                                class="payment-input">
                         
-                        <button onclick="submitPayment()" class="btn-unlock">
+                        <button class="btn-unlock" onclick="submitPayment()">
                             <i class="fas fa-unlock-alt"></i> Unlock Now
                         </button>
                     </div>
@@ -180,7 +180,7 @@
                 </div>
             </div>
 
-            <!-- REGULAR DASHBOARD CONTENT (Visible during trial and after payment) -->
+            <!-- REGULAR DASHBOARD CONTENT -->
             <div id="dashboardContent">
                 <!-- Progress Section -->
                 <div class="progress-section">
@@ -202,9 +202,6 @@
                     <div class="teacher-grid" id="teacherGrid">
                         <!-- Dynamically filled -->
                     </div>
-                    <div class="playlists-section" id="playlistsSection">
-                        <!-- Dynamically filled -->
-                    </div>
                 </div>
 
                 <!-- LESSONS SECTION -->
@@ -215,7 +212,7 @@
                     </div>
                 </div>
 
-                <!-- GAMES SECTION (Flashcards & Quiz) -->
+                <!-- GAMES SECTION -->
                 <div class="games-section">
                     <h3><i class="fas fa-gamepad"></i> Interactive Games</h3>
                     
@@ -253,15 +250,19 @@
 
                 <!-- Complete Lesson Button -->
                 <button class="btn-complete" onclick="completeLesson()" id="completeLessonBtn">
-                    <i class="fas fa-check-circle"></i> Complete Lesson
+                    <i class="fas fa-check-circle"></i> Complete Current Lesson
                 </button>
 
-                <!-- Certificate Section (Shown after course completion) -->
+                <!-- Certificate Section -->
                 <div class="certificate-section" id="certificateSection" style="display: none;">
                     <h3><i class="fas fa-certificate"></i> Get Your Certificate</h3>
                     <p>Pay KSH 500 to receive your verified certificate</p>
                     <div class="certificate-preview">
-                        <img src="https://via.placeholder.com/600x400?text=SkillForge+Certificate" alt="Certificate Preview">
+                        <div style="background: linear-gradient(135deg, #667eea, #764ba2); padding: 3rem; border-radius: 15px; color: white;">
+                            <i class="fas fa-certificate" style="font-size: 4rem;"></i>
+                            <h3>SkillForge Certificate</h3>
+                            <p>Course Completion</p>
+                        </div>
                     </div>
                     <input type="text" id="cert_mpesa" placeholder="Enter M-PESA code for certificate">
                     <button class="btn-certificate" onclick="purchaseCertificate()">
@@ -271,7 +272,7 @@
             </div>
         </div>
 
-        <!-- ADMIN PANEL (Hidden - accessible via /admin) -->
+        <!-- ADMIN PANEL -->
         <div id="adminPanel" style="display: none;">
             <div class="admin-header">
                 <h2><i class="fas fa-shield-alt"></i> Admin Panel</h2>
