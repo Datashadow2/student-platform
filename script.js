@@ -1,15 +1,11 @@
-// ---------------------------
-// Supabase Client Setup (declared once)
-// ---------------------------
+
 const SUPABASE_URL = "https://xzptxrarzdgawilymmhu.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6cHR4cmFyemRnYXdpbHltbWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzODc0NjYsImV4cCI6MjA4ODk2MzQ2Nn0.5n833vgZmdN3Rr4s_jja8R6qLy4DN34DPbRw6DzuDbg"; // replace with your anon key
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let currentUser = null;
 
-// ---------------------------
-// Auto-login if already logged in
-// ---------------------------
+
 window.onload = checkSession;
 
 function checkSession(){
