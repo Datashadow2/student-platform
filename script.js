@@ -1,72 +1,133 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>SkillForge Academy</title>
-<link rel="stylesheet" href="style.css">
-<!-- Load Supabase and your script after HTML is parsed -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-<script src="script.js" defer></script>
-</head>
-<body>
+// ---------------------------
+// Supabase Client Setup (declared once)
+// ---------------------------
+const SUPABASE_URL = "https://xzptxrarzdgawilymmhu.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6cHR4cmFyemRnYXdpbHltbWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzODc0NjYsImV4cCI6MjA4ODk2MzQ2Nn0.5n833vgZmdN3Rr4s_jja8R6qLy4DN34DPbRw6DzuDbg"; // replace with your anon key
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-<header>SkillForge Academy</header>
+let currentUser = null;
 
-<div class="container">
+// ---------------------------
+// Auto-login if already logged in
+// ---------------------------
+window.onload = checkSession;
 
-<!-- Registration & Login -->
-<div id="auth">
-  <div class="card">
-    <h3>Register</h3>
-    <input id="reg_name" placeholder="Full Name">
-    <input id="reg_email" placeholder="Email">
-    <input id="reg_pass" type="password" placeholder="Password">
-    <select id="reg_course">
-      <option value="">Select Course</option>
-      <option value="forex">Forex Trading</option>
-      <option value="webdev">Web Development</option>
-      <option value="ai">AI Automation</option>
-      <option value="business">Online Business</option>
-    </select>
-    <button onclick="register()">Register</button>
-  </div>
+function checkSession(){
+  const saved = localStorage.getItem("student");
+  if(saved){ 
+    currentUser = saved; 
+    loadUser(); 
+  }
+}
 
-  <div class="card">
-    <h3>Login</h3>
-    <input id="log_email" placeholder="Email">
-    <input id="log_pass" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-  </div>
-</div>
+// ---------------------------
+// Register new user
+// ---------------------------
+async function register(){
+  const name = document.getElementById("reg_name").value;
+  const email = document.getElementById("reg_email").value;
+  const pass = document.getElementById("reg_pass").value;
+  const course = document.getElementById("reg_course").value;
 
-<!-- Dashboard -->
-<div id="dashboard" style="display:none">
-  <h2 id="welcome"></h2>
-  <h3 id="courseTitle"></h3>
+  if(!name || !email || !pass || !course){ alert("Fill all fields"); return; }
 
-  <div class="progress">
-    <div class="bar" id="progressBar"></div>
-  </div>
+  let {data:exist} = await supabase.from("users").select("*").eq("email",email).single();
+  if(exist){ alert("Email already exists"); return; }
 
-  <div id="lessonsContainer"></div>
+  await supabase.from("users").insert([{name,email,password:pass,course,progress:0}]);
 
-  <div class="card">
-    <h3>Quiz</h3>
-    <button onclick="completeLesson()">Complete Lesson</button>
-  </div>
+  localStorage.setItem("student", email);
+  currentUser = email;
+  loadUser();
+}
 
-  <div class="card" id="paymentCard">
-    <h3>Payment</h3>
-    <p>Send KSH 200 to 0798880808</p>
-    <input id="mpesa" placeholder="Enter MPESA Code">
-    <button onclick="submitPayment()">I Have Paid</button>
-    <p id="paymentStatus"></p>
-  </div>
+// ---------------------------
+// Login existing user
+// ---------------------------
+async function login(){
+  const email = document.getElementById("log_email").value;
+  const pass = document.getElementById("log_pass").value;
 
-  <button onclick="logout()">Logout</button>
-</div>
+  let {data} = await supabase.from("users").select("*").eq("email",email).eq("password",pass);
+  if(data.length==0){ alert("Invalid login"); return; }
 
-</div>
+  localStorage.setItem("student", email);
+  currentUser = email;
+  loadUser();
+}
 
-</body>
-</html>
+// ---------------------------
+// Logout
+// ---------------------------
+function logout(){
+  localStorage.removeItem("student");
+  location.reload();
+}
+
+// ---------------------------
+// Load user dashboard
+// ---------------------------
+async function loadUser(){
+  document.getElementById("auth").style.display = "none";
+  let {data} = await supabase.from("users").select("*").eq("email",currentUser);
+  let user = data[0];
+  openDashboard(user);
+}
+
+function openDashboard(user){
+  document.getElementById("dashboard").style.display = "block";
+  document.getElementById("welcome").innerText = `Welcome ${user.name}`;
+  document.getElementById("courseTitle").innerText = `Course: ${user.course}`;
+  loadNotes(user.course);
+  loadProgress(user);
+}
+
+// ---------------------------
+// Load course-specific notes
+// ---------------------------
+function loadNotes(course){
+  const notes = {
+    forex: ["Lesson 1: What is Forex","Lesson 2: Currency pairs","Lesson 3: Charts & Analysis"],
+    webdev: ["Lesson 1: HTML Basics","Lesson 2: CSS Styling","Lesson 3: JavaScript Intro"],
+    ai: ["Lesson 1: What is AI","Lesson 2: Automation Tools","Lesson 3: AI Applications"],
+    business: ["Lesson 1: Online income models","Lesson 2: Marketing Basics","Lesson 3: Scaling Strategies"]
+  };
+
+  let container = document.getElementById("lessonsContainer");
+  container.innerHTML = "";
+  notes[course].forEach((n,i)=>{
+    let div = document.createElement("div");
+    div.className = "card";
+    div.innerHTML = `<h4>${n}</h4><p id="lesson${i}">Incomplete</p>`;
+    container.appendChild(div);
+  });
+}
+
+// ---------------------------
+// Complete a lesson
+// ---------------------------
+async function completeLesson(){
+  let {data} = await supabase.from("users").select("*").eq("email",currentUser);
+  let user = data[0];
+  let progress = user.progress || 0;
+  progress += 33;
+  if(progress>100) progress=100;
+  await supabase.from("users").update({progress}).eq("email",currentUser);
+  loadUser();
+}
+
+function loadProgress(user){
+  let progress = user.progress || 0;
+  document.getElementById("progressBar").style.width = progress + "%";
+}
+
+// ---------------------------
+// Payment submission
+// ---------------------------
+async function submitPayment(){
+  let code = document.getElementById("mpesa").value;
+  if(!code){ alert("Enter code"); return; }
+
+  await supabase.from("payments").insert([{email:currentUser, code, status:"pending"}]);
+  document.getElementById("paymentStatus").innerText = "Payment Submitted. Await admin approval.";
+}
