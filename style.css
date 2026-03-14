@@ -1,50 +1,12 @@
-body{
-  font-family: Arial;
-  background:#f4f6fb;
-  margin:0;
-}
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:20px;
-}
-.card{
-  background:white;
-  padding:20px;
-  margin-top:20px;
-  border-radius:10px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-input{
-  display:block;
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:1px solid #ccc;
-  border-radius:5px;
-}
-button{
-  margin-top:10px;
-  padding:10px 20px;
-  background:#4CAF50;
-  border:none;
-  color:white;
-  border-radius:5px;
-  cursor:pointer;
-}
-button:hover{
-  background:#43a047;
-}
-.progressBar{
-  width:100%;
-  height:20px;
-  background:#ddd;
-  border-radius:10px;
-  overflow:hidden;
-}
-#progressFill{
-  height:100%;
-  width:0%;
-  background:#4CAF50;
-}
-
+body{font-family:Arial;background:#0f172a;color:white;text-align:center;margin:0;}
+header{background:#020617;padding:20px;font-size:28px;font-weight:bold;}
+.container{padding:30px;}
+.card{background:#1e293b;padding:20px;margin:20px auto;border-radius:10px;transition:0.3s;}
+.card:hover{transform:scale(1.03);box-shadow:0 4px 15px rgba(34,197,94,0.4);}
+input{padding:10px;width:90%;margin:5px;border-radius:5px;border:none;}
+button{padding:10px 20px;background:#22c55e;border:none;color:white;cursor:pointer;border-radius:5px;}
+.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;padding:20px;}
+.course{background:#1e293b;padding:20px;border-radius:10px;cursor:pointer;transition:0.3s;}
+.course:hover{transform:scale(1.05);box-shadow:0 4px 15px rgba(34,197,94,0.4);}
+.progress{width:100%;background:#334155;border-radius:10px;overflow:hidden;}
+.bar{height:20px;background:#22c55e;width:0%;transition:width 0.5s;}
