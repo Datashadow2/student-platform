@@ -3,12 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>SkillForge Academy</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="script.js"></script>
-
 <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
@@ -17,82 +14,55 @@
 <div class="container">
 
 <div id="auth">
+  <div class="card">
+    <h3>Register</h3>
+    <input id="reg_name" placeholder="Full Name">
+    <input id="reg_email" placeholder="Email">
+    <input id="reg_pass" type="password" placeholder="Password">
+    <select id="reg_course">
+      <option value="">Select Course</option>
+      <option value="forex">Forex Trading</option>
+      <option value="webdev">Web Development</option>
+      <option value="ai">AI Automation</option>
+      <option value="business">Online Business</option>
+    </select>
+    <button onclick="register()">Register</button>
+  </div>
 
-<div class="card">
-<h3>Register</h3>
-<input id="reg_email" placeholder="Email">
-<input id="reg_pass" type="password" placeholder="Password">
-<button onclick="register()">Register</button>
-</div>
-
-<div class="card">
-<h3>Login</h3>
-<input id="log_email" placeholder="Email">
-<input id="log_pass" type="password" placeholder="Password">
-<button onclick="login()">Login</button>
-</div>
-
-</div>
-
-<div id="courseSelect" class="course-grid" style="display:none">
-
-<div class="course" onclick="chooseCourse('forex')">
-<h3>Forex Trading</h3>
-<p>Learn currency trading</p>
-</div>
-
-<div class="course" onclick="chooseCourse('webdev')">
-<h3>Web Development</h3>
-<p>Build websites & apps</p>
-</div>
-
-<div class="course" onclick="chooseCourse('ai')">
-<h3>AI Automation</h3>
-<p>Automate tasks</p>
-</div>
-
-<div class="course" onclick="chooseCourse('business')">
-<h3>Online Business</h3>
-<p>Start digital income streams</p>
-</div>
-
+  <div class="card">
+    <h3>Login</h3>
+    <input id="log_email" placeholder="Email">
+    <input id="log_pass" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
 </div>
 
 <div id="dashboard" style="display:none">
+  <h2 id="welcome"></h2>
+  <h3 id="courseTitle"></h3>
 
-<h2 id="welcome"></h2>
-<h3 id="courseTitle"></h3>
+  <div class="progress">
+    <div class="bar" id="progressBar"></div>
+  </div>
 
-<div class="progress">
-<div class="bar" id="progressBar"></div>
-</div>
+  <div id="lessonsContainer"></div>
 
-<div id="lessonsContainer"></div>
+  <div class="card">
+    <h3>Quiz</h3>
+    <button onclick="completeLesson()">Complete Lesson</button>
+  </div>
 
-<div class="card">
-<h3>Quiz</h3>
-<button onclick="completeLesson()">Complete Lesson</button>
-</div>
+  <div class="card" id="paymentCard">
+    <h3>Payment</h3>
+    <p>Send KSH 200 to 0789480259</p>
+    <input id="mpesa" placeholder="Enter MPESA Code">
+    <button onclick="submitPayment()">I Have Paid</button>
+    <p id="paymentStatus"></p>
+  </div>
 
-<div class="card" id="paymentCard">
-<h3>Payment</h3>
-<p>Send KSH 200 to 0789480259</p>
-<input id="mpesa" placeholder="Enter MPESA Code">
-<button onclick="submitPayment()">I Have Paid</button>
-<p id="paymentStatus"></p>
-</div>
-
-<button onclick="logout()">Logout</button>
-
-</div>
-
-<div id="adminPanel" style="display:none" class="admin">
-<h2>Admin Dashboard</h2>
-<button onclick="loadUsers()">Load Users</button>
-<div id="userList"></div>
+  <button onclick="logout()">Logout</button>
 </div>
 
 </div>
-
 </body>
 </html>
