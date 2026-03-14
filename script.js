@@ -23,12 +23,27 @@ const courseContent = {
     forex: {
         title: "Forex Trading Mastery",
         icon: "chart-line",
-        externalSource: "https://www.investopedia.com/forex",
         lessons: [
-            { title: "Introduction to Forex", description: "Learn Forex basics, market hours, and currency pairs" },
-            { title: "Technical Analysis", description: "Master charts, indicators, and price action" },
-            { title: "Risk Management", description: "Position sizing, stop losses, and risk-reward" },
-            { title: "Trading Psychology", description: "Master emotions and develop winning habits" }
+            { 
+                title: "Introduction to Forex", 
+                description: "Learn Forex basics, market hours, and currency pairs",
+                content: "Forex (Foreign Exchange) is the global market for trading currencies. Daily volume: $6.6 trillion. Market hours: 24/5 from Sunday 5pm to Friday 5pm EST. Major pairs: EUR/USD, GBP/USD, USD/JPY, USD/CHF."
+            },
+            { 
+                title: "Technical Analysis", 
+                description: "Master charts, indicators, and price action",
+                content: "Technical analysis involves studying price charts to predict future movements. Key concepts: Support and Resistance, Trend Lines, Chart Patterns (Head and Shoulders, Double Tops), Indicators (RSI, MACD, Moving Averages)."
+            },
+            { 
+                title: "Risk Management", 
+                description: "Position sizing, stop losses, and risk-reward",
+                content: "Never risk more than 1-2% of your account per trade. Use stop losses to protect capital. Aim for risk-reward ratios of at least 1:2. Position size = (Account Size × Risk %) / Stop Loss in pips."
+            },
+            { 
+                title: "Trading Psychology", 
+                description: "Master emotions and develop winning habits",
+                content: "The market is a battle of emotions. Fear causes selling at bottoms, greed causes buying at tops. Develop a trading plan and stick to it. Keep a trading journal. Embrace losses as learning opportunities."
+            }
         ],
         flashcards: [
             { front: "What is Forex?", back: "Foreign Exchange - trading currencies globally" },
@@ -59,12 +74,27 @@ const courseContent = {
     webdev: {
         title: "Web Development Bootcamp",
         icon: "laptop-code",
-        externalSource: "https://www.w3schools.com",
         lessons: [
-            { title: "HTML Fundamentals", description: "Structure web pages with semantic HTML" },
-            { title: "CSS Styling", description: "Create beautiful layouts with modern CSS" },
-            { title: "JavaScript Essentials", description: "Add interactivity to your websites" },
-            { title: "Responsive Design", description: "Build websites that work on all devices" }
+            { 
+                title: "HTML Fundamentals", 
+                description: "Structure web pages with semantic HTML",
+                content: "HTML (HyperText Markup Language) is the foundation of all websites. Key elements: <html>, <head>, <body>, <h1>-<h6> for headings, <p> for paragraphs, <a> for links, <img> for images, <div> and <span> for containers."
+            },
+            { 
+                title: "CSS Styling", 
+                description: "Create beautiful layouts with modern CSS",
+                content: "CSS (Cascading Style Sheets) makes websites look good. Selectors target HTML elements. Properties control colors, fonts, spacing. Flexbox and Grid create layouts. Responsive design with media queries."
+            },
+            { 
+                title: "JavaScript Essentials", 
+                description: "Add interactivity to your websites",
+                content: "JavaScript brings websites to life. Variables store data. Functions perform tasks. DOM manipulation changes page content. Events handle user interactions. APIs fetch external data."
+            },
+            { 
+                title: "Responsive Design", 
+                description: "Build websites that work on all devices",
+                content: "Responsive design ensures websites look great on phones, tablets, and desktops. Use viewport meta tag, fluid grids, flexible images, and media queries. Mobile-first approach designs for small screens first."
+            }
         ],
         flashcards: [
             { front: "What is HTML?", back: "HyperText Markup Language - structure of web pages" },
@@ -88,12 +118,27 @@ const courseContent = {
     ai: {
         title: "AI & Automation",
         icon: "robot",
-        externalSource: "https://www.tutorialspoint.com/artificial_intelligence",
         lessons: [
-            { title: "AI Fundamentals", description: "Understand artificial intelligence basics" },
-            { title: "Automation Tools", description: "Explore popular AI automation platforms" },
-            { title: "Machine Learning", description: "Learn how machines learn from data" },
-            { title: "AI Applications", description: "Real-world AI applications in business" }
+            { 
+                title: "AI Fundamentals", 
+                description: "Understand artificial intelligence basics",
+                content: "AI (Artificial Intelligence) enables machines to mimic human intelligence. Machine Learning is a subset of AI where systems learn from data. Deep Learning uses neural networks. Natural Language Processing (NLP) handles text and speech."
+            },
+            { 
+                title: "Automation Tools", 
+                description: "Explore popular AI automation platforms",
+                content: "Popular AI tools: ChatGPT for conversation, Midjourney for images, Zapier for workflow automation, TensorFlow for ML models, PyTorch for research, AutoGPT for autonomous tasks."
+            },
+            { 
+                title: "Machine Learning", 
+                description: "Learn how machines learn from data",
+                content: "Machine Learning types: Supervised (labeled data), Unsupervised (patterns in data), Reinforcement (reward-based). Algorithms: Linear Regression, Decision Trees, Neural Networks, K-Means Clustering."
+            },
+            { 
+                title: "AI Applications", 
+                description: "Real-world AI applications in business",
+                content: "AI in business: Customer service chatbots, Predictive analytics, Fraud detection, Personalized recommendations, Process automation, Sentiment analysis, Image recognition."
+            }
         ],
         flashcards: [
             { front: "What is AI?", back: "Artificial Intelligence - machines mimicking human intelligence" },
@@ -111,12 +156,27 @@ const courseContent = {
     business: {
         title: "Online Business Mastery",
         icon: "briefcase",
-        externalSource: "https://www.entrepreneur.com",
         lessons: [
-            { title: "Business Models", description: "Choose the right online business model" },
-            { title: "Digital Marketing", description: "Market your business effectively online" },
-            { title: "Sales Funnels", description: "Build high-converting sales funnels" },
-            { title: "Scaling Strategies", description: "Scale your business to 6 figures" }
+            { 
+                title: "Business Models", 
+                description: "Choose the right online business model",
+                content: "Online business models: E-commerce (selling products), Dropshipping (no inventory), Affiliate marketing (commission on sales), Digital products (courses, ebooks), SaaS (software subscription), Membership sites (recurring revenue)."
+            },
+            { 
+                title: "Digital Marketing", 
+                description: "Market your business effectively online",
+                content: "Digital marketing channels: SEO (organic search), PPC (paid ads), Social media marketing, Email marketing, Content marketing, Influencer marketing. Track metrics: CTR, Conversion rate, ROI, Customer acquisition cost."
+            },
+            { 
+                title: "Sales Funnels", 
+                description: "Build high-converting sales funnels",
+                content: "Sales funnel stages: Awareness (TOFU) → Interest → Consideration → Intent → Evaluation → Purchase (BOFU). Lead magnets attract prospects. Email sequences nurture leads. Upsells and cross-sells increase order value."
+            },
+            { 
+                title: "Scaling Strategies", 
+                description: "Scale your business to 6 figures",
+                content: "Scaling strategies: Automate processes, Outsource tasks, Expand product lines, Enter new markets, Increase prices, Build partnerships, Create systems and SOPs, Focus on high-value activities."
+            }
         ],
         flashcards: [
             { front: "What is a business model?", back: "How a company creates and delivers value" },
@@ -506,7 +566,7 @@ function renderYouTubeTeachers() {
                 <img src="${teacher.image}" alt="${teacher.name}">
                 <h4>${teacher.name}</h4>
                 <p>${teacher.specialty}</p>
-                <a href="${teacher.url}" target="_blank">
+                <a href="${teacher.url}" target="_blank" class="btn-youtube">
                     <i class="fab fa-youtube"></i> Visit Channel
                 </a>
             </div>
@@ -514,12 +574,6 @@ function renderYouTubeTeachers() {
     });
     
     document.getElementById('teacherGrid').innerHTML = html;
-    
-    // Add playlists
-    document.getElementById('playlistsSection').innerHTML = `
-        <h4>Recommended Playlists</h4>
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/videoseries?list=PL123456789" frameborder="0" allowfullscreen></iframe>
-    `;
 }
 
 // ===== RENDER LESSONS =====
@@ -539,12 +593,14 @@ function renderLessons() {
                 </div>
                 <h4>${lesson.title}</h4>
                 <p>${lesson.description}</p>
+                <div class="lesson-content">
+                    <p>${lesson.content}</p>
+                </div>
                 <div class="lesson-status">
                     <span class="status-badge ${isCompleted ? 'status-completed' : isLocked ? 'status-locked' : 'status-pending'}">
                         ${isCompleted ? '✓ Completed' : isLocked ? '🔒 Locked' : '▶ In Progress'}
                     </span>
                 </div>
-                <iframe src="${courseContent[currentUserData.course]?.externalSource}" style="width:100%; height:200px; margin-top:1rem; border-radius:10px;" sandbox="allow-same-origin allow-scripts"></iframe>
             </div>
         `;
     });
