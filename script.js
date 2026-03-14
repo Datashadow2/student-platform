@@ -1,4 +1,4 @@
-// Supabase Configuration
+// ===== SUPABASE CONFIGURATION =====
 const SUPABASE_URL = "https://xzptxrarzdgawilymmhu.supabase.co";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6cHR4cmFyemRnYXdpbHltbWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzODc0NjYsImV4cCI6MjA4ODk2MzQ2Nn0.5n833vgZmdN3Rr4s_jja8R6qLy4DN34DPbRw6DzuDbg";
 
@@ -6,61 +6,164 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 const { createClient } = supabase;
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Global variables
+// ===== GLOBAL VARIABLES =====
 let currentUser = null;
 let currentUserData = null;
+let countdownInterval = null;
+let currentFlashcardIndex = 0;
+let currentFlashcardSet = [];
+let knownCards = [];
+let reviewCards = [];
+let currentQuizIndex = 0;
+let quizScore = 0;
+let selectedQuizOption = null;
 
-// Course content
+// ===== COURSE CONTENT =====
 const courseContent = {
     forex: {
         title: "Forex Trading Mastery",
         icon: "chart-line",
+        externalSource: "https://www.investopedia.com/forex",
         lessons: [
-            { title: "Introduction to Forex", description: "Learn the basics of Forex trading, market hours, and currency pairs", duration: "15 min" },
-            { title: "Technical Analysis", description: "Master chart patterns, indicators, and price action", duration: "20 min" },
-            { title: "Risk Management", description: "Position sizing, stop losses, and risk-reward ratios", duration: "25 min" },
-            { title: "Trading Psychology", description: "Master your emotions and develop winning habits", duration: "20 min" }
+            { title: "Introduction to Forex", description: "Learn Forex basics, market hours, and currency pairs" },
+            { title: "Technical Analysis", description: "Master charts, indicators, and price action" },
+            { title: "Risk Management", description: "Position sizing, stop losses, and risk-reward" },
+            { title: "Trading Psychology", description: "Master emotions and develop winning habits" }
+        ],
+        flashcards: [
+            { front: "What is Forex?", back: "Foreign Exchange - trading currencies globally" },
+            { front: "What is a Pip?", back: "Percentage in Point - smallest price movement (0.0001)" },
+            { front: "Major currency pairs?", back: "EUR/USD, GBP/USD, USD/JPY, USD/CHF" },
+            { front: "Market hours?", back: "24/5 from Sunday 5pm to Friday 5pm EST" },
+            { front: "Bullish market?", back: "Prices are rising/expected to rise" },
+            { front: "Bearish market?", back: "Prices are falling/expected to fall" }
+        ],
+        quizzes: [
+            {
+                question: "What does a Pip represent?",
+                options: ["Price movement", "Currency pair", "Trading platform", "Broker fee"],
+                correct: 0
+            },
+            {
+                question: "Which is a major currency pair?",
+                options: ["EUR/USD", "USD/TRY", "EUR/TRY", "GBP/ZAR"],
+                correct: 0
+            },
+            {
+                question: "Forex market is open 24/7",
+                options: ["True", "False"],
+                correct: 1
+            }
         ]
     },
     webdev: {
         title: "Web Development Bootcamp",
         icon: "laptop-code",
+        externalSource: "https://www.w3schools.com",
         lessons: [
-            { title: "HTML5 Fundamentals", description: "Structure web pages with semantic HTML", duration: "20 min" },
-            { title: "CSS3 Styling", description: "Create beautiful layouts with modern CSS", duration: "25 min" },
-            { title: "JavaScript Essentials", description: "Add interactivity to your websites", duration: "30 min" },
-            { title: "Responsive Design", description: "Build websites that work on all devices", duration: "25 min" }
+            { title: "HTML Fundamentals", description: "Structure web pages with semantic HTML" },
+            { title: "CSS Styling", description: "Create beautiful layouts with modern CSS" },
+            { title: "JavaScript Essentials", description: "Add interactivity to your websites" },
+            { title: "Responsive Design", description: "Build websites that work on all devices" }
+        ],
+        flashcards: [
+            { front: "What is HTML?", back: "HyperText Markup Language - structure of web pages" },
+            { front: "What is CSS?", back: "Cascading Style Sheets - makes websites beautiful" },
+            { front: "What is JavaScript?", back: "Programming language for interactive websites" },
+            { front: "What is a tag?", back: "<div>, <p>, <h1> - elements that define content" }
+        ],
+        quizzes: [
+            {
+                question: "What does HTML stand for?",
+                options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyper Transfer Markup Language", "Home Tool Markup Language"],
+                correct: 0
+            },
+            {
+                question: "Which tag is used for the largest heading?",
+                options: ["<h1>", "<heading>", "<h6>", "<head>"],
+                correct: 0
+            }
         ]
     },
     ai: {
         title: "AI & Automation",
         icon: "robot",
+        externalSource: "https://www.tutorialspoint.com/artificial_intelligence",
         lessons: [
-            { title: "AI Fundamentals", description: "Understand artificial intelligence basics", duration: "15 min" },
-            { title: "Automation Tools", description: "Explore popular AI automation platforms", duration: "20 min" },
-            { title: "Build AI Agents", description: "Create your first AI-powered automation", duration: "30 min" },
-            { title: "AI in Business", description: "Implement AI solutions in real business", duration: "25 min" }
+            { title: "AI Fundamentals", description: "Understand artificial intelligence basics" },
+            { title: "Automation Tools", description: "Explore popular AI automation platforms" },
+            { title: "Machine Learning", description: "Learn how machines learn from data" },
+            { title: "AI Applications", description: "Real-world AI applications in business" }
+        ],
+        flashcards: [
+            { front: "What is AI?", back: "Artificial Intelligence - machines mimicking human intelligence" },
+            { front: "What is Machine Learning?", back: "Algorithms that learn from data" },
+            { front: "What is Automation?", back: "Using technology to automate tasks" }
+        ],
+        quizzes: [
+            {
+                question: "What does AI stand for?",
+                options: ["Artificial Intelligence", "Automated Interface", "Advanced Integration", "Algorithmic Input"],
+                correct: 0
+            }
         ]
     },
     business: {
         title: "Online Business Mastery",
         icon: "briefcase",
+        externalSource: "https://www.entrepreneur.com",
         lessons: [
-            { title: "Business Models", description: "Choose the right online business model", duration: "20 min" },
-            { title: "Digital Marketing", description: "Market your business effectively online", duration: "25 min" },
-            { title: "Sales Funnels", description: "Build high-converting sales funnels", duration: "20 min" },
-            { title: "Scaling Strategies", description: "Scale your business to 6 figures", duration: "25 min" }
+            { title: "Business Models", description: "Choose the right online business model" },
+            { title: "Digital Marketing", description: "Market your business effectively online" },
+            { title: "Sales Funnels", description: "Build high-converting sales funnels" },
+            { title: "Scaling Strategies", description: "Scale your business to 6 figures" }
+        ],
+        flashcards: [
+            { front: "What is a business model?", back: "How a company creates and delivers value" },
+            { front: "What is digital marketing?", back: "Marketing through digital channels" },
+            { front: "What is a sales funnel?", back: "Customer journey from awareness to purchase" }
+        ],
+        quizzes: [
+            {
+                question: "What is a business model?",
+                options: ["How company makes money", "Company logo", "Office location", "Employee count"],
+                correct: 0
+            }
         ]
     }
 };
 
-// Initialize on page load
+// ===== YOUTUBE TEACHERS (Hidden until payment) =====
+const youtubeTeachers = {
+    forex: [
+        { name: "Rayner Teo", channel: "@RaynerTeo", url: "https://youtube.com/@RaynerTeo", specialty: "Price Action", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
+        { name: "ForexSignals", channel: "@ForexSignals", url: "https://youtube.com/@ForexSignals", specialty: "Daily Analysis", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
+        { name: "Trading Rush", channel: "@TradingRush", url: "https://youtube.com/@TradingRush", specialty: "Beginners", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" }
+    ],
+    webdev: [
+        { name: "Kevin Powell", channel: "@KevinPowell", url: "https://youtube.com/@KevinPowell", specialty: "CSS Master", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
+        { name: "Traversy Media", channel: "@TraversyMedia", url: "https://youtube.com/@TraversyMedia", specialty: "Full Stack", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
+        { name: "Web Dev Simplified", channel: "@WebDevSimplified", url: "https://youtube.com/@WebDevSimplified", specialty: "JavaScript", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" }
+    ],
+    ai: [
+        { name: "Sentdex", channel: "@sentdex", url: "https://youtube.com/@sentdex", specialty: "Python AI", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
+        { name: "Two Minute Papers", channel: "@TwoMinutePapers", url: "https://youtube.com/@TwoMinutePapers", specialty: "AI Research", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
+        { name: "Nicholas Renotte", channel: "@nicholasrenotte", url: "https://youtube.com/@nicholasrenotte", specialty: "AI Projects", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" }
+    ],
+    business: [
+        { name: "Alex Hormozi", channel: "@AlexHormozi", url: "https://youtube.com/@AlexHormozi", specialty: "Scaling", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
+        { name: "Grant Cardone", channel: "@GrantCardone", url: "https://youtube.com/@GrantCardone", specialty: "Sales", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" },
+        { name: "GaryVee", channel: "@GaryVee", url: "https://youtube.com/@GaryVee", specialty: "Marketing", image: "https://img.youtube.com/vi/UC8p1vwZvnIo/0.jpg" }
+    ]
+};
+
+// ===== INITIALIZATION =====
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Page loaded, checking session...');
     checkSession();
 });
 
-// Check for existing session
+// ===== SESSION MANAGEMENT =====
 async function checkSession() {
     try {
         const savedEmail = localStorage.getItem("student");
@@ -69,103 +172,53 @@ async function checkSession() {
             currentUser = savedEmail;
             await loadUser();
         } else {
-            console.log('No active session');
             showAuthForms();
         }
     } catch (error) {
-        console.error('Session check error:', error);
-        showToast('Failed to check session', 'error');
+        console.error('Session error:', error);
         showAuthForms();
     }
 }
 
-// UI Helper Functions
+// ===== UI HELPERS =====
 function showAuthForms() {
-    const auth = document.getElementById('auth');
-    const dashboard = document.getElementById('dashboard');
-    if (auth) auth.style.display = 'grid';
-    if (dashboard) dashboard.style.display = 'none';
+    document.getElementById('auth').style.display = 'grid';
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'none';
 }
 
 function showDashboard() {
-    const auth = document.getElementById('auth');
-    const dashboard = document.getElementById('dashboard');
-    if (auth) auth.style.display = 'none';
-    if (dashboard) dashboard.style.display = 'block';
+    document.getElementById('auth').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
 }
 
-// Toast notification
+function showLogin() {
+    document.getElementById('registerCard').style.display = 'none';
+    document.getElementById('loginCard').style.display = 'block';
+}
+
+function showRegister() {
+    document.getElementById('loginCard').style.display = 'none';
+    document.getElementById('registerCard').style.display = 'block';
+}
+
+// ===== TOAST NOTIFICATIONS =====
 function showToast(message, type = 'info') {
-    // Check if toast container exists, if not create it
-    let container = document.getElementById('toastContainer');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'toastContainer';
-        container.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-        `;
-        document.body.appendChild(container);
-    }
-    
+    const container = document.getElementById('toastContainer');
     const toast = document.createElement('div');
-    toast.style.cssText = `
-        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
-        color: white;
-        padding: 12px 24px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        animation: slideIn 0.3s ease;
-        font-family: 'Poppins', sans-serif;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+        <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+        ${message}
     `;
-    
-    const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
-    toast.innerHTML = `<span style="font-size: 18px;">${icon}</span> ${message}`;
-    
     container.appendChild(toast);
     
     setTimeout(() => {
-        toast.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-            toast.remove();
-        }, 300);
+        toast.remove();
     }, 3000);
 }
 
-// Add animation styles
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Register new user
+// ===== REGISTRATION =====
 async function register() {
     try {
         const name = document.getElementById("reg_name")?.value;
@@ -173,7 +226,6 @@ async function register() {
         const pass = document.getElementById("reg_pass")?.value;
         const course = document.getElementById("reg_course")?.value;
 
-        // Validation
         if (!name || !email || !pass || !course) {
             showToast("Please fill all fields", "error");
             return;
@@ -184,48 +236,44 @@ async function register() {
             return;
         }
 
-        if (!email.includes('@')) {
-            showToast("Please enter a valid email", "error");
-            return;
-        }
-
         // Check if user exists
-        const { data: existingUsers, error: checkError } = await supabaseClient
+        const { data: existing } = await supabaseClient
             .from("users")
             .select("email")
             .eq("email", email);
 
-        if (checkError) {
-            console.error('Error checking existing user:', checkError);
-        }
-
-        if (existingUsers && existingUsers.length > 0) {
-            showToast("Email already registered. Please login.", "error");
+        if (existing && existing.length > 0) {
+            showToast("Email already registered", "error");
             return;
         }
 
-        // Insert new user - using only columns that exist in your database
-        const { data, error } = await supabaseClient
+        // Calculate trial dates (2 days from now)
+        const now = new Date();
+        const trialEnd = new Date(now);
+        trialEnd.setDate(trialEnd.getDate() + 2);
+
+        // Insert new user
+        const { error } = await supabaseClient
             .from("users")
             .insert([{
                 name: name,
                 email: email,
                 password: pass,
                 course: course,
-                progress: 0
-                // Removed completed_lessons, payment_status, created_at as they might not exist
+                progress: 0,
+                completed_lessons: [],
+                payment_status: 'trial',
+                trial_start: now.toISOString(),
+                trial_end: trialEnd.toISOString(),
+                created_at: now.toISOString()
             }]);
 
-        if (error) {
-            console.error('Insert error:', error);
-            showToast("Registration failed: " + error.message, "error");
-            return;
-        }
+        if (error) throw error;
 
         localStorage.setItem("student", email);
         currentUser = email;
         
-        showToast("Registration successful! Welcome to SkillForge!", "success");
+        showToast("Registration successful! 2-day trial started!", "success");
         
         // Clear fields
         document.getElementById("reg_name").value = '';
@@ -237,11 +285,11 @@ async function register() {
         
     } catch (error) {
         console.error('Registration error:', error);
-        showToast(error.message || "Registration failed", "error");
+        showToast(error.message, "error");
     }
 }
 
-// Login user
+// ===== LOGIN =====
 async function login() {
     try {
         const email = document.getElementById("log_email")?.value;
@@ -258,11 +306,7 @@ async function login() {
             .eq("email", email)
             .eq("password", pass);
 
-        if (error) {
-            console.error('Login query error:', error);
-            showToast("Login failed: " + error.message, "error");
-            return;
-        }
+        if (error) throw error;
 
         if (!data || data.length === 0) {
             showToast("Invalid email or password", "error");
@@ -272,9 +316,8 @@ async function login() {
         localStorage.setItem("student", email);
         currentUser = email;
         
-        showToast("Login successful! Welcome back!", "success");
+        showToast("Login successful!", "success");
         
-        // Clear fields
         document.getElementById("log_email").value = '';
         document.getElementById("log_pass").value = '';
         
@@ -282,37 +325,31 @@ async function login() {
         
     } catch (error) {
         console.error('Login error:', error);
-        showToast(error.message || "Login failed", "error");
+        showToast(error.message, "error");
     }
 }
 
-// Logout
+// ===== LOGOUT =====
 function logout() {
     localStorage.removeItem("student");
     currentUser = null;
     currentUserData = null;
+    if (countdownInterval) clearInterval(countdownInterval);
     showAuthForms();
     showToast("Logged out successfully", "success");
 }
 
-// Load user data
+// ===== LOAD USER =====
 async function loadUser() {
     try {
-        if (!currentUser) {
-            showAuthForms();
-            return;
-        }
+        if (!currentUser) return;
 
         const { data, error } = await supabaseClient
             .from("users")
             .select("*")
             .eq("email", currentUser);
 
-        if (error) {
-            console.error('Load user error:', error);
-            showToast("Failed to load user data", "error");
-            return;
-        }
+        if (error) throw error;
 
         if (!data || data.length === 0) {
             showToast("User not found", "error");
@@ -321,290 +358,631 @@ async function loadUser() {
         }
 
         currentUserData = data[0];
-        openDashboard(currentUserData);
+        
+        // Check if user is admin
+        if (currentUserData.email === 'admin@skillforge.com') {
+            loadAdminPanel();
+            return;
+        }
+        
+        renderDashboard();
         
     } catch (error) {
-        console.error('Error loading user:', error);
-        showToast("Failed to load user data", "error");
+        console.error('Load user error:', error);
+        showToast("Failed to load user", "error");
     }
 }
 
-// Open dashboard
-function openDashboard(user) {
+// ===== CHECK ACCESS =====
+function checkAccess(user) {
+    const now = new Date();
+    const trialEnd = new Date(user.trial_end);
+    
+    // Check if trial expired
+    if (now > trialEnd && user.payment_status !== 'paid' && user.payment_status !== 'certified') {
+        return {
+            canAccess: false,
+            status: 'locked',
+            message: 'Trial ended. Pay KSH 200 to unlock.'
+        };
+    }
+    
+    // Check if paid
+    if (user.payment_status === 'paid' || user.payment_status === 'certified') {
+        return {
+            canAccess: true,
+            status: 'paid',
+            message: 'Lifetime access',
+            showYouTube: true
+        };
+    }
+    
+    // Still in trial
+    return {
+        canAccess: true,
+        status: 'trial',
+        message: `Trial ends in ${getRemainingTime(trialEnd)}`,
+        showYouTube: false
+    };
+}
+
+// ===== GET REMAINING TIME =====
+function getRemainingTime(endDate) {
+    const now = new Date();
+    const diff = endDate - now;
+    
+    if (diff <= 0) return 'Expired';
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    
+    return `${days}d ${hours}h ${minutes}m`;
+}
+
+// ===== RENDER DASHBOARD =====
+function renderDashboard() {
     showDashboard();
     
-    // Update user avatar
-    const avatar = document.getElementById('userAvatar');
-    if (avatar) {
-        avatar.textContent = user.name ? user.name.charAt(0).toUpperCase() : 'S';
+    const access = checkAccess(currentUserData);
+    
+    // Update header
+    document.getElementById('userAvatar').textContent = currentUserData.name.charAt(0).toUpperCase();
+    document.getElementById('welcome').textContent = `Welcome, ${currentUserData.name}!`;
+    
+    const courseInfo = courseContent[currentUserData.course] || courseContent.webdev;
+    document.getElementById('courseTitle').innerHTML = `<i class="fas fa-${courseInfo.icon}"></i> ${courseInfo.title}`;
+    
+    // Show/hide trial timer
+    if (access.status === 'trial') {
+        document.getElementById('trialTimer').style.display = 'flex';
+        document.getElementById('trialHeaderBadge').style.display = 'block';
+        startCountdown(new Date(currentUserData.trial_end));
+    } else {
+        document.getElementById('trialTimer').style.display = 'none';
+        document.getElementById('trialHeaderBadge').style.display = 'none';
     }
     
-    // Update welcome message
-    document.getElementById("welcome").innerHTML = `Welcome, ${user.name || 'Student'}! <span style="font-size: 1rem; color: #666;">Ready to learn?</span>`;
-    
-    // Update course title
-    const courseInfo = courseContent[user.course] || courseContent.webdev;
-    document.getElementById("courseTitle").innerHTML = `<i class="fas fa-${courseInfo.icon}"></i> ${courseInfo.title}`;
-    
-    // Show/hide payment card (simplified)
-    const paymentCard = document.getElementById("paymentCard");
-    if (paymentCard) {
-        // For now, always show payment card
-        paymentCard.style.display = 'block';
+    // Show/hide payment wall
+    if (access.status === 'locked') {
+        document.getElementById('paymentWall').style.display = 'block';
+        document.getElementById('dashboardContent').style.display = 'none';
+        renderLockedProgress();
+    } else {
+        document.getElementById('paymentWall').style.display = 'none';
+        document.getElementById('dashboardContent').style.display = 'block';
+        
+        // Show/hide YouTube section (only after payment)
+        if (access.showYouTube) {
+            document.getElementById('youtubeSection').style.display = 'block';
+            renderYouTubeTeachers();
+        } else {
+            document.getElementById('youtubeSection').style.display = 'none';
+        }
+        
+        // Render regular content
+        renderLessons();
+        updateProgress();
+        loadFlashcards();
+        loadQuiz();
+        
+        // Show certificate section if course completed
+        if (currentUserData.progress === 100) {
+            document.getElementById('certificateSection').style.display = 'block';
+        }
     }
-    
-    // Load lessons
-    loadLessons(user.course);
-    
-    // Update progress
-    updateProgress(user);
 }
 
-// Load lessons
-function loadLessons(course) {
-    const container = document.getElementById("lessonsContainer");
-    if (!container) return;
+// ===== RENDER LOCKED PROGRESS =====
+function renderLockedProgress() {
+    document.getElementById('lockedProgressBar').style.width = `${currentUserData.progress || 0}%`;
+    document.getElementById('lockedProgressBar').textContent = `${currentUserData.progress || 0}%`;
     
-    const courseData = courseContent[course] || courseContent.webdev;
+    const lessons = courseContent[currentUserData.course]?.lessons || [];
+    const completed = currentUserData.completed_lessons || [];
     
-    let lessonsHtml = '<h3 style="margin-bottom: 1rem;"><i class="fas fa-book-open"></i> Course Lessons</h3>';
-    lessonsHtml += '<div class="lessons-grid">';
+    let html = '';
+    lessons.forEach((lesson, index) => {
+        const isCompleted = completed.includes(index);
+        html += `
+            <div class="locked-lesson-item">
+                <span>${isCompleted ? '✅' : '📘'} ${lesson.title}</span>
+                <span>${isCompleted ? 'Completed' : index === 0 ? '50% done' : '🔒 Locked'}</span>
+            </div>
+        `;
+    });
     
-    courseData.lessons.forEach((lesson, index) => {
-        lessonsHtml += `
-            <div class="lesson-card">
+    document.getElementById('lockedLessons').innerHTML = html;
+}
+
+// ===== RENDER YOUTUBE TEACHERS =====
+function renderYouTubeTeachers() {
+    const teachers = youtubeTeachers[currentUserData.course] || youtubeTeachers.webdev;
+    
+    let html = '';
+    teachers.forEach(teacher => {
+        html += `
+            <div class="teacher-card">
+                <img src="${teacher.image}" alt="${teacher.name}">
+                <h4>${teacher.name}</h4>
+                <p>${teacher.specialty}</p>
+                <a href="${teacher.url}" target="_blank">
+                    <i class="fab fa-youtube"></i> Visit Channel
+                </a>
+            </div>
+        `;
+    });
+    
+    document.getElementById('teacherGrid').innerHTML = html;
+    
+    // Add playlists
+    document.getElementById('playlistsSection').innerHTML = `
+        <h4>Recommended Playlists</h4>
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/videoseries?list=PL123456789" frameborder="0" allowfullscreen></iframe>
+    `;
+}
+
+// ===== RENDER LESSONS =====
+function renderLessons() {
+    const lessons = courseContent[currentUserData.course]?.lessons || [];
+    const completed = currentUserData.completed_lessons || [];
+    
+    let html = '';
+    lessons.forEach((lesson, index) => {
+        const isCompleted = completed.includes(index);
+        const isLocked = index > 0 && !completed.includes(index - 1) && !completed.includes(index);
+        
+        html += `
+            <div class="lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}">
                 <div class="lesson-icon">
-                    <i class="fas fa-${courseData.icon}"></i>
+                    <i class="fas fa-${courseContent[currentUserData.course]?.icon}"></i>
                 </div>
-                <h4 class="lesson-title">${lesson.title}</h4>
-                <p class="lesson-description">${lesson.description}</p>
+                <h4>${lesson.title}</h4>
+                <p>${lesson.description}</p>
                 <div class="lesson-status">
-                    <i class="fas fa-clock"></i> ${lesson.duration}
-                    <span class="status-badge status-pending">Not Started</span>
+                    <span class="status-badge ${isCompleted ? 'status-completed' : isLocked ? 'status-locked' : 'status-pending'}">
+                        ${isCompleted ? '✓ Completed' : isLocked ? '🔒 Locked' : '▶ In Progress'}
+                    </span>
+                </div>
+                <iframe src="${courseContent[currentUserData.course]?.externalSource}" style="width:100%; height:200px; margin-top:1rem; border-radius:10px;" sandbox="allow-same-origin allow-scripts"></iframe>
+            </div>
+        `;
+    });
+    
+    document.getElementById('lessonsGrid').innerHTML = html;
+}
+
+// ===== UPDATE PROGRESS =====
+function updateProgress() {
+    const progress = currentUserData.progress || 0;
+    document.getElementById('progressBar').style.width = `${progress}%`;
+    document.getElementById('progressBar').textContent = `${progress}%`;
+    document.getElementById('progressPercent').textContent = `${progress}%`;
+}
+
+// ===== COMPLETE LESSON =====
+async function completeLesson() {
+    try {
+        const completed = currentUserData.completed_lessons || [];
+        const totalLessons = courseContent[currentUserData.course]?.lessons.length || 4;
+        
+        // Find next incomplete lesson
+        let nextLesson = 0;
+        while (completed.includes(nextLesson) && nextLesson < totalLessons) {
+            nextLesson++;
+        }
+        
+        if (nextLesson >= totalLessons) {
+            showToast("Congratulations! You've completed all lessons!", "success");
+            return;
+        }
+        
+        const newCompleted = [...completed, nextLesson];
+        const newProgress = Math.round((newCompleted.length / totalLessons) * 100);
+        
+        const { error } = await supabaseClient
+            .from("users")
+            .update({ 
+                completed_lessons: newCompleted,
+                progress: newProgress
+            })
+            .eq("email", currentUser);
+            
+        if (error) throw error;
+        
+        currentUserData.completed_lessons = newCompleted;
+        currentUserData.progress = newProgress;
+        
+        updateProgress();
+        renderLessons();
+        
+        showToast(`✅ Lesson ${nextLesson + 1} completed!`, "success");
+        
+    } catch (error) {
+        console.error('Error:', error);
+        showToast("Failed to complete lesson", "error");
+    }
+}
+
+// ===== FLASHCARDS =====
+function loadFlashcards() {
+    const cards = courseContent[currentUserData.course]?.flashcards || [];
+    currentFlashcardSet = cards;
+    currentFlashcardIndex = 0;
+    knownCards = [];
+    reviewCards = [];
+    displayFlashcard();
+}
+
+function displayFlashcard() {
+    if (currentFlashcardSet.length === 0) return;
+    
+    const card = currentFlashcardSet[currentFlashcardIndex];
+    document.getElementById('flashcardContainer').innerHTML = `
+        <div class="flashcard" onclick="flipCard()">
+            <div class="flashcard-content" id="flashcardContent">
+                ${card.front}
+            </div>
+        </div>
+    `;
+    document.getElementById('flashcardProgress').textContent = 
+        `Progress: ${knownCards.length}/${currentFlashcardSet.length} mastered`;
+}
+
+function flipCard() {
+    const card = currentFlashcardSet[currentFlashcardIndex];
+    const content = document.getElementById('flashcardContent');
+    const flashcard = document.querySelector('.flashcard');
+    
+    if (content.textContent === card.front) {
+        content.textContent = card.back;
+        flashcard.classList.add('flipped');
+    } else {
+        content.textContent = card.front;
+        flashcard.classList.remove('flipped');
+    }
+}
+
+function markKnown() {
+    if (!knownCards.includes(currentFlashcardIndex)) {
+        knownCards.push(currentFlashcardIndex);
+    }
+    nextFlashcard();
+}
+
+function markReview() {
+    if (!reviewCards.includes(currentFlashcardIndex)) {
+        reviewCards.push(currentFlashcardIndex);
+    }
+    nextFlashcard();
+}
+
+function nextFlashcard() {
+    if (currentFlashcardIndex < currentFlashcardSet.length - 1) {
+        currentFlashcardIndex++;
+        displayFlashcard();
+    } else {
+        showToast("🎉 You've reviewed all flashcards!", "success");
+    }
+}
+
+// ===== QUIZ =====
+function loadQuiz() {
+    const quizzes = courseContent[currentUserData.course]?.quizzes || [];
+    currentQuizIndex = 0;
+    quizScore = 0;
+    displayQuiz();
+}
+
+function displayQuiz() {
+    const quizzes = courseContent[currentUserData.course]?.quizzes || [];
+    if (quizzes.length === 0) return;
+    
+    const quiz = quizzes[currentQuizIndex];
+    let optionsHtml = '';
+    
+    quiz.options.forEach((option, index) => {
+        optionsHtml += `
+            <div class="quiz-option" onclick="selectQuizOption(${index})" id="opt_${index}">
+                ${option}
+            </div>
+        `;
+    });
+    
+    document.getElementById('quizContainer').innerHTML = `
+        <div class="quiz-question">${quiz.question}</div>
+        <div class="quiz-options">
+            ${optionsHtml}
+        </div>
+    `;
+    
+    document.getElementById('quizScore').textContent = `Score: ${quizScore}/${quizzes.length}`;
+    selectedQuizOption = null;
+}
+
+function selectQuizOption(index) {
+    // Remove previous selection
+    document.querySelectorAll('.quiz-option').forEach(opt => {
+        opt.classList.remove('selected');
+    });
+    
+    // Add selection
+    document.getElementById(`opt_${index}`).classList.add('selected');
+    selectedQuizOption = index;
+}
+
+function checkQuizAnswer() {
+    if (selectedQuizOption === null) {
+        showToast("Please select an answer", "error");
+        return;
+    }
+    
+    const quizzes = courseContent[currentUserData.course]?.quizzes || [];
+    const quiz = quizzes[currentQuizIndex];
+    
+    const selectedEl = document.getElementById(`opt_${selectedQuizOption}`);
+    const correctEl = document.getElementById(`opt_${quiz.correct}`);
+    
+    if (selectedQuizOption === quiz.correct) {
+        selectedEl.classList.add('correct');
+        quizScore++;
+        showToast("✅ Correct!", "success");
+    } else {
+        selectedEl.classList.add('wrong');
+        correctEl.classList.add('correct');
+        showToast("❌ Incorrect. Try again!", "error");
+    }
+    
+    document.getElementById('quizScore').textContent = `Score: ${quizScore}/${quizzes.length}`;
+}
+
+function nextQuizQuestion() {
+    const quizzes = courseContent[currentUserData.course]?.quizzes || [];
+    
+    if (currentQuizIndex < quizzes.length - 1) {
+        currentQuizIndex++;
+        displayQuiz();
+    } else {
+        const passScore = Math.ceil(quizzes.length * 0.7); // 70% to pass
+        if (quizScore >= passScore) {
+            showToast("🎉 Quiz passed! You can complete the lesson!", "success");
+            document.getElementById('completeLessonBtn').disabled = false;
+        } else {
+            showToast(`You need ${passScore}/${quizzes.length} to pass. Try again!`, "error");
+        }
+    }
+}
+
+// ===== PAYMENT =====
+async function submitPayment() {
+    try {
+        const code = document.getElementById('mpesa_wall')?.value;
+        
+        if (!code || code.length < 5) {
+            showToast("Please enter a valid M-PESA code", "error");
+            return;
+        }
+        
+        // Insert payment record
+        const { error } = await supabaseClient
+            .from("payments")
+            .insert([{
+                email: currentUser,
+                code: code,
+                amount: 200,
+                type: 'course',
+                status: 'pending',
+                created_at: new Date()
+            }]);
+            
+        if (error) throw error;
+        
+        showToast("Payment submitted! Admin will verify shortly.", "success");
+        document.getElementById('mpesa_wall').value = '';
+        
+    } catch (error) {
+        console.error('Payment error:', error);
+        showToast("Payment submission failed", "error");
+    }
+}
+
+// ===== CERTIFICATE PURCHASE =====
+async function purchaseCertificate() {
+    try {
+        const code = document.getElementById('cert_mpesa')?.value;
+        
+        if (!code || code.length < 5) {
+            showToast("Please enter a valid M-PESA code", "error");
+            return;
+        }
+        
+        const { error } = await supabaseClient
+            .from("payments")
+            .insert([{
+                email: currentUser,
+                code: code,
+                amount: 500,
+                type: 'certificate',
+                status: 'pending',
+                created_at: new Date()
+            }]);
+            
+        if (error) throw error;
+        
+        showToast("Certificate payment submitted! You'll receive your PDF soon.", "success");
+        document.getElementById('cert_mpesa').value = '';
+        
+    } catch (error) {
+        console.error('Certificate error:', error);
+        showToast("Failed to process certificate payment", "error");
+    }
+}
+
+// ===== COUNTDOWN TIMER =====
+function startCountdown(endDate) {
+    if (countdownInterval) clearInterval(countdownInterval);
+    
+    countdownInterval = setInterval(() => {
+        const now = new Date();
+        const diff = endDate - now;
+        
+        if (diff <= 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdown').textContent = 'Expired';
+            // Auto-lock the account
+            if (currentUserData) {
+                renderDashboard(); // This will show the payment wall
+            }
+            return;
+        }
+        
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        
+        document.getElementById('countdown').textContent = `${days}d ${hours}h ${minutes}m`;
+        document.getElementById('trialDays').textContent = days;
+    }, 60000); // Update every minute
+}
+
+// ===== ADMIN PANEL =====
+async function loadAdminPanel() {
+    document.getElementById('auth').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    
+    await loadPendingPayments();
+    await loadAllUsers();
+}
+
+async function loadPendingPayments() {
+    const { data, error } = await supabaseClient
+        .from("payments")
+        .select("*")
+        .eq("status", "pending")
+        .order("created_at", { ascending: false });
+        
+    if (error) {
+        console.error('Error loading payments:', error);
+        return;
+    }
+    
+    let html = '';
+    data.forEach(payment => {
+        html += `
+            <div class="payment-request">
+                <div>
+                    <strong>${payment.email}</strong><br>
+                    Code: ${payment.code} | Amount: KSH ${payment.amount} | Type: ${payment.type}
+                </div>
+                <div>
+                    <button class="btn-approve" onclick="approvePayment('${payment.id}', '${payment.email}', ${payment.amount})">Approve</button>
+                    <button class="btn-reject" onclick="rejectPayment('${payment.id}')">Reject</button>
                 </div>
             </div>
         `;
     });
     
-    lessonsHtml += '</div>';
-    container.innerHTML = lessonsHtml;
+    document.getElementById('pendingPaymentsList').innerHTML = html || '<p>No pending payments</p>';
 }
 
-// Complete lesson (simplified version)
-async function completeLesson() {
-    if (!currentUserData) return;
+async function loadAllUsers() {
+    const { data, error } = await supabaseClient
+        .from("users")
+        .select("*")
+        .order("created_at", { ascending: false });
+        
+    if (error) {
+        console.error('Error loading users:', error);
+        return;
+    }
     
+    let html = '<table style="width:100%; border-collapse: collapse;">';
+    html += '<tr><th>Name</th><th>Email</th><th>Course</th><th>Status</th><th>Progress</th></tr>';
+    
+    data.forEach(user => {
+        html += `
+            <tr style="border-bottom:1px solid #e0e0e0;">
+                <td style="padding:10px;">${user.name}</td>
+                <td style="padding:10px;">${user.email}</td>
+                <td style="padding:10px;">${user.course}</td>
+                <td style="padding:10px;">${user.payment_status}</td>
+                <td style="padding:10px;">${user.progress || 0}%</td>
+            </tr>
+        `;
+    });
+    
+    html += '</table>';
+    document.getElementById('usersList').innerHTML = html;
+}
+
+async function approvePayment(paymentId, userEmail, amount) {
     try {
-        const totalLessons = 4; // We have 4 lessons per course
-        let currentProgress = currentUserData.progress || 0;
-        
-        // Calculate new progress (increment by 25% for each lesson)
-        let newProgress = currentProgress + 25;
-        if (newProgress > 100) newProgress = 100;
-        
-        const { error } = await supabaseClient
-            .from("users")
-            .update({ progress: newProgress })
-            .eq("email", currentUser);
+        // Update payment status
+        const { error: paymentError } = await supabaseClient
+            .from("payments")
+            .update({ status: 'approved' })
+            .eq("id", paymentId);
             
-        if (error) throw error;
+        if (paymentError) throw paymentError;
         
-        // Update local data
-        currentUserData.progress = newProgress;
-        
-        // Update UI
-        updateProgress(currentUserData);
-        
-        // Update lesson status in UI
-        const lessonIndex = Math.floor((newProgress - 1) / 25);
-        const lessonCards = document.querySelectorAll('.lesson-card');
-        if (lessonCards[lessonIndex]) {
-            const statusBadge = lessonCards[lessonIndex].querySelector('.status-badge');
-            if (statusBadge) {
-                statusBadge.textContent = 'Completed ✓';
-                statusBadge.className = 'status-badge status-completed';
-            }
-            lessonCards[lessonIndex].classList.add('completed');
+        // Update user status based on payment type
+        if (amount === 200) {
+            await supabaseClient
+                .from("users")
+                .update({ payment_status: 'paid' })
+                .eq("email", userEmail);
+        } else if (amount === 500) {
+            await supabaseClient
+                .from("users")
+                .update({ payment_status: 'certified' })
+                .eq("email", userEmail);
         }
         
-        showToast(`✅ Lesson completed! Progress: ${newProgress}%`, "success");
+        showToast(`Payment approved for ${userEmail}`, "success");
+        loadPendingPayments();
         
     } catch (error) {
-        console.error('Error completing lesson:', error);
-        showToast("Failed to complete lesson", "error");
+        console.error('Approval error:', error);
+        showToast("Failed to approve payment", "error");
     }
 }
 
-// Update progress display
-function updateProgress(user) {
-    const progressBar = document.getElementById("progressBar");
-    const progressPercentage = document.getElementById("progressPercentage");
-    
-    if (progressBar && progressPercentage) {
-        const progress = user.progress || 0;
-        progressBar.style.width = progress + "%";
-        progressBar.textContent = progress + "%";
-        progressPercentage.textContent = progress + "% Complete";
-    }
-}
-
-// Refresh dashboard
-async function refreshDashboard() {
-    showToast("Refreshing dashboard...", "info");
-    await loadUser();
-}
-
-// Submit payment
-async function submitPayment() {
+async function rejectPayment(paymentId) {
     try {
-        const code = document.getElementById("mpesa")?.value;
-        const paymentStatus = document.getElementById("paymentStatus");
-        
-        if (!code || code.trim() === '') {
-            showToast("Please enter MPESA code", "error");
-            return;
-        }
-
-        if (code.length < 5) {
-            showToast("Please enter a valid MPESA code", "error");
-            return;
-        }
-        
-        // Check if payments table exists and insert
-        try {
-            const { error } = await supabaseClient
-                .from("payments")
-                .insert([{
-                    email: currentUser,
-                    code: code.trim(),
-                    status: "pending",
-                    created_at: new Date().toISOString()
-                }]);
-                
-            if (error) {
-                console.error('Payment insert error:', error);
-                // If payments table doesn't exist, just show success message
-                showToast("Payment submitted! (Demo mode)", "success");
-            } else {
-                showToast("Payment submitted successfully!", "success");
-            }
-        } catch (paymentError) {
-            // Payments table might not exist, just show success for demo
-            console.log('Payment recorded in demo mode');
-            showToast("Payment submitted! (Demo mode)", "success");
-        }
-        
-        if (paymentStatus) {
-            paymentStatus.innerHTML = '<i class="fas fa-check-circle"></i> Payment submitted for verification!';
-            paymentStatus.style.color = "#28a745";
-        }
-        
-        // Clear input
-        document.getElementById("mpesa").value = '';
+        await supabaseClient
+            .from("payments")
+            .update({ status: 'rejected' })
+            .eq("id", paymentId);
+            
+        showToast("Payment rejected", "success");
+        loadPendingPayments();
         
     } catch (error) {
-        console.error('Payment error:', error);
-        showToast("Payment submitted (demo mode)", "success");
+        console.error('Rejection error:', error);
+        showToast("Failed to reject payment", "error");
     }
 }
 
-// Add CSS for lesson cards if not already present
-const lessonStyles = document.createElement('style');
-lessonStyles.textContent = `
-    .lessons-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin: 2rem 0;
-    }
+function logoutAdmin() {
+    logout();
+}
 
-    .lesson-card {
-        background: #f8f9fa;
-        border-radius: 15px;
-        padding: 1.5rem;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
-    }
-
-    .lesson-card:hover {
-        transform: translateY(-5px);
-        border-color: #667eea;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
-    }
-
-    .lesson-card.completed {
-        background: linear-gradient(135deg, #667eea10, #764ba210);
-        border-color: #28a745;
-    }
-
-    .lesson-icon {
-        width: 50px;
-        height: 50px;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
-    }
-
-    .lesson-icon i {
-        color: white;
-        font-size: 1.5rem;
-    }
-
-    .lesson-title {
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 0.5rem;
-    }
-
-    .lesson-description {
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-
-    .lesson-status {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.9rem;
-    }
-
-    .status-badge {
-        padding: 0.25rem 1rem;
-        border-radius: 50px;
-        font-weight: 500;
-        font-size: 0.8rem;
-    }
-
-    .status-completed {
-        background: #28a74520;
-        color: #28a745;
-    }
-
-    .status-pending {
-        background: #ffc10720;
-        color: #ffc107;
-    }
-
-    #progressBar {
-        transition: width 0.5s ease;
-        background: linear-gradient(90deg, #667eea, #764ba2);
-        color: white;
-        text-align: center;
-        line-height: 20px;
-        font-size: 12px;
-        border-radius: 10px;
-    }
-`;
-document.head.appendChild(lessonStyles);
-
-// Make functions globally available
+// ===== MAKE FUNCTIONS GLOBAL =====
 window.register = register;
 window.login = login;
 window.logout = logout;
-window.completeLesson = completeLesson;
+window.showLogin = showLogin;
+window.showRegister = showRegister;
 window.submitPayment = submitPayment;
-window.refreshDashboard = refreshDashboard;
+window.completeLesson = completeLesson;
+window.flipCard = flipCard;
+window.markKnown = markKnown;
+window.markReview = markReview;
+window.selectQuizOption = selectQuizOption;
+window.checkQuizAnswer = checkQuizAnswer;
+window.nextQuizQuestion = nextQuizQuestion;
+window.purchaseCertificate = purchaseCertificate;
+window.approvePayment = approvePayment;
+window.rejectPayment = rejectPayment;
+window.logoutAdmin = logoutAdmin;
