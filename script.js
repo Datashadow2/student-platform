@@ -1,9 +1,15 @@
-const SUPABASE_URL="https://xzptxrarzdgawilymmhu.supabase.co";
-const SUPABASE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6cHR4cmFyemRnYXdpbHltbWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzODc0NjYsImV4cCI6MjA4ODk2MzQ2Nn0.5n833vgZmdN3Rr4s_jja8R6qLy4DN34DPbRw6DzuDbg";
+// ---------------------------
+// Supabase Client Setup
+// ---------------------------
+const SUPABASE_URL = "https://xzptxrarzdgawilymmhu.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6cHR4cmFyemRnYXdpbHltbWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzODc0NjYsImV4cCI6MjA4ODk2MzQ2Nn0.5n833vgZmdN3Rr4s_jja8R6qLy4DN34DPbRw6DzuDbg"; // replace with your anon key
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let currentUser = null;
 
+// ---------------------------
+// Auto-login if already logged in
+// ---------------------------
 window.onload = checkSession;
 
 function checkSession(){
@@ -11,6 +17,9 @@ function checkSession(){
   if(saved){ currentUser = saved; loadUser(); }
 }
 
+// ---------------------------
+// Register new user
+// ---------------------------
 async function register(){
   const name = document.getElementById("reg_name").value;
   const email = document.getElementById("reg_email").value;
@@ -23,11 +32,15 @@ async function register(){
   if(exist){ alert("Email already exists"); return; }
 
   await supabase.from("users").insert([{name,email,password:pass,course,progress:0}]);
-  localStorage.setItem("student",email);
+
+  localStorage.setItem("student", email);
   currentUser = email;
   loadUser();
 }
 
+// ---------------------------
+// Login existing user
+// ---------------------------
 async function login(){
   const email = document.getElementById("log_email").value;
   const pass = document.getElementById("log_pass").value;
@@ -35,13 +48,22 @@ async function login(){
   let {data} = await supabase.from("users").select("*").eq("email",email).eq("password",pass);
   if(data.length==0){ alert("Invalid login"); return; }
 
-  localStorage.setItem("student",email);
+  localStorage.setItem("student", email);
   currentUser = email;
   loadUser();
 }
 
-function logout(){ localStorage.removeItem("student"); location.reload(); }
+// ---------------------------
+// Logout
+// ---------------------------
+function logout(){
+  localStorage.removeItem("student");
+  location.reload();
+}
 
+// ---------------------------
+// Load user dashboard
+// ---------------------------
 async function loadUser(){
   document.getElementById("auth").style.display = "none";
   let {data} = await supabase.from("users").select("*").eq("email",currentUser);
@@ -57,6 +79,9 @@ function openDashboard(user){
   loadProgress(user);
 }
 
+// ---------------------------
+// Load course-specific notes
+// ---------------------------
 function loadNotes(course){
   const notes = {
     forex: ["Lesson 1: What is Forex","Lesson 2: Currency pairs","Lesson 3: Charts & Analysis"],
@@ -75,6 +100,9 @@ function loadNotes(course){
   });
 }
 
+// ---------------------------
+// Complete a lesson
+// ---------------------------
 async function completeLesson(){
   let {data} = await supabase.from("users").select("*").eq("email",currentUser);
   let user = data[0];
@@ -87,9 +115,12 @@ async function completeLesson(){
 
 function loadProgress(user){
   let progress = user.progress || 0;
-  document.getElementById("progressBar").style.width = progress+"%";
+  document.getElementById("progressBar").style.width = progress + "%";
 }
 
+// ---------------------------
+// Payment submission
+// ---------------------------
 async function submitPayment(){
   let code = document.getElementById("mpesa").value;
   if(!code){ alert("Enter code"); return; }
