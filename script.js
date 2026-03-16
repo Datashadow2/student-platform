@@ -7,10 +7,119 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ===== GLOBAL VARIABLES =====
 let currentUser = null;
-let currentUserData = null;
-let countdownInterval = null;
-let testimonials = [];
-let kcseGrades = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'E', 'Adult'];
+let pendingUsers = [];
+
+// ===== KENYAN TESTIMONIALS WITH REAL KENYAN FACES =====
+const testimonials = [
+    {
+        name: "James Otieno",
+        grade: "B+",
+        job: "Tax Assistant",
+        org: "KRA - Kenya Revenue Authority",
+        story: "Nilipay KSH 150, nikajifunza kuhusu kazi za serikali, na baada ya miezi 3 nikaajiriwa KRA! Asante SkillForge!",
+        image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 5
+    },
+    {
+        name: "Mary Wanjiku",
+        grade: "C",
+        job: "Customer Service",
+        org: "Huduma Kenya - Nyeri",
+        story: "Sikujua ni kazi gani ningepata na C plain yangu. Kozi hii ilionyesha nafasi 185 za serikali! Sasa niko Huduma Nyeri.",
+        image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 5
+    },
+    {
+        name: "Peter Kamau",
+        grade: "Adult",
+        job: "ICT Officer",
+        org: "ICT Authority",
+        story: "Mimi mwanafunzi mzima nilidhani kazi za serikali ni ngumu. Sasa niko ICT Authority! Usikate tamaa.",
+        image: "https://images.pexels.com/photos/697509/pexels-photo-697509.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 5
+    },
+    {
+        name: "Faith Akinyi",
+        grade: "A-",
+        job: "Compliance Officer",
+        org: "CMA - Capital Markets Authority",
+        story: "Niliomba nafasi 8, nikaitwa interview 3, sasa niko CMA! KSH 150 ilikuwa investment bora kabisa.",
+        image: "https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 5
+    },
+    {
+        name: "John Mwangi",
+        grade: "C",
+        job: "Clerk",
+        org: "County Government of Kiambu",
+        story: "County zinaajiri watu wengi wa C plain. Sasa niko permanent na pension! Nashukuru.",
+        image: "https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 5
+    },
+    {
+        name: "Lucy Wambui",
+        grade: "B",
+        job: "IT Support",
+        org: "Huduma Kenya",
+        story: "Nililipa KSH 150, KSH 200, na KSH 500 kwa cheti. Yote ilifaa! Sasa niko na kazi nzuri.",
+        image: "https://images.pexels.com/photos/1036622/pexels-photo-1036622.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 5
+    },
+    {
+        name: "Brian Odhiambo",
+        grade: "B-",
+        job: "Customs Officer",
+        org: "KRA - Customs Department",
+        story: "Nimeajiriwa KRA Customs Mombasa! Kazi nzuri na malipo mazuri. Mungu ni mwema.",
+        image: "https://images.pexels.com/photos/2770600/pexels-photo-2770600.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 5
+    },
+    {
+        name: "Sarah Chepkemoi",
+        grade: "C+",
+        job: "Receptionist",
+        org: "Huduma Kenya - Eldoret",
+        story: "Nilikuwa natafuta kazi kwa muda mrefu. Kozi hii ilinionyesha njia ya kuingia Huduma. Asanteni!",
+        image: "https://images.pexels.com/photos/1310522/pexels-photo-1310522.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 4
+    },
+    {
+        name: "David Mwangi",
+        grade: "D+",
+        job: "Intern",
+        org: "ICT Authority",
+        story: "Nilianza kama intern, sasa nimepata nafasi ya kuapply permanent. SkillForge imenisaidia sana.",
+        image: "https://images.pexels.com/photos/2623917/pexels-photo-2623917.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 4
+    },
+    {
+        name: "Esther Akoth",
+        grade: "B+",
+        job: "Tax Officer",
+        org: "KRA - Headquarters",
+        story: "Nilimaliza kozi, nikapata cheti cha KSH 500, na sasa niko KRA! Cheti kilinisaidia interview.",
+        image: "https://images.pexels.com/photos/1855582/pexels-photo-1855582.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 5
+    },
+    {
+        name: "Joseph Kipchoge",
+        grade: "C",
+        job: "Driver",
+        org: "County Government of Uasin Gishu",
+        story: "Sijui kwanini nilidhani C haifai. County zina nafasi nyingi! Niko na kazi sasa.",
+        image: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 4
+    },
+    {
+        name: "Grace Njeri",
+        grade: "Adult",
+        job: "Administrative Assistant",
+        org: "Ministry of Education",
+        story: "Nilianza kama adult learner, sasa niko Ministry of Education. Usiogope kujaribu!",
+        image: "https://images.pexels.com/photos/1820917/pexels-photo-1820917.jpeg?auto=compress&cs=tinysrgb&w=400",
+        stars: 5
+    }
+];
 
 // ===== KENYAN GOVERNMENT AGENCIES BY KCSE GRADE =====
 const governmentJobs = {
@@ -115,32 +224,23 @@ const jobLessons = {
     'KRA': [
         {
             title: "Tax Assistant - KRA",
-            description: "Learn what Tax Assistants do daily",
+            description: "Jifunze kazi za Tax Assistant KRA",
             content: `
                 <div class="job-details">
-                    <h4>Daily Tasks:</h4>
+                    <h4>Kazi za Kila Siku:</h4>
                     <ul class="daily-tasks">
-                        <li><i class="fas fa-clock"></i> 8:30 AM - Open taxpayer counter</li>
-                        <li><i class="fas fa-file"></i> 9:00 AM - Help taxpayers file returns</li>
-                        <li><i class="fas fa-check"></i> 10:00 AM - Verify submitted documents</li>
-                        <li><i class="fas fa-phone"></i> 11:00 AM - Answer tax inquiries</li>
-                        <li><i class="fas fa-id-card"></i> 12:00 PM - Process KRA PIN applications</li>
-                        <li><i class="fas fa-keyboard"></i> 2:00 PM - Data entry of tax records</li>
-                        <li><i class="fas fa-clock"></i> 4:00 PM - Report generation</li>
+                        <li><i class="fas fa-clock"></i> 8:30 AM - Fungua kaunta</li>
+                        <li><i class="fas fa-file"></i> 9:00 AM - Saidia walipa kodi</li>
+                        <li><i class="fas fa-check"></i> 10:00 AM - Angalia nyaraka</li>
+                        <li><i class="fas fa-phone"></i> 11:00 AM - Jibu maswali</li>
+                        <li><i class="fas fa-id-card"></i> 12:00 PM - Chapisha KRA PIN</li>
                     </ul>
                     
-                    <h4>Skills You'll Learn:</h4>
+                    <h4>Ujuzi Utakaopata:</h4>
                     <ul>
-                        <li>✅ How to file tax returns (iTax system)</li>
-                        <li>✅ Understanding VAT, PAYE, Corporation tax</li>
-                        <li>✅ KRA PIN application process</li>
-                        <li>✅ Tax compliance checks</li>
-                    </ul>
-                    
-                    <h4>Requirements:</h4>
-                    <ul>
-                        <li>KCSE: C+ and above</li>
-                        <li>Certificate: KSH 500 (optional)</li>
+                        <li>✅ Kutumia iTax system</li>
+                        <li>✅ Kuelewa VAT na PAYE</li>
+                        <li>✅ Huduma kwa wateja</li>
                     </ul>
                 </div>
             `
@@ -149,16 +249,15 @@ const jobLessons = {
     'Huduma': [
         {
             title: "Customer Service - Huduma Kenya",
-            description: "Learn to serve citizens at Huduma centres",
+            description: "Jifunze kuhudumia wananchi",
             content: `
                 <div class="job-details">
-                    <h4>Daily Tasks:</h4>
+                    <h4>Kazi za Kila Siku:</h4>
                     <ul class="daily-tasks">
-                        <li><i class="fas fa-clock"></i> 8:00 AM - Open service counter</li>
-                        <li><i class="fas fa-smile"></i> 9:00 AM - Assist citizens with services</li>
-                        <li><i class="fas fa-id-card"></i> 10:00 AM - Process ID applications</li>
-                        <li><i class="fas fa-passport"></i> 11:00 AM - Handle passport inquiries</li>
-                        <li><i class="fas fa-file"></i> 2:00 PM - Document verification</li>
+                        <li><i class="fas fa-clock"></i> 8:00 AM - Fungua kaunta</li>
+                        <li><i class="fas fa-smile"></i> 9:00 AM - Saidia wananchi</li>
+                        <li><i class="fas fa-id-card"></i> 10:00 AM - Chapisha ID</li>
+                        <li><i class="fas fa-passport"></i> 11:00 AM - Huduma ya paspoti</li>
                     </ul>
                 </div>
             `
@@ -166,151 +265,84 @@ const jobLessons = {
     ]
 };
 
-// ===== SAMPLE TESTIMONIALS WITH IMAGES =====
-const sampleTestimonials = [
-    {
-        id: 1,
-        name: "James Otieno",
-        grade: "B+",
-        job: "Tax Assistant",
-        organization: "KRA",
-        salary: "KSH 65,000",
-        story: "I paid KSH 150, learned about government jobs through this course, and 3 months later I was hired at KRA! The daily tasks training prepared me perfectly for the interview.",
-        image: "https://randomuser.me/api/portraits/men/1.jpg",
-        stars: 5,
-        approved: true,
-        date: "2024-01-15"
-    },
-    {
-        id: 2,
-        name: "Mary Wanjiku",
-        grade: "C",
-        job: "Customer Service",
-        organization: "Huduma Kenya",
-        salary: "KSH 45,000",
-        story: "I didn't know what jobs my C plain could get. This course showed me 185 government positions I qualified for! Now I serve citizens at Huduma Nyeri.",
-        image: "https://randomuser.me/api/portraits/women/2.jpg",
-        stars: 5,
-        approved: true,
-        date: "2024-02-20"
-    },
-    {
-        id: 3,
-        name: "Peter Kamau",
-        grade: "Adult",
-        job: "ICT Officer",
-        organization: "ICT Authority",
-        salary: "KSH 95,000",
-        story: "As an adult learner with 10 years experience, I thought government jobs were out of reach. This course showed me 78 positions I qualified for. Now I'm a manager!",
-        image: "https://randomuser.me/api/portraits/men/3.jpg",
-        stars: 5,
-        approved: true,
-        date: "2024-03-10"
-    },
-    {
-        id: 4,
-        name: "Faith Akinyi",
-        grade: "A-",
-        job: "Compliance Officer",
-        organization: "CMA",
-        salary: "KSH 82,000",
-        story: "The interview tips helped me prepare for the CMA panel. I got the job! The KSH 150 booking fee was the best investment I ever made.",
-        image: "https://randomuser.me/api/portraits/women/4.jpg",
-        stars: 4,
-        approved: true,
-        date: "2024-03-05"
-    },
-    {
-        id: 5,
-        name: "John Mwangi",
-        grade: "C",
-        job: "Clerk",
-        organization: "County Government of Kiambu",
-        salary: "KSH 38,000",
-        story: "I didn't know county governments hired so many C plain graduates. This course showed me the way. Now I'm permanent and pensionable!",
-        image: "https://randomuser.me/api/portraits/men/5.jpg",
-        stars: 5,
-        approved: true,
-        date: "2024-02-28"
-    },
-    {
-        id: 6,
-        name: "Lucy Wambui",
-        grade: "B",
-        job: "IT Support",
-        organization: "Huduma Kenya",
-        salary: "KSH 58,000",
-        story: "Paid KSH 150, then KSH 200, and finally KSH 500 for the certificate. Worth every shilling! The certificate helped me stand out.",
-        image: "https://randomuser.me/api/portraits/women/6.jpg",
-        stars: 5,
-        approved: true,
-        date: "2024-01-30"
-    }
-];
-
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
     loadFeaturedTestimonials();
     checkSession();
 });
 
-// ===== FEATURED TESTIMONIALS =====
+// ===== LOAD FEATURED TESTIMONIALS =====
 function loadFeaturedTestimonials() {
     const container = document.getElementById('featuredTestimonials');
-    const featured = sampleTestimonials.slice(0, 3);
+    if (!container) return;
+    
+    const featured = testimonials.slice(0, 6);
     
     container.innerHTML = featured.map(t => `
         <div class="testimonial-card">
-            <img src="${t.image}" alt="${t.name}" class="testimonial-image">
+            <img src="${t.image}" alt="${t.name}" class="testimonial-image" onerror="this.src='https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400'">
             <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
-            <p class="testimonial-text">"${t.story.substring(0, 100)}..."</p>
+            <p class="testimonial-text">"${t.story}"</p>
             <div class="testimonial-name">${t.name}</div>
-            <div class="testimonial-job">${t.job} at ${t.organization}</div>
+            <div class="testimonial-job">${t.job} - ${t.org}</div>
             <span class="testimonial-grade">KCSE: ${t.grade}</span>
         </div>
     `).join('');
 }
 
-// ===== SESSION MANAGEMENT =====
-async function checkSession() {
-    const saved = localStorage.getItem("student");
-    if (saved) {
-        currentUser = saved;
-        await loadUser();
-    } else {
-        document.getElementById('heroSection').style.display = 'block';
-        document.getElementById('auth').style.display = 'none';
-    }
+// ===== PAGE NAVIGATION =====
+function showHeroSection() {
+    document.getElementById('heroSection').style.display = 'block';
+    document.getElementById('registrationPage').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'none';
 }
 
-function showAuthForms() {
+function showRegistrationPage() {
     document.getElementById('heroSection').style.display = 'none';
-    document.getElementById('auth').style.display = 'block';
-    document.getElementById('dashboard').style.display = 'none';
+    document.getElementById('registrationPage').style.display = 'block';
+    document.getElementById('loginPage').style.display = 'none';
     document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'none';
+}
+
+function showLoginPage() {
+    document.getElementById('heroSection').style.display = 'none';
+    document.getElementById('registrationPage').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'block';
+    document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'none';
+}
+
+function showAdminPanel() {
+    document.getElementById('heroSection').style.display = 'none';
+    document.getElementById('registrationPage').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    document.getElementById('dashboard').style.display = 'none';
+    loadPendingRegistrations();
 }
 
 function showDashboard() {
     document.getElementById('heroSection').style.display = 'none';
-    document.getElementById('auth').style.display = 'none';
+    document.getElementById('registrationPage').style.display = 'none';
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
 }
 
-function showRegister() {
-    showAuthForms();
-    document.getElementById('registerCard').style.display = 'block';
-    document.getElementById('loginCard').style.display = 'none';
-}
-
-function showLogin() {
-    showAuthForms();
-    document.getElementById('loginCard').style.display = 'block';
-    document.getElementById('registerCard').style.display = 'none';
+// ===== UPDATE ACCOUNT DISPLAY =====
+function updateAccountDisplay(email) {
+    const display = document.getElementById('accountDisplay');
+    if (display) display.textContent = email || 'Your Email';
 }
 
 // ===== TOAST =====
 function showToast(message, type = 'info') {
     const container = document.getElementById('toastContainer');
+    if (!container) return;
+    
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
@@ -318,424 +350,331 @@ function showToast(message, type = 'info') {
     setTimeout(() => toast.remove(), 3000);
 }
 
-// ===== REGISTRATION WITH KSH 150 =====
-async function register() {
+// ===== SUBMIT REGISTRATION =====
+async function submitRegistration() {
     try {
-        const name = document.getElementById("reg_name").value;
-        const email = document.getElementById("reg_email").value;
-        const pass = document.getElementById("reg_pass").value;
-        const course = document.getElementById("reg_course").value;
-        const kcse = document.getElementById("reg_kcse").value;
-        const mpesa = document.getElementById("reg_mpesa").value;
+        const name = document.getElementById('reg_name').value;
+        const email = document.getElementById('reg_email').value;
+        const password = document.getElementById('reg_pass').value;
+        const kcse = document.getElementById('reg_kcse').value;
+        const course = document.getElementById('reg_course').value;
+        const mpesaMessage = document.getElementById('reg_mpesa').value;
 
-        if (!name || !email || !pass || !course || !kcse || !mpesa) {
-            showToast("Please fill all fields", "error");
+        // Validation
+        if (!name || !email || !password || !kcse || !course || !mpesaMessage) {
+            showToast('Tafadhali jaza sehemu zote', 'error');
             return;
         }
 
-        if (pass.length < 6) {
-            showToast("Password must be at least 6 characters", "error");
+        if (password.length < 6) {
+            showToast('Password lazima iwe na herufi 6 au zaidi', 'error');
             return;
         }
 
-        // Check if user exists
-        const { data: existing } = await supabaseClient
-            .from("users")
-            .select("email")
-            .eq("email", email);
+        // Extract M-PESA code from message
+        const mpesaCode = mpesaMessage.match(/[A-Z0-9]{6,10}/g)?.[0] || 'MANUAL-' + Date.now();
 
-        if (existing && existing.length > 0) {
-            showToast("Email already registered", "error");
-            return;
-        }
-
-        const now = new Date();
-        const trialEnd = new Date(now);
-        trialEnd.setDate(trialEnd.getDate() + 2);
-
-        // Insert user with KSH 150 paid
+        // Save to Supabase
         const { error } = await supabaseClient
-            .from("users")
+            .from('users')
             .insert([{
-                name, email, password: pass, course, kcse,
-                progress: 0, completed_lessons: [],
-                payment_status: 'booking_paid', // KSH 150 paid
+                name,
+                email,
+                password,
+                kcse,
+                course,
+                mpesa_message: mpesaMessage,
+                mpesa_code: mpesaCode,
                 amount_paid: 150,
-                trial_start: now.toISOString(),
-                trial_end: trialEnd.toISOString(),
-                created_at: now.toISOString(),
-                mpesa_code: mpesa
+                status: 'pending',
+                created_at: new Date().toISOString()
             }]);
 
         if (error) throw error;
 
-        localStorage.setItem("student", email);
-        currentUser = email;
+        showToast('Umefanikiwa! Subiri admin akubali.', 'success');
         
-        showToast("Registration successful! KSH 150 received. 2-day trial started!", "success");
+        // Clear form
+        document.getElementById('registrationForm').reset();
         
-        document.getElementById("reg_name").value = '';
-        document.getElementById("reg_email").value = '';
-        document.getElementById("reg_pass").value = '';
-        document.getElementById("reg_course").value = '';
-        document.getElementById("reg_kcse").value = '';
-        document.getElementById("reg_mpesa").value = '';
-        
-        await loadUser();
+        // Go to login page
+        showLoginPage();
         
     } catch (error) {
         console.error('Registration error:', error);
-        showToast(error.message, "error");
+        showToast(error.message, 'error');
     }
 }
 
 // ===== LOGIN =====
 async function login() {
     try {
-        const email = document.getElementById("log_email").value;
-        const pass = document.getElementById("log_pass").value;
+        const email = document.getElementById('log_email').value;
+        const password = document.getElementById('log_pass').value;
 
         const { data, error } = await supabaseClient
-            .from("users")
-            .select("*")
-            .eq("email", email)
-            .eq("password", pass);
+            .from('users')
+            .select('*')
+            .eq('email', email)
+            .eq('password', password);
 
-        if (error || !data || data.length === 0) {
-            showToast("Invalid email or password", "error");
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            showToast('Email au password si sahihi', 'error');
             return;
         }
 
-        localStorage.setItem("student", email);
-        currentUser = email;
+        const user = data[0];
         
-        showToast("Login successful!", "success");
-        await loadUser();
+        // Check if admin
+        if (email === 'admin@skillforge.com') {
+            currentUser = user;
+            showAdminPanel();
+            return;
+        }
+
+        // Check if approved
+        if (user.status !== 'approved') {
+            showToast('Akaunti yako haijaidhinishwa. Subiri admin.', 'info');
+            return;
+        }
+
+        currentUser = user;
+        localStorage.setItem('student', email);
+        renderDashboard();
         
     } catch (error) {
-        showToast(error.message, "error");
+        showToast(error.message, 'error');
     }
 }
 
 // ===== LOGOUT =====
 function logout() {
-    localStorage.removeItem("student");
+    localStorage.removeItem('student');
     currentUser = null;
-    currentUserData = null;
-    if (countdownInterval) clearInterval(countdownInterval);
-    document.getElementById('heroSection').style.display = 'block';
-    document.getElementById('auth').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'none';
-    showToast("Logged out", "success");
+    showHeroSection();
+    showToast('Umetoka vizuri', 'success');
 }
 
-// ===== LOAD USER =====
-async function loadUser() {
+// ===== LOAD PENDING REGISTRATIONS (ADMIN) =====
+async function loadPendingRegistrations() {
     try {
-        const { data } = await supabaseClient
-            .from("users")
-            .select("*")
-            .eq("email", currentUser);
+        const { data, error } = await supabaseClient
+            .from('users')
+            .select('*')
+            .eq('status', 'pending');
 
+        if (error) throw error;
+
+        const container = document.getElementById('pendingRegistrations');
+        
+        if (!container) return;
+        
         if (!data || data.length === 0) {
-            logout();
+            container.innerHTML = '<p>Hakuna watu wanaosubiri</p>';
             return;
         }
 
-        currentUserData = data[0];
-        
-        if (currentUserData.email === 'admin@skillforge.com') {
-            loadAdminPanel();
-            return;
-        }
-        
-        renderDashboard();
+        container.innerHTML = data.map(user => `
+            <div class="pending-payment">
+                <div class="payment-details">
+                    <strong>${user.name}</strong> (${user.email})<br>
+                    KCSE: ${user.kcse} | Course: ${user.course}<br>
+                    M-PESA: ${user.mpesa_code}<br>
+                    <small>${new Date(user.created_at).toLocaleString()}</small>
+                </div>
+                <div class="payment-actions">
+                    <button class="btn-approve" onclick="approveUser('${user.email}')">✓ Idhinisha</button>
+                    <button class="btn-reject" onclick="rejectUser('${user.email}')">✗ Kataa</button>
+                </div>
+            </div>
+        `).join('');
         
     } catch (error) {
-        console.error('Load error:', error);
+        console.error('Error loading pending:', error);
     }
 }
 
-// ===== CHECK ACCESS =====
-function checkAccess() {
-    const now = new Date();
-    const trialEnd = new Date(currentUserData.trial_end);
-    
-    // If trial expired and not fully paid
-    if (now > trialEnd && currentUserData.payment_status !== 'full_access') {
-        return { canAccess: false, status: 'locked', message: 'Trial ended. Pay KSH 200.' };
+// ===== APPROVE USER (ADMIN) =====
+async function approveUser(email) {
+    try {
+        const trialEnd = new Date();
+        trialEnd.setDate(trialEnd.getDate() + 2);
+
+        const { error } = await supabaseClient
+            .from('users')
+            .update({ 
+                status: 'approved',
+                trial_start: new Date().toISOString(),
+                trial_end: trialEnd.toISOString(),
+                progress: 0,
+                completed_lessons: []
+            })
+            .eq('email', email);
+
+        if (error) throw error;
+
+        showToast(`✅ ${email} ameidhinishwa!`, 'success');
+        loadPendingRegistrations();
+        
+    } catch (error) {
+        showToast(error.message, 'error');
     }
-    
-    // If has full access
-    if (currentUserData.payment_status === 'full_access') {
-        return { canAccess: true, status: 'full', showContent: true };
+}
+
+// ===== REJECT USER (ADMIN) =====
+async function rejectUser(email) {
+    try {
+        const { error } = await supabaseClient
+            .from('users')
+            .delete()
+            .eq('email', email);
+
+        if (error) throw error;
+
+        showToast(`❌ ${email} amekataliwa`, 'success');
+        loadPendingRegistrations();
+        
+    } catch (error) {
+        showToast(error.message, 'error');
     }
-    
-    // Still in trial
-    return { canAccess: true, status: 'trial', showContent: false };
 }
 
 // ===== RENDER DASHBOARD =====
 function renderDashboard() {
     showDashboard();
     
-    const access = checkAccess();
-    const jobs = governmentJobs[currentUserData.kcse] || governmentJobs['B+'];
+    const user = currentUser;
     
-    // Update header
-    document.getElementById('userAvatar').textContent = currentUserData.name.charAt(0);
-    document.getElementById('welcome').textContent = `Welcome, ${currentUserData.name}!`;
-    document.getElementById('kcseDisplay').textContent = `KCSE: ${currentUserData.kcse}`;
-    document.getElementById('userGrade').textContent = currentUserData.kcse;
-    document.getElementById('testimonialGrade').textContent = currentUserData.kcse;
+    document.getElementById('userAvatar').textContent = user.name.charAt(0);
+    document.getElementById('welcomeName').textContent = `Karibu, ${user.name}!`;
+    document.getElementById('userGrade').textContent = `KCSE: ${user.kcse}`;
     
-    // Update payment badge
-    if (currentUserData.payment_status === 'full_access') {
-        document.getElementById('paymentBadge').textContent = 'KSH 350 Paid - Full Access';
-        document.getElementById('paymentBadge').style.background = '#28a745';
+    // Check trial status
+    const now = new Date();
+    const trialEnd = new Date(user.trial_end);
+    
+    if (now <= trialEnd) {
+        document.getElementById('trialTimer').style.display = 'block';
+        startCountdown(trialEnd);
+        document.getElementById('paymentStatus').textContent = 'Trial Inaendelea';
+        document.getElementById('paymentStatus').className = 'payment-status';
     } else {
-        document.getElementById('paymentBadge').textContent = 'KSH 150 Paid - Limited Access';
+        document.getElementById('trialTimer').style.display = 'none';
+        document.getElementById('paymentStatus').textContent = 'Trial Imeisha - Lipa KSH 200';
+        document.getElementById('paymentStatus').className = 'payment-status';
     }
     
-    // Update job preview
-    document.getElementById('previewGrade').textContent = currentUserData.kcse;
-    document.getElementById('previewGov').textContent = jobs.total;
-    document.getElementById('previewPrivate').textContent = Math.floor(jobs.total * 2.2);
-    
-    // Update job stats
-    document.getElementById('govJobs').textContent = jobs.total;
-    document.getElementById('privateJobs').textContent = Math.floor(jobs.total * 2.2);
-    document.getElementById('internships').textContent = Math.floor(jobs.total * 0.5);
-    
-    // Show/hide based on access
-    if (access.status === 'locked') {
-        document.getElementById('paymentWall').style.display = 'block';
-        document.getElementById('mainContent').style.display = 'none';
-    } else {
-        document.getElementById('paymentWall').style.display = 'none';
-        document.getElementById('mainContent').style.display = 'block';
-        
-        if (access.status === 'trial') {
-            startCountdown(new Date(currentUserData.trial_end));
-        }
-        
-        if (access.showContent) {
-            renderLessons();
-            renderGradeTestimonials();
-            renderAllTestimonials();
-            updateProgress();
-        }
-    }
+    // Load dashboard content
+    loadDashboardContent(user);
 }
 
-// ===== UNLOCK FULL ACCESS (KSH 200) =====
-async function unlockFullAccess() {
-    const code = document.getElementById('mpesa_unlock').value;
-    if (!code || code.length < 5) {
-        showToast("Enter valid M-PESA code", "error");
-        return;
-    }
+// ===== LOAD DASHBOARD CONTENT =====
+function loadDashboardContent(user) {
+    const container = document.getElementById('dashboardContent');
     
-    try {
-        await supabaseClient
-            .from("users")
-            .update({ 
-                payment_status: 'full_access',
-                amount_paid: 350,
-                full_access_code: code,
-                full_access_date: new Date()
-            })
-            .eq("email", currentUser);
-        
-        currentUserData.payment_status = 'full_access';
-        showToast("Payment verified! Full access granted!", "success");
-        renderDashboard();
-        
-    } catch (error) {
-        showToast("Payment failed", "error");
-    }
-}
-
-// ===== RENDER LESSONS =====
-function renderLessons() {
-    const container = document.getElementById('lessonsGrid');
-    const lessons = [
-        {
-            title: "KRA Jobs - Tax Assistant",
-            description: "Learn about tax assistant positions at KRA",
-            icon: "landmark",
-            content: jobLessons['KRA'][0].content
-        },
-        {
-            title: "Huduma Kenya - Customer Service",
-            description: "Learn about customer service at Huduma centres",
-            icon: "hands-helping",
-            content: jobLessons['Huduma'][0].content
-        },
-        {
-            title: "CMA - Compliance Officer",
-            description: "Learn about compliance at Capital Markets Authority",
-            icon: "chart-line",
-            content: `<div class="job-details"><h4>Coming soon...</h4></div>`
-        }
-    ];
+    const jobs = governmentJobs[user.kcse] || governmentJobs['B+'];
     
-    container.innerHTML = lessons.map(lesson => `
-        <div class="lesson-card">
-            <div class="lesson-icon">
-                <i class="fas fa-${lesson.icon}"></i>
+    container.innerHTML = `
+        <div style="background: white; padding: 2rem; border-radius: 20px;">
+            <h3>📊 Job Market - KCSE ${user.kcse}</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0;">
+                <div style="background: #f8f9fa; padding: 1.5rem; text-align: center; border-radius: 10px;">
+                    <div style="font-size: 2rem; color: #667eea; font-weight: 700;">${jobs.total}</div>
+                    <div>Government Jobs</div>
+                </div>
+                <div style="background: #f8f9fa; padding: 1.5rem; text-align: center; border-radius: 10px;">
+                    <div style="font-size: 2rem; color: #667eea; font-weight: 700;">${Math.floor(jobs.total * 2)}</div>
+                    <div>Private Sector</div>
+                </div>
+                <div style="background: #f8f9fa; padding: 1.5rem; text-align: center; border-radius: 10px;">
+                    <div style="font-size: 2rem; color: #667eea; font-weight: 700;">${Math.floor(jobs.total * 0.5)}</div>
+                    <div>Internships</div>
+                </div>
             </div>
-            <h4>${lesson.title}</h4>
-            <p>${lesson.description}</p>
-            ${lesson.content}
+            
+            <h4 style="margin: 2rem 0 1rem;">🏛️ Government Agencies</h4>
+            ${jobs.agencies.map(agency => `
+                <div style="background: #f8f9fa; padding: 1rem; margin: 0.5rem 0; border-radius: 10px;">
+                    <strong>${agency.name}</strong> - ${agency.positions} positions
+                    <div style="font-size: 0.9rem; color: #666;">${agency.salary}</div>
+                </div>
+            `).join('')}
+            
+            <h4 style="margin: 2rem 0 1rem;">📚 Mafunzo ya Kazi</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                <div class="lesson-card">
+                    <h5>KRA - Tax Assistant</h5>
+                    <p>Jifunze kazi za KRA</p>
+                    <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson coming soon!')">Fungua</button>
+                </div>
+                <div class="lesson-card">
+                    <h5>Huduma Kenya</h5>
+                    <p>Jifunze kuhudumia wananchi</p>
+                    <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson coming soon!')">Fungua</button>
+                </div>
+            </div>
         </div>
-    `).join('');
+    `;
 }
 
-// ===== RENDER GRADE-SPECIFIC TESTIMONIALS =====
-function renderGradeTestimonials() {
-    const container = document.getElementById('gradeTestimonials');
-    const filtered = sampleTestimonials.filter(t => t.grade === currentUserData.kcse).slice(0, 3);
-    
-    if (filtered.length === 0) {
-        container.innerHTML = '<p>No testimonials yet for your grade. Be the first to share!</p>';
-        return;
-    }
-    
-    container.innerHTML = filtered.map(t => `
-        <div class="testimonial-card">
-            <img src="${t.image}" alt="${t.name}" class="testimonial-image">
-            <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
-            <p class="testimonial-text">"${t.story}"</p>
-            <div class="testimonial-name">${t.name}</div>
-            <div class="testimonial-job">${t.job} at ${t.organization}</div>
-            <div class="testimonial-salary">💰 ${t.salary}</div>
-        </div>
-    `).join('');
-}
-
-// ===== RENDER ALL TESTIMONIALS =====
-function renderAllTestimonials(filter = 'all') {
-    const container = document.getElementById('allTestimonials');
-    let filtered = sampleTestimonials.filter(t => t.approved);
-    
-    if (filter !== 'all') {
-        filtered = filtered.filter(t => t.grade === filter);
-    }
-    
-    container.innerHTML = filtered.map(t => `
-        <div class="testimonial-card">
-            <img src="${t.image}" alt="${t.name}" class="testimonial-image">
-            <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
-            <p class="testimonial-text">"${t.story.substring(0, 150)}..."</p>
-            <div class="testimonial-name">${t.name}</div>
-            <div class="testimonial-job">${t.job} at ${t.organization}</div>
-            <span class="testimonial-grade">KCSE: ${t.grade}</span>
-        </div>
-    `).join('');
-}
-
-// ===== FILTER TESTIMONIALS =====
-function filterTestimonials(grade) {
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    renderAllTestimonials(grade);
-}
-
-// ===== SUBMIT TESTIMONIAL =====
-async function submitTestimonial() {
-    const name = document.getElementById('story_name').value || currentUserData.name;
-    const job = document.getElementById('story_job').value;
-    const org = document.getElementById('story_org').value;
-    const salary = document.getElementById('story_salary').value;
-    const story = document.getElementById('story_text').value;
-    const image = document.getElementById('story_image').value || `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 50)}.jpg`;
-    
-    if (!job || !org || !story) {
-        showToast("Please fill required fields", "error");
-        return;
-    }
-    
-    const testimonial = {
-        id: sampleTestimonials.length + 1,
-        name,
-        grade: currentUserData.kcse,
-        job,
-        organization: org,
-        salary,
-        story,
-        image,
-        stars: 5,
-        approved: false,
-        date: new Date().toISOString().split('T')[0]
-    };
-    
-    // In real app, save to database
-    sampleTestimonials.push(testimonial);
-    
-    showToast("Testimonial submitted for approval!", "success");
-    
-    document.getElementById('story_job').value = '';
-    document.getElementById('story_org').value = '';
-    document.getElementById('story_salary').value = '';
-    document.getElementById('story_text').value = '';
-}
-
-// ===== PURCHASE CERTIFICATE =====
-async function purchaseCertificate() {
-    const code = document.getElementById('cert_mpesa').value;
-    if (!code || code.length < 5) {
-        showToast("Enter M-PESA code", "error");
-        return;
-    }
-    
-    showToast("Certificate payment received! You'll get your PDF soon.", "success");
-}
-
-// ===== UPDATE PROGRESS =====
-function updateProgress() {
-    const progress = currentUserData.progress || 0;
-    document.getElementById('progressBar').style.width = progress + '%';
-    document.getElementById('progressBar').textContent = progress + '%';
-    document.getElementById('progressPercent').textContent = progress + '%';
-}
-
-// ===== COUNTDOWN =====
+// ===== COUNTDOWN TIMER =====
 function startCountdown(endDate) {
-    if (countdownInterval) clearInterval(countdownInterval);
-    
-    countdownInterval = setInterval(() => {
+    const interval = setInterval(() => {
         const now = new Date();
         const diff = endDate - now;
         
         if (diff <= 0) {
-            clearInterval(countdownInterval);
-            document.getElementById('countdown').textContent = 'Expired';
+            clearInterval(interval);
+            document.getElementById('countdown').textContent = 'Imeisha';
             renderDashboard();
             return;
         }
         
         const days = Math.floor(diff / (1000 * 60 * 60 * 24));
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         
-        document.getElementById('countdown').textContent = `${days}d ${hours}h ${minutes}m`;
+        document.getElementById('countdown').textContent = `${days}d ${hours}h`;
     }, 60000);
 }
 
-// ===== ADMIN PANEL =====
-function loadAdminPanel() {
-    document.getElementById('heroSection').style.display = 'none';
-    document.getElementById('auth').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'none';
-    document.getElementById('adminPanel').style.display = 'block';
+// ===== CHECK SESSION =====
+async function checkSession() {
+    const savedEmail = localStorage.getItem('student');
     
-    renderAdminPayments();
-    renderAdminTestimonials();
+    if (savedEmail) {
+        const { data } = await supabaseClient
+            .from('users')
+            .select('*')
+            .eq('email', savedEmail);
+            
+        if (data && data.length > 0) {
+            currentUser = data[0];
+            
+            if (savedEmail === 'admin@skillforge.com') {
+                showAdminPanel();
+            } else if (currentUser.status === 'approved') {
+                renderDashboard();
+            } else {
+                showHeroSection();
+            }
+            return;
+        }
+    }
+    
+    showHeroSection();
 }
 
-function renderAdminPayments() {
-    const container = document.getElementById('pendingPaymentsList');
-    container.innerHTML = `
-        <div class="payment-request">
-            <div><strong>john@example.com</strong> - KSH 200 - Code: X
+// ===== MAKE FUNCTIONS GLOBAL =====
+window.showRegistrationPage = showRegistrationPage;
+window.showLoginPage = showLoginPage;
+window.showHeroSection = showHeroSection;
+window.submitRegistration = submitRegistration;
+window.login = login;
+window.logout = logout;
+window.approveUser = approveUser;
+window.rejectUser = rejectUser;
+window.updateAccountDisplay = updateAccountDisplay;
+window.showAdminPanel = showAdminPanel;
