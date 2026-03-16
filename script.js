@@ -7,9 +7,8 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ===== GLOBAL VARIABLES =====
 let currentUser = null;
-let pendingUsers = [];
 
-// ===== KENYAN TESTIMONIALS WITH REAL AFRICAN FACES =====
+// ===== KENYAN TESTIMONIALS WITH YOUR SPECIFIC FACES =====
 const testimonials = [
     {
         name: "James Otieno",
@@ -17,7 +16,7 @@ const testimonials = [
         job: "Tax Assistant",
         org: "KRA - Kenya Revenue Authority",
         story: "Nilipay KSH 150, nikajifunza kuhusu kazi za serikali, na baada ya miezi 3 nikaajiriwa KRA! Asante SkillForge!",
-        image: "https://images.unsplash.com/photo-1531427186628-1ad0ace0e3c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg",
         stars: 5
     },
     {
@@ -26,7 +25,7 @@ const testimonials = [
         job: "Customer Service",
         org: "Huduma Kenya - Nyeri",
         story: "Sikujua ni kazi gani ningepata na C plain yangu. Kozi hii ilionyesha nafasi 185 za serikali! Sasa niko Huduma Nyeri.",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/1390128/pexels-photo-1390128.jpeg",
         stars: 5
     },
     {
@@ -35,7 +34,7 @@ const testimonials = [
         job: "ICT Officer",
         org: "ICT Authority",
         story: "Mimi mwanafunzi mzima nilidhani kazi za serikali ni ngumu. Sasa niko ICT Authority! Usikate tamaa.",
-        image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/35165475/pexels-photo-35165475.jpeg",
         stars: 5
     },
     {
@@ -44,7 +43,7 @@ const testimonials = [
         job: "Compliance Officer",
         org: "CMA - Capital Markets Authority",
         story: "Niliomba nafasi 8, nikaitwa interview 3, sasa niko CMA! KSH 150 ilikuwa investment bora kabisa.",
-        image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/1255010/pexels-photo-1255010.jpeg",
         stars: 5
     },
     {
@@ -53,7 +52,7 @@ const testimonials = [
         job: "Clerk",
         org: "County Government of Kiambu",
         story: "County zinaajiri watu wengi wa C plain. Sasa niko permanent na pension! Nashukuru.",
-        image: "https://images.unsplash.com/photo-1556157382-97eda2f9e2bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/29079409/pexels-photo-29079409.jpeg",
         stars: 5
     },
     {
@@ -62,7 +61,7 @@ const testimonials = [
         job: "IT Support",
         org: "Huduma Kenya",
         story: "Nililipa KSH 150, KSH 200, na KSH 500 kwa cheti. Yote ilifaa! Sasa niko na kazi nzuri.",
-        image: "https://images.unsplash.com/photo-1581403341630-a6e0b9d2d257?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/35081993/pexels-photo-35081993.jpeg",
         stars: 5
     },
     {
@@ -71,7 +70,7 @@ const testimonials = [
         job: "Customs Officer",
         org: "KRA - Customs Department",
         story: "Nimeajiriwa KRA Customs Mombasa! Kazi nzuri na malipo mazuri. Mungu ni mwema.",
-        image: "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg",
         stars: 5
     },
     {
@@ -80,7 +79,7 @@ const testimonials = [
         job: "Receptionist",
         org: "Huduma Kenya - Eldoret",
         story: "Nilikuwa natafuta kazi kwa muda mrefu. Kozi hii ilinionyesha njia ya kuingia Huduma. Asanteni!",
-        image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/1390128/pexels-photo-1390128.jpeg",
         stars: 4
     },
     {
@@ -89,7 +88,7 @@ const testimonials = [
         job: "Intern",
         org: "ICT Authority",
         story: "Nilianza kama intern, sasa nimepata nafasi ya kuapply permanent. SkillForge imenisaidia sana.",
-        image: "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/35165475/pexels-photo-35165475.jpeg",
         stars: 4
     },
     {
@@ -98,7 +97,7 @@ const testimonials = [
         job: "Tax Officer",
         org: "KRA - Headquarters",
         story: "Nilimaliza kozi, nikapata cheti cha KSH 500, na sasa niko KRA! Cheti kilinisaidia interview.",
-        image: "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/1255010/pexels-photo-1255010.jpeg",
         stars: 5
     },
     {
@@ -107,7 +106,7 @@ const testimonials = [
         job: "Driver",
         org: "County Government of Uasin Gishu",
         story: "Sijui kwanini nilidhani C haifai. County zina nafasi nyingi! Niko na kazi sasa.",
-        image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/29079409/pexels-photo-29079409.jpeg",
         stars: 4
     },
     {
@@ -116,7 +115,7 @@ const testimonials = [
         job: "Administrative Assistant",
         org: "Ministry of Education",
         story: "Nilianza kama adult learner, sasa niko Ministry of Education. Usiogope kujaribu!",
-        image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
+        image: "https://images.pexels.com/photos/35081993/pexels-photo-35081993.jpeg",
         stars: 5
     }
 ];
@@ -324,7 +323,7 @@ function loadFeaturedTestimonials() {
             <img src="${t.image}" 
                  alt="${t.name}" 
                  class="testimonial-image" 
-                 onerror="this.src='https://images.unsplash.com/photo-1531427186628-1ad0ace0e3c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'">
+                 onerror="this.src='https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg'">
             <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
             <p class="testimonial-text">"${t.story}"</p>
             <div class="testimonial-name">${t.name}</div>
@@ -353,7 +352,7 @@ function loadGradeTestimonials(grade) {
             <p class="testimonial-text">"${t.story}"</p>
             <div class="testimonial-name">${t.name}</div>
             <div class="testimonial-job">${t.job} - ${t.org}</div>
-            <div class="testimonial-salary">💰 ${t.salary || 'KSH 45-65k'}</div>
+            <div class="testimonial-salary">💰 KSH 45-65k</div>
         </div>
     `).join('');
 }
@@ -392,7 +391,6 @@ async function submitTestimonial() {
     const name = document.getElementById('story_name')?.value || currentUser?.name;
     const job = document.getElementById('story_job')?.value;
     const org = document.getElementById('story_org')?.value;
-    const salary = document.getElementById('story_salary')?.value;
     const story = document.getElementById('story_text')?.value;
     
     if (!job || !org || !story) {
@@ -400,14 +398,35 @@ async function submitTestimonial() {
         return;
     }
     
-    // In a real app, save to database
-    showToast('Testimonial imetumwa! Inasubiri kuidhinishwa.', 'success');
-    
-    // Clear form
-    document.getElementById('story_job').value = '';
-    document.getElementById('story_org').value = '';
-    document.getElementById('story_salary').value = '';
-    document.getElementById('story_text').value = '';
+    try {
+        const { error } = await supabaseClient
+            .from('testimonials')
+            .insert([{
+                name: name,
+                email: currentUser?.email,
+                grade: currentUser?.kcse,
+                job: job,
+                organization: org,
+                story: story,
+                image: "https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg",
+                stars: 5,
+                approved: false,
+                created_at: new Date()
+            }]);
+            
+        if (error) throw error;
+        
+        showToast('Testimonial imetumwa! Inasubiri kuidhinishwa.', 'success');
+        
+        // Clear form
+        document.getElementById('story_job').value = '';
+        document.getElementById('story_org').value = '';
+        document.getElementById('story_text').value = '';
+        
+    } catch (error) {
+        console.error('Testimonial error:', error);
+        showToast('Error submitting testimonial', 'error');
+    }
 }
 
 // ===== PAGE NAVIGATION =====
@@ -442,6 +461,7 @@ function showAdminPanel() {
     document.getElementById('adminPanel').style.display = 'block';
     document.getElementById('dashboard').style.display = 'none';
     loadPendingRegistrations();
+    loadPendingTestimonials();
 }
 
 function showDashboard() {
@@ -494,7 +514,12 @@ async function submitRegistration() {
         // Extract M-PESA code from message
         const mpesaCode = mpesaMessage.match(/[A-Z0-9]{6,10}/g)?.[0] || 'MANUAL-' + Date.now();
 
-        // SIMPLIFIED: Only use columns that definitely exist in your database
+        // Calculate trial dates (2 days from now)
+        const now = new Date();
+        const trialEnd = new Date(now);
+        trialEnd.setDate(trialEnd.getDate() + 2);
+
+        // Save to Supabase with ALL columns
         const { error } = await supabaseClient
             .from('users')
             .insert([{
@@ -503,32 +528,19 @@ async function submitRegistration() {
                 password: password,
                 kcse: kcse,
                 course: course,
-                // Removed problematic columns - add them one by one if they exist
+                mpesa_message: mpesaMessage,
+                mpesa_code: mpesaCode,
+                amount_paid: 150,
                 status: 'pending',
-                created_at: new Date().toISOString()
+                trial_start: now.toISOString(),
+                trial_end: trialEnd.toISOString(),
+                progress: 0,
+                completed_lessons: [],
+                payment_status: 'booking_paid',
+                created_at: now.toISOString()
             }]);
 
-        if (error) {
-            console.error('Supabase error:', error);
-            
-            // Try without status if that's the issue
-            if (error.message.includes('status')) {
-                const { error: retryError } = await supabaseClient
-                    .from('users')
-                    .insert([{
-                        name: name,
-                        email: email,
-                        password: password,
-                        kcse: kcse,
-                        course: course,
-                        created_at: new Date().toISOString()
-                    }]);
-                    
-                if (retryError) throw retryError;
-            } else {
-                throw error;
-            }
-        }
+        if (error) throw error;
 
         showToast('Umefanikiwa! Subiri admin akubali.', 'success');
         
@@ -565,15 +577,15 @@ async function login() {
 
         const user = data[0];
         
-        // Check if admin (simple check - you can change this)
+        // Check if admin
         if (email === 'admin@skillforge.com') {
             currentUser = user;
             showAdminPanel();
             return;
         }
 
-        // Check if approved (if status column exists)
-        if (user.status && user.status !== 'approved') {
+        // Check if approved
+        if (user.status !== 'approved') {
             showToast('Akaunti yako haijaidhinishwa. Subiri admin.', 'info');
             return;
         }
@@ -598,21 +610,12 @@ function logout() {
 // ===== LOAD PENDING REGISTRATIONS (ADMIN) =====
 async function loadPendingRegistrations() {
     try {
-        // Try to get users with status = 'pending' if column exists
-        let data = [];
-        try {
-            const result = await supabaseClient
-                .from('users')
-                .select('*')
-                .eq('status', 'pending');
-            data = result.data || [];
-        } catch (e) {
-            // If status column doesn't exist, show all users
-            const result = await supabaseClient
-                .from('users')
-                .select('*');
-            data = result.data || [];
-        }
+        const { data, error } = await supabaseClient
+            .from('users')
+            .select('*')
+            .eq('status', 'pending');
+
+        if (error) throw error;
 
         const container = document.getElementById('pendingRegistrations');
         
@@ -628,6 +631,7 @@ async function loadPendingRegistrations() {
                 <div class="payment-details">
                     <strong>${user.name}</strong> (${user.email})<br>
                     KCSE: ${user.kcse} | Course: ${user.course}<br>
+                    M-PESA: ${user.mpesa_code}<br>
                     <small>${new Date(user.created_at).toLocaleString()}</small>
                 </div>
                 <div class="payment-actions">
@@ -642,27 +646,56 @@ async function loadPendingRegistrations() {
     }
 }
 
+// ===== LOAD PENDING TESTIMONIALS (ADMIN) =====
+async function loadPendingTestimonials() {
+    try {
+        const { data, error } = await supabaseClient
+            .from('testimonials')
+            .select('*')
+            .eq('approved', false);
+
+        if (error) throw error;
+
+        const container = document.getElementById('pendingTestimonialsList');
+        
+        if (!container) return;
+        
+        if (!data || data.length === 0) {
+            container.innerHTML = '<p>Hakuna testimonials zinazosubiri</p>';
+            return;
+        }
+
+        container.innerHTML = data.map(t => `
+            <div class="pending-payment">
+                <div class="payment-details">
+                    <strong>${t.name}</strong> (${t.email})<br>
+                    KCSE: ${t.grade} | ${t.job} at ${t.organization}<br>
+                    "${t.story.substring(0, 100)}..."<br>
+                    <small>${new Date(t.created_at).toLocaleString()}</small>
+                </div>
+                <div class="payment-actions">
+                    <button class="btn-approve" onclick="approveTestimonial('${t.id}')">✓ Idhinisha</button>
+                    <button class="btn-reject" onclick="rejectTestimonial('${t.id}')">✗ Kataa</button>
+                </div>
+            </div>
+        `).join('');
+        
+    } catch (error) {
+        console.error('Error loading testimonials:', error);
+    }
+}
+
 // ===== APPROVE USER (ADMIN) =====
 async function approveUser(email) {
     try {
-        const trialEnd = new Date();
-        trialEnd.setDate(trialEnd.getDate() + 2);
+        const { error } = await supabaseClient
+            .from('users')
+            .update({ 
+                status: 'approved'
+            })
+            .eq('email', email);
 
-        // Update user status (if column exists)
-        try {
-            await supabaseClient
-                .from('users')
-                .update({ 
-                    status: 'approved',
-                    trial_start: new Date().toISOString(),
-                    trial_end: trialEnd.toISOString(),
-                    progress: 0
-                })
-                .eq('email', email);
-        } catch (e) {
-            // If columns don't exist, just show success
-            console.log('Status update skipped - columns may not exist');
-        }
+        if (error) throw error;
 
         showToast(`✅ ${email} ameidhinishwa!`, 'success');
         loadPendingRegistrations();
@@ -675,13 +708,52 @@ async function approveUser(email) {
 // ===== REJECT USER (ADMIN) =====
 async function rejectUser(email) {
     try {
-        await supabaseClient
+        const { error } = await supabaseClient
             .from('users')
             .delete()
             .eq('email', email);
 
+        if (error) throw error;
+
         showToast(`❌ ${email} amekataliwa`, 'success');
         loadPendingRegistrations();
+        
+    } catch (error) {
+        showToast(error.message, 'error');
+    }
+}
+
+// ===== APPROVE TESTIMONIAL (ADMIN) =====
+async function approveTestimonial(id) {
+    try {
+        const { error } = await supabaseClient
+            .from('testimonials')
+            .update({ approved: true })
+            .eq('id', id);
+
+        if (error) throw error;
+
+        showToast(`✅ Testimonial imeidhinishwa!`, 'success');
+        loadPendingTestimonials();
+        loadAllTestimonials();
+        
+    } catch (error) {
+        showToast(error.message, 'error');
+    }
+}
+
+// ===== REJECT TESTIMONIAL (ADMIN) =====
+async function rejectTestimonial(id) {
+    try {
+        const { error } = await supabaseClient
+            .from('testimonials')
+            .delete()
+            .eq('id', id);
+
+        if (error) throw error;
+
+        showToast(`❌ Testimonial imekataliwa`, 'success');
+        loadPendingTestimonials();
         
     } catch (error) {
         showToast(error.message, 'error');
@@ -698,7 +770,7 @@ function renderDashboard() {
     document.getElementById('welcomeName').textContent = `Karibu, ${user.name || 'User'}!`;
     document.getElementById('userGrade').textContent = `KCSE: ${user.kcse || 'N/A'}`;
     
-    // Check trial status if columns exist
+    // Check trial status
     if (user.trial_end) {
         const now = new Date();
         const trialEnd = new Date(user.trial_end);
@@ -767,17 +839,17 @@ function loadDashboardContent(user) {
                 <div class="lesson-card" style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
                     <h5>KRA - Tax Assistant</h5>
                     <p>Jifunze kazi za KRA</p>
-                    <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson loading...')">Fungua</button>
+                    <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson coming soon!')">Fungua</button>
                 </div>
                 <div class="lesson-card" style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
                     <h5>Huduma Kenya</h5>
                     <p>Jifunze kuhudumia wananchi</p>
-                    <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson loading...')">Fungua</button>
+                    <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson coming soon!')">Fungua</button>
                 </div>
                 <div class="lesson-card" style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
                     <h5>CMA - Compliance</h5>
                     <p>Jifunze kazi za CMA</p>
-                    <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson loading...')">Fungua</button>
+                    <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson coming soon!')">Fungua</button>
                 </div>
             </div>
         </div>
@@ -825,19 +897,17 @@ async function unlockFullAccess() {
     }
     
     try {
-        // Try to update payment status if column exists
-        try {
-            await supabaseClient
-                .from('users')
-                .update({ 
-                    payment_status: 'full_access',
-                    full_access_date: new Date()
-                })
-                .eq('email', currentUser.email);
-        } catch (e) {
-            console.log('Payment status update skipped');
-        }
+        await supabaseClient
+            .from('users')
+            .update({ 
+                payment_status: 'full_access',
+                amount_paid: 350,
+                full_access_code: code,
+                full_access_date: new Date()
+            })
+            .eq('email', currentUser.email);
         
+        currentUser.payment_status = 'full_access';
         showToast('Umefanikiwa! Full access imefunguliwa!', 'success');
         renderDashboard();
         
@@ -862,8 +932,10 @@ async function checkSession() {
                 
                 if (savedEmail === 'admin@skillforge.com') {
                     showAdminPanel();
-                } else {
+                } else if (currentUser.status === 'approved') {
                     renderDashboard();
+                } else {
+                    showHeroSection();
                 }
                 return;
             }
@@ -890,3 +962,5 @@ window.purchaseCertificate = purchaseCertificate;
 window.unlockFullAccess = unlockFullAccess;
 window.filterTestimonials = filterTestimonials;
 window.submitTestimonial = submitTestimonial;
+window.approveTestimonial = approveTestimonial;
+window.rejectTestimonial = rejectTestimonial;
