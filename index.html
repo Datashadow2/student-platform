@@ -11,558 +11,8 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <style>
-        /* ===== KENYAN GOVERNMENT STYLE ===== */
-        :root {
-            --kenyan-green: #006B3C;
-            --kenyan-red: #B22234;
-            --kenyan-black: #000000;
-            --kenyan-white: #FFFFFF;
-            --govt-blue: #003366;
-            --govt-gold: #FFD700;
-            --govt-gray: #F5F5F5;
-            --heart-red: #ff4444;
-            --heart-gray: #cccccc;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf5 100%);
-            min-height: 100vh;
-            color: #2c3e50;
-        }
-
-        /* ===== KENYAN FLAG HEADER ===== */
-        .flag-header {
-            height: 8px;
-            display: flex;
-            width: 100%;
-        }
-        .flag-black { background: var(--kenyan-black); flex: 1; }
-        .flag-red { background: var(--kenyan-red); flex: 1; }
-        .flag-green { background: var(--kenyan-green); flex: 1; }
-
-        header {
-            background: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 3px solid var(--govt-blue);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-icon {
-            font-size: 2rem;
-            color: var(--govt-blue);
-        }
-
-        .logo-text h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--govt-blue);
-        }
-
-        .logo-text small {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .nav-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .nav-btn {
-            padding: 0.7rem 1.5rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            font-size: 0.9rem;
-        }
-
-        .nav-btn.login {
-            background: transparent;
-            color: var(--govt-blue);
-            border: 2px solid var(--govt-blue);
-        }
-
-        .nav-btn.register {
-            background: var(--govt-blue);
-            color: white;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 2rem auto;
-            padding: 0 2rem;
-        }
-
-        /* ===== GOVERNMENT BANNER ===== */
-        .govt-banner {
-            background: linear-gradient(135deg, var(--govt-blue), #001a33);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-            border-left: 5px solid var(--govt-gold);
-        }
-
-        .govt-badge {
-            background: var(--govt-gold);
-            color: var(--govt-blue);
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.8rem;
-        }
-
-        /* ===== HERO SECTION ===== */
-        .hero-section {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            border: 1px solid #e0e0e0;
-        }
-
-        .hero-section h1 {
-            font-size: 2.5rem;
-            color: var(--govt-blue);
-            margin-bottom: 1rem;
-        }
-
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .stat-box {
-            background: var(--govt-gray);
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            border-bottom: 3px solid var(--govt-blue);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--govt-blue);
-            display: block;
-        }
-
-        /* ===== TESTIMONIALS ===== */
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .testimonial-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            border: 1px solid #e0e0e0;
-            position: relative;
-            text-align: center;
-        }
-
-        .testimonial-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--govt-blue);
-            margin: 0 auto 1rem;
-        }
-
-        .testimonial-stars {
-            color: #ffc107;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-name {
-            font-weight: 700;
-            color: var(--govt-blue);
-        }
-
-        .testimonial-grade {
-            display: inline-block;
-            background: var(--govt-blue);
-            color: white;
-            padding: 0.2rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-        }
-
-        /* ===== AUTH FORMS ===== */
-        .auth-container {
-            max-width: 500px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .auth-container h2 {
-            color: var(--govt-blue);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.3rem;
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-        }
-
-        .btn {
-            padding: 1rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin: 0.5rem 0;
-        }
-
-        .btn-primary {
-            background: var(--govt-blue);
-            color: white;
-        }
-
-        .btn-success {
-            background: var(--kenyan-green);
-            color: white;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .back-link {
-            text-align: center;
-            margin-top: 1rem;
-        }
-
-        .back-link a {
-            color: var(--govt-blue);
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* ===== DASHBOARD ===== */
-        .dashboard-header {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            border: 1px solid #e0e0e0;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--govt-blue), var(--kenyan-green));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        .status-badge {
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-approved {
-            background: var(--kenyan-green);
-            color: white;
-        }
-
-        /* ===== HEARTS DISPLAY ===== */
-        .hearts-container {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            background: white;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .heart {
-            font-size: 1.5rem;
-            color: var(--heart-red);
-        }
-
-        .heart.empty {
-            color: var(--heart-gray);
-        }
-
-        .lockout-timer {
-            background: var(--kenyan-red);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* ===== JOB CARDS ===== */
-        .job-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-
-        .job-card {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .job-stat {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--kenyan-green);
-        }
-
-        /* ===== LESSON CARDS ===== */
-        .lessons-container {
-            margin-top: 2rem;
-        }
-
-        .lesson-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid var(--govt-blue);
-            position: relative;
-        }
-
-        .lesson-card.completed {
-            border-left-color: var(--kenyan-green);
-            background: #f0fff0;
-        }
-
-        .lesson-card.locked {
-            opacity: 0.7;
-            border-left-color: #ccc;
-        }
-
-        .lesson-complete-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: var(--kenyan-green);
-            color: white;
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-        }
-
-        .lesson-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .lesson-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--govt-blue), var(--kenyan-green));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .lesson-title h3 {
-            color: var(--govt-blue);
-        }
-
-        .lesson-progress {
-            margin: 1rem 0;
-            color: #666;
-        }
-
-        /* ===== QUIZ MODAL ===== */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .modal-header h3 {
-            color: var(--govt-blue);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #666;
-        }
-
-        .quiz-hearts {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: center;
-            margin: 1rem 0;
-        }
-
-        .quiz-heart {
-            font-size: 2rem;
-            color: var(--heart-red);
-        }
-
-        .quiz-heart.empty {
-            color: var(--heart-gray);
-        }
-
-        .quiz-option {
-            width: 100%;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            background: #f8f9fa;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-        }
-
-        .quiz-option:hover {
-            background: #e0e0e0;
-        }
-
-        .quiz-option.selected {
-            background: var(--govt-blue);
-            color: white;
-        }
-
-        .quiz-option.correct {
-            background: var(--kenyan-green);
-            color: white;
-        }
-
-        .quiz-option.wrong {
-            background: var(--kenyan-red);
-            color: white;
-        }
-
-        .lockout-message {
-            background: var(--kenyan-red);
-            color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .certificate-section {
-            background: linear-gradient(135deg, #f0f9ff, #e6f3ff);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-top: 3rem;
-            border: 2px solid var(--govt-blue);
-            text-align: center;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Kenyan Flag Header -->
@@ -587,9 +37,10 @@
     </header>
 
     <div class="container" id="mainContainer">
-        <!-- Content will be dynamically loaded here -->
+        <!-- Content will be dynamically loaded by JavaScript -->
     </div>
 
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
         // ===== DATABASE =====
         let users = JSON.parse(localStorage.getItem('skillforge_users')) || [];
@@ -695,14 +146,14 @@
                     
                     <h4>📅 DAILY TASKS</h4>
                     <ul>
-                        <li>8:30 AM - Open taxpayer counter and prepare workstations</li>
-                        <li>9:00 AM - Assist taxpayers with filing returns (iTax system)</li>
-                        <li>10:00 AM - Verify submitted documents for accuracy</li>
-                        <li>11:00 AM - Answer tax inquiries via phone and counter</li>
-                        <li>12:00 PM - Process KRA PIN applications</li>
-                        <li>2:00 PM - Data entry of tax records into the system</li>
-                        <li>3:00 PM - Follow up on pending applications</li>
-                        <li>4:00 PM - Generate daily reports and close counter</li>
+                        <li><i class="fas fa-clock"></i> 8:30 AM - Open taxpayer counter and prepare workstations</li>
+                        <li><i class="fas fa-clock"></i> 9:00 AM - Assist taxpayers with filing returns (iTax system)</li>
+                        <li><i class="fas fa-clock"></i> 10:00 AM - Verify submitted documents for accuracy</li>
+                        <li><i class="fas fa-clock"></i> 11:00 AM - Answer tax inquiries via phone and counter</li>
+                        <li><i class="fas fa-clock"></i> 12:00 PM - Process KRA PIN applications</li>
+                        <li><i class="fas fa-clock"></i> 2:00 PM - Data entry of tax records into the system</li>
+                        <li><i class="fas fa-clock"></i> 3:00 PM - Follow up on pending applications</li>
+                        <li><i class="fas fa-clock"></i> 4:00 PM - Generate daily reports and close counter</li>
                     </ul>
                     
                     <h4>📍 LOCATIONS</h4>
@@ -711,16 +162,16 @@
                     <h4>💰 SALARY & BENEFITS</h4>
                     <p><strong>KSH 45,000 - 65,000 per month</strong></p>
                     <ul>
-                        <li>Housing allowance included</li>
-                        <li>Medical cover</li>
-                        <li>Pension scheme</li>
+                        <li><i class="fas fa-home"></i> Housing allowance included</li>
+                        <li><i class="fas fa-hospital"></i> Medical cover</li>
+                        <li><i class="fas fa-piggy-bank"></i> Pension scheme</li>
                     </ul>
                     
                     <h4>🎓 REQUIREMENTS</h4>
                     <ul>
-                        <li>KCSE: C+ and above</li>
-                        <li>Certificate in Taxation (advantage)</li>
-                        <li>Computer literacy, especially iTax system</li>
+                        <li><i class="fas fa-graduation-cap"></i> KCSE: C+ and above</li>
+                        <li><i class="fas fa-certificate"></i> Certificate in Taxation (advantage)</li>
+                        <li><i class="fas fa-laptop"></i> Computer literacy, especially iTax system</li>
                     </ul>
                 `,
                 quiz: [
@@ -743,13 +194,13 @@
                     
                     <h4>📅 DAILY TASKS</h4>
                     <ul>
-                        <li>8:00 AM - Review overnight international market movements</li>
-                        <li>9:00 AM - Check USD/KES, EUR/KES exchange rates</li>
-                        <li>10:00 AM - Analyze market trends and prepare briefs</li>
-                        <li>11:00 AM - Monitor regional currency markets</li>
-                        <li>2:00 PM - Prepare reports for Monetary Policy Committee</li>
-                        <li>3:00 PM - Forecast currency movements</li>
-                        <li>4:00 PM - Update exchange rate dashboards</li>
+                        <li><i class="fas fa-clock"></i> 8:00 AM - Review overnight international market movements</li>
+                        <li><i class="fas fa-clock"></i> 9:00 AM - Check USD/KES, EUR/KES exchange rates</li>
+                        <li><i class="fas fa-clock"></i> 10:00 AM - Analyze market trends and prepare briefs</li>
+                        <li><i class="fas fa-clock"></i> 11:00 AM - Monitor regional currency markets</li>
+                        <li><i class="fas fa-clock"></i> 2:00 PM - Prepare reports for Monetary Policy Committee</li>
+                        <li><i class="fas fa-clock"></i> 3:00 PM - Forecast currency movements</li>
+                        <li><i class="fas fa-clock"></i> 4:00 PM - Update exchange rate dashboards</li>
                     </ul>
                     
                     <h4>📍 LOCATIONS</h4>
@@ -758,16 +209,16 @@
                     <h4>💰 SALARY & BENEFITS</h4>
                     <p><strong>KSH 95,000 - 140,000 per month</strong></p>
                     <ul>
-                        <li>Housing allowance (KSH 40,000)</li>
-                        <li>Comprehensive medical cover</li>
-                        <li>Pension (20% employer contribution)</li>
+                        <li><i class="fas fa-home"></i> Housing allowance (KSH 40,000)</li>
+                        <li><i class="fas fa-hospital"></i> Comprehensive medical cover</li>
+                        <li><i class="fas fa-piggy-bank"></i> Pension (20% employer contribution)</li>
                     </ul>
                     
                     <h4>🎓 REQUIREMENTS</h4>
                     <ul>
-                        <li>KCSE: A- and above</li>
-                        <li>Degree in Economics/Finance</li>
-                        <li>CFA certification (advantage)</li>
+                        <li><i class="fas fa-graduation-cap"></i> KCSE: A- and above</li>
+                        <li><i class="fas fa-graduation-cap"></i> Degree in Economics/Finance</li>
+                        <li><i class="fas fa-certificate"></i> CFA certification (advantage)</li>
                     </ul>
                 `,
                 quiz: [
@@ -790,11 +241,11 @@
                     
                     <h4>📅 DAILY TASKS</h4>
                     <ul>
-                        <li>9:00 AM - Review company filings and reports</li>
-                        <li>10:00 AM - Inspect compliance with regulations</li>
-                        <li>11:00 AM - Investigate investor complaints</li>
-                        <li>2:00 PM - Prepare enforcement actions</li>
-                        <li>3:00 PM - Conduct market surveillance</li>
+                        <li><i class="fas fa-clock"></i> 9:00 AM - Review company filings and reports</li>
+                        <li><i class="fas fa-clock"></i> 10:00 AM - Inspect compliance with regulations</li>
+                        <li><i class="fas fa-clock"></i> 11:00 AM - Investigate investor complaints</li>
+                        <li><i class="fas fa-clock"></i> 2:00 PM - Prepare enforcement actions</li>
+                        <li><i class="fas fa-clock"></i> 3:00 PM - Conduct market surveillance</li>
                     </ul>
                     
                     <h4>📍 LOCATIONS</h4>
@@ -805,8 +256,8 @@
                     
                     <h4>🎓 REQUIREMENTS</h4>
                     <ul>
-                        <li>KCSE: B+ and above</li>
-                        <li>Degree in Finance/Law</li>
+                        <li><i class="fas fa-graduation-cap"></i> KCSE: B+ and above</li>
+                        <li><i class="fas fa-graduation-cap"></i> Degree in Finance/Law</li>
                     </ul>
                 `,
                 quiz: [
@@ -829,11 +280,11 @@
                     
                     <h4>📅 DAILY TASKS</h4>
                     <ul>
-                        <li>8:00 AM - Open service counter</li>
-                        <li>9:00 AM - Process ID applications</li>
-                        <li>10:00 AM - Handle passport inquiries</li>
-                        <li>11:00 AM - Assist with birth certificates</li>
-                        <li>2:00 PM - Help with driving license applications</li>
+                        <li><i class="fas fa-clock"></i> 8:00 AM - Open service counter</li>
+                        <li><i class="fas fa-clock"></i> 9:00 AM - Process ID applications</li>
+                        <li><i class="fas fa-clock"></i> 10:00 AM - Handle passport inquiries</li>
+                        <li><i class="fas fa-clock"></i> 11:00 AM - Assist with birth certificates</li>
+                        <li><i class="fas fa-clock"></i> 2:00 PM - Help with driving license applications</li>
                     </ul>
                     
                     <h4>📍 LOCATIONS</h4>
@@ -844,8 +295,8 @@
                     
                     <h4>🎓 REQUIREMENTS</h4>
                     <ul>
-                        <li>KCSE: C+ and above</li>
-                        <li>Customer service skills</li>
+                        <li><i class="fas fa-graduation-cap"></i> KCSE: C+ and above</li>
+                        <li><i class="fas fa-smile"></i> Customer service skills</li>
                     </ul>
                 `,
                 quiz: [
@@ -868,11 +319,11 @@
                     
                     <h4>📅 DAILY TASKS</h4>
                     <ul>
-                        <li>8:30 AM - Check server status and backups</li>
-                        <li>9:30 AM - Respond to IT support tickets</li>
-                        <li>11:00 AM - Install software updates</li>
-                        <li>2:00 PM - Network maintenance</li>
-                        <li>3:30 PM - User training and support</li>
+                        <li><i class="fas fa-clock"></i> 8:30 AM - Check server status and backups</li>
+                        <li><i class="fas fa-clock"></i> 9:30 AM - Respond to IT support tickets</li>
+                        <li><i class="fas fa-clock"></i> 11:00 AM - Install software updates</li>
+                        <li><i class="fas fa-clock"></i> 2:00 PM - Network maintenance</li>
+                        <li><i class="fas fa-clock"></i> 3:30 PM - User training and support</li>
                     </ul>
                     
                     <h4>📍 LOCATIONS</h4>
@@ -883,8 +334,8 @@
                     
                     <h4>🎓 REQUIREMENTS</h4>
                     <ul>
-                        <li>KCSE: C+ and above</li>
-                        <li>Diploma/Degree in IT</li>
+                        <li><i class="fas fa-graduation-cap"></i> KCSE: C+ and above</li>
+                        <li><i class="fas fa-graduation-cap"></i> Diploma/Degree in IT</li>
                     </ul>
                 `,
                 quiz: [
@@ -907,11 +358,11 @@
                     
                     <h4>📅 DAILY TASKS</h4>
                     <ul>
-                        <li>8:30 AM - Assist with account creation</li>
-                        <li>10:00 AM - Troubleshoot login issues</li>
-                        <li>11:30 AM - Help with online payments</li>
-                        <li>2:00 PM - Answer email inquiries</li>
-                        <li>3:30 PM - Update help documentation</li>
+                        <li><i class="fas fa-clock"></i> 8:30 AM - Assist with account creation</li>
+                        <li><i class="fas fa-clock"></i> 10:00 AM - Troubleshoot login issues</li>
+                        <li><i class="fas fa-clock"></i> 11:30 AM - Help with online payments</li>
+                        <li><i class="fas fa-clock"></i> 2:00 PM - Answer email inquiries</li>
+                        <li><i class="fas fa-clock"></i> 3:30 PM - Update help documentation</li>
                     </ul>
                     
                     <h4>📍 LOCATIONS</h4>
@@ -922,8 +373,8 @@
                     
                     <h4>🎓 REQUIREMENTS</h4>
                     <ul>
-                        <li>KCSE: C+ and above</li>
-                        <li>Computer literacy</li>
+                        <li><i class="fas fa-graduation-cap"></i> KCSE: C+ and above</li>
+                        <li><i class="fas fa-laptop"></i> Computer literacy</li>
                     </ul>
                 `,
                 quiz: [
@@ -989,6 +440,11 @@
             };
         }
 
+        // ===== SAVE USERS =====
+        function saveUsers() {
+            localStorage.setItem('skillforge_users', JSON.stringify(users));
+        }
+
         // ===== LOAD HERO SECTION =====
         function loadHeroSection() {
             const heroHtml = `
@@ -1018,7 +474,7 @@
             const grid = document.getElementById('testimonialsGrid');
             grid.innerHTML = testimonials.map(t => `
                 <div class="testimonial-card">
-                    <img src="${t.image}" class="testimonial-image">
+                    <img src="${t.image}" alt="${t.name}" class="testimonial-image" onerror="this.src='https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg';">
                     <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
                     <p>"${t.story}"</p>
                     <div class="testimonial-name">${t.name}</div>
@@ -1122,7 +578,7 @@
                         <i class="fas fa-certificate" style="font-size: 3rem; color: var(--govt-gold);"></i>
                         <h3>🎓 GET YOUR CERTIFICATE</h3>
                         <p>You've completed all ${lessons.length} lessons! Pay KSH 500 to receive your verified certificate.</p>
-                        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+                        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap;">
                             <input type="text" id="certMpesa" placeholder="Enter M-PESA code" style="padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; width: 300px;">
                             <button class="btn btn-success" onclick="purchaseCertificate()" style="width: auto;">GET CERTIFICATE</button>
                         </div>
@@ -1324,11 +780,6 @@
             loadDashboard();
         }
 
-        // ===== SAVE USERS =====
-        function saveUsers() {
-            localStorage.setItem('skillforge_users', JSON.stringify(users));
-        }
-
         // ===== PURCHASE CERTIFICATE =====
         function purchaseCertificate() {
             const code = document.getElementById('certMpesa').value;
@@ -1417,7 +868,6 @@
                         <div class="back-link">
                             <a onclick="showSection('hero')">← Back to Home</a>
                         </div>
-                        <p style="text-align: center; margin-top: 1rem; color: #666;">Admin: admin@skillforge.com / admin123</p>
                     </div>
                 `;
             } else if (section === 'register') {
@@ -1456,6 +906,12 @@
             }
         }
 
+        // ===== LOGOUT =====
+        function logout() {
+            currentUser = null;
+            showSection('hero');
+        }
+
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', () => {
             showSection('hero');
@@ -1465,7 +921,7 @@
         window.showSection = showSection;
         window.login = login;
         window.register = register;
-        window.logout = () => { currentUser = null; showSection('hero'); };
+        window.logout = logout;
         window.startLesson = startLesson;
         window.closeModal = closeModal;
         window.purchaseCertificate = purchaseCertificate;
