@@ -8,11 +8,11 @@
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts - Official Government Style -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ===== OFFICIAL KENYAN GOVERNMENT STYLE ===== */
+        /* ===== KENYAN GOVERNMENT STYLE ===== */
         :root {
             --kenyan-green: #006B3C;
             --kenyan-red: #B22234;
@@ -21,6 +21,7 @@
             --govt-blue: #003366;
             --govt-gold: #FFD700;
             --govt-gray: #F5F5F5;
+            --govt-light-blue: #e6f0ff;
         }
 
         * {
@@ -117,14 +118,13 @@
             box-shadow: 0 5px 15px rgba(0,51,102,0.2);
         }
 
-        /* ===== MAIN CONTAINER ===== */
         .container {
             max-width: 1280px;
             margin: 2rem auto;
             padding: 0 2rem;
         }
 
-        /* ===== KENYAN GOVERNMENT BANNER ===== */
+        /* ===== GOVERNMENT BANNER ===== */
         .govt-banner {
             background: linear-gradient(135deg, var(--govt-blue), #001a33);
             color: white;
@@ -397,6 +397,18 @@
             background: #004d2b;
         }
 
+        .btn-close {
+            background: #dc3545;
+            color: white;
+            width: auto;
+            padding: 0.5rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-close:hover {
+            background: #b02a37;
+        }
+
         .back-link {
             text-align: center;
             margin-top: 2rem;
@@ -498,22 +510,197 @@
             margin: 0.5rem 0;
         }
 
-        /* ===== LESSON CARDS ===== */
+        /* ===== ENHANCED LESSON CARDS ===== */
+        .lessons-container {
+            margin-top: 2rem;
+        }
+
         .lesson-card {
             background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 6px solid var(--govt-blue);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .lesson-card:hover {
+            box-shadow: 0 8px 25px rgba(0,51,102,0.1);
+        }
+
+        .lesson-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .lesson-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--govt-blue), var(--kenyan-green));
             border-radius: 12px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            border-left: 4px solid var(--govt-blue);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
         }
 
-        .lesson-card h4 {
+        .lesson-title {
+            flex: 1;
+        }
+
+        .lesson-title h3 {
             color: var(--govt-blue);
-            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
         }
 
-        /* ===== FLASHCARDS ===== */
+        .lesson-title p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .lesson-content {
+            margin: 1.5rem 0;
+            line-height: 1.8;
+        }
+
+        .lesson-content h4 {
+            color: var(--govt-blue);
+            margin: 1.5rem 0 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .lesson-content h4 i {
+            color: var(--kenyan-green);
+            margin-right: 0.5rem;
+        }
+
+        .lesson-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .lesson-content li {
+            padding: 0.3rem 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .lesson-content li i {
+            color: var(--kenyan-green);
+            width: 20px;
+            margin-right: 0.5rem;
+        }
+
+        .kenya-highlight {
+            background: var(--govt-light-blue);
+            border-left: 4px solid var(--kenyan-green);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .salary-badge {
+            background: var(--kenyan-green);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        .agency-tag {
+            background: var(--govt-blue);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-right: 0.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .lesson-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .lesson-actions button {
+            width: auto;
+            padding: 0.8rem 1.5rem;
+            background: var(--govt-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lesson-actions button:hover {
+            background: #001a33;
+            transform: translateY(-2px);
+        }
+
+        .lesson-actions button i {
+            margin-right: 0.5rem;
+        }
+
+        /* ===== FLASHCARD MODAL ===== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            color: var(--govt-blue);
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-close:hover {
+            color: var(--kenyan-red);
+        }
+
         .flashcard-container {
             perspective: 1000px;
             margin: 2rem 0;
@@ -522,29 +709,32 @@
         .flashcard {
             background: white;
             border-radius: 15px;
-            padding: 3rem;
+            padding: 3rem 2rem;
             text-align: center;
             font-size: 1.2rem;
             font-weight: 600;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             cursor: pointer;
-            min-height: 200px;
+            min-height: 250px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid var(--govt-blue);
+            border: 3px solid var(--govt-blue);
+            transition: all 0.3s ease;
         }
 
         .flashcard.flipped {
             background: linear-gradient(135deg, var(--govt-blue), var(--kenyan-green));
             color: white;
+            border-color: var(--kenyan-green);
         }
 
         .flashcard-controls {
             display: flex;
             gap: 1rem;
             justify-content: center;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
         }
 
         .btn-flashcard {
@@ -553,6 +743,7 @@
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .btn-know {
@@ -560,9 +751,91 @@
             color: white;
         }
 
+        .btn-know:hover {
+            background: #004d2b;
+            transform: translateY(-2px);
+        }
+
         .btn-review {
             background: #ffc107;
             color: #000;
+        }
+
+        .btn-review:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+        }
+
+        .flashcard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .flashcard-nav button {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--govt-blue);
+            background: white;
+            color: var(--govt-blue);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .flashcard-nav button:hover {
+            background: var(--govt-blue);
+            color: white;
+        }
+
+        .flashcard-progress {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* ===== QUIZ MODAL ===== */
+        .quiz-option {
+            width: 100%;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: #e0e0e0;
+            border-color: var(--govt-blue);
+        }
+
+        .quiz-option.selected {
+            background: var(--govt-blue);
+            color: white;
+            border-color: var(--govt-blue);
+        }
+
+        .quiz-option.correct {
+            background: var(--kenyan-green);
+            color: white;
+            border-color: var(--kenyan-green);
+        }
+
+        .quiz-option.wrong {
+            background: var(--kenyan-red);
+            color: white;
+            border-color: var(--kenyan-red);
+        }
+
+        .quiz-score {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--govt-blue);
+            text-align: center;
+            margin: 1rem 0;
         }
 
         /* ===== ADMIN PANEL ===== */
@@ -636,6 +909,14 @@
             .hero-section h1 {
                 font-size: 1.8rem;
             }
+
+            .lesson-actions {
+                flex-direction: column;
+            }
+
+            .lesson-actions button {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -669,7 +950,7 @@
                 <strong>OFFICIAL KENYAN GOVERNMENT JOB PORTAL</strong> • KCSE Grade-Based Recruitment
             </div>
             <div class="govt-badge">
-                <i class="fas fa-check-circle"></i> VERIFIED BY PSC
+                <i class="fas fa-check-circle"></i> VERIFIED BY PUBLIC SERVICE COMMISSION
             </div>
         </div>
 
@@ -680,7 +961,7 @@
                 Your KCSE Grade is Your Key to Government Jobs
             </h1>
             <div class="hero-subtitle">
-                <i class="fas fa-gavel"></i> Public Service Commission • Kenya Revenue Authority • Central Bank of Kenya • Huduma Kenya
+                <i class="fas fa-gavel"></i> Kenya Revenue Authority • Central Bank of Kenya • Huduma Kenya • ICT Authority • CMA
             </div>
             
             <div class="stats-container">
@@ -723,70 +1004,68 @@
         <div id="registerSection" class="hidden">
             <div class="auth-container">
                 <h2><i class="fas fa-user-plus"></i> REGISTER • PAY KSH 150</h2>
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label><i class="fas fa-user"></i> Full Name (as on ID)</label>
-                        <input type="text" id="regName" placeholder="e.g., James Otieno" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-envelope"></i> Email Address</label>
-                        <input type="email" id="regEmail" placeholder="you@example.com" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-lock"></i> Password (min. 6 characters)</label>
-                        <input type="password" id="regPass" placeholder="••••••••" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-graduation-cap"></i> KCSE Grade</label>
-                        <select id="regGrade" required>
-                            <option value="">Select your KCSE grade</option>
-                            <option value="A">A (81-100) - Plain A</option>
-                            <option value="A-">A- (75-80) - A minus</option>
-                            <option value="B+">B+ (70-74) - B plus</option>
-                            <option value="B">B (65-69) - B plain</option>
-                            <option value="B-">B- (60-64) - B minus</option>
-                            <option value="C+">C+ (55-59) - C plus</option>
-                            <option value="C">C (50-54) - C plain</option>
-                            <option value="C-">C- (45-49) - C minus</option>
-                            <option value="D+">D+ (40-44) - D plus</option>
-                            <option value="D">D (35-39) - D plain</option>
-                            <option value="D-">D- (30-34) - D minus</option>
-                            <option value="E">E (Below 30) - E</option>
-                            <option value="Adult">Adult Learner (No KCSE)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-briefcase"></i> Career Interest</label>
-                        <select id="regCourse" required>
-                            <option value="forex">💰 Finance & Banking (KRA, CBK, CMA)</option>
-                            <option value="webdev">💻 ICT & Digital (ICT Authority, eCitizen)</option>
-                            <option value="ai">🤖 AI & Automation (Government Innovation)</option>
-                            <option value="business">📊 Business Admin (Ministries, County Govts)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="mpesa-info">
-                        <p><i class="fas fa-mobile-alt"></i> LIPA NA M-PESA</p>
-                        <div class="mpesa-paybill">0789 480 259</div>
-                        <p><strong>Account:</strong> <span id="accountDisplay">Your Email</span></p>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
-                            <i class="fas fa-info-circle"></i> Send KSH 150, then paste confirmation below
-                        </p>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label><i class="fas fa-comment"></i> M-PESA Confirmation Message</label>
-                        <textarea id="regMpesa" rows="3" placeholder="Paste the full M-PESA message here..." required></textarea>
-                    </div>
-                    
-                    <button type="button" class="btn btn-primary" onclick="register()">
-                        <i class="fas fa-check-circle"></i> SUBMIT & REGISTER (KSH 150)
-                    </button>
-                </form>
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Full Name (as on ID)</label>
+                    <input type="text" id="regName" placeholder="e.g., James Otieno">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="regEmail" placeholder="you@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Password (min. 6 characters)</label>
+                    <input type="password" id="regPass" placeholder="••••••••">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-graduation-cap"></i> KCSE Grade</label>
+                    <select id="regGrade">
+                        <option value="">Select your KCSE grade</option>
+                        <option value="A">A (81-100) - Plain A</option>
+                        <option value="A-">A- (75-80) - A minus</option>
+                        <option value="B+">B+ (70-74) - B plus</option>
+                        <option value="B">B (65-69) - B plain</option>
+                        <option value="B-">B- (60-64) - B minus</option>
+                        <option value="C+">C+ (55-59) - C plus</option>
+                        <option value="C">C (50-54) - C plain</option>
+                        <option value="C-">C- (45-49) - C minus</option>
+                        <option value="D+">D+ (40-44) - D plus</option>
+                        <option value="D">D (35-39) - D plain</option>
+                        <option value="D-">D- (30-34) - D minus</option>
+                        <option value="E">E (Below 30) - E</option>
+                        <option value="Adult">Adult Learner (No KCSE)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-briefcase"></i> Career Interest</label>
+                    <select id="regCourse">
+                        <option value="forex">💰 Finance & Banking (KRA, CBK, CMA)</option>
+                        <option value="webdev">💻 ICT & Digital (ICT Authority, eCitizen)</option>
+                        <option value="ai">🤖 AI & Automation (Government Innovation)</option>
+                        <option value="business">📊 Business Admin (Ministries, County Govts)</option>
+                    </select>
+                </div>
+                
+                <div class="mpesa-info">
+                    <p><i class="fas fa-mobile-alt"></i> LIPA NA M-PESA</p>
+                    <div class="mpesa-paybill">0789 480 259</div>
+                    <p><strong>Account:</strong> <span id="accountDisplay">Your Email</span></p>
+                    <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+                        <i class="fas fa-info-circle"></i> Send KSH 150, then paste confirmation below
+                    </p>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-comment"></i> M-PESA Confirmation Message</label>
+                    <textarea id="regMpesa" rows="3" placeholder="Paste the full M-PESA message here..."></textarea>
+                </div>
+                
+                <button class="btn btn-primary" onclick="register()">
+                    <i class="fas fa-check-circle"></i> SUBMIT & REGISTER (KSH 150)
+                </button>
                 
                 <div class="back-link">
                     <a onclick="showSection('hero')"><i class="fas fa-arrow-left"></i> Back to Home</a>
@@ -794,7 +1073,7 @@
             </div>
         </div>
 
-        <!-- LOGIN PAGE - Admin credentials hidden -->
+        <!-- LOGIN PAGE -->
         <div id="loginSection" class="hidden">
             <div class="auth-container" style="max-width: 450px;">
                 <h2><i class="fas fa-sign-in-alt"></i> LOGIN</h2>
@@ -887,6 +1166,7 @@
         }
         
         let currentUser = null;
+        let activeModal = null;
 
         // ===== KENYAN TESTIMONIALS WITH YOUR LINKS =====
         const testimonials = [
@@ -963,37 +1243,78 @@
             'Adult': { gov: 78, private: 156, salary: "KSH 80-170k", agencies: ["KRA (Experienced)", "CMA (Professional)", "ICT Authority"] }
         };
 
-        // ===== LESSON CONTENT =====
+        // ===== ENHANCED LESSON CONTENT WITH DETAILED NOTES =====
         const lessons = {
             forex: [
                 {
                     title: "KRA Tax Assistant",
+                    agency: "Kenya Revenue Authority",
+                    location: "Nationwide (Nairobi, Mombasa, Kisumu, Eldoret)",
+                    description: "Entry-level position helping taxpayers with returns and PIN registration",
                     content: `
-                        <h4>📋 JOB OVERVIEW</h4>
-                        <p>Tax Assistants at KRA help taxpayers file returns, process KRA PIN applications, and answer tax inquiries.</p>
+                        <div class="kenya-highlight">
+                            <i class="fas fa-shield-alt"></i> <strong>KENYA REVENUE AUTHORITY</strong> - KRA is the principal government agency responsible for assessing, collecting and accounting for tax revenues in Kenya.
+                        </div>
                         
-                        <h4>📅 DAILY TASKS</h4>
+                        <h4><i class="fas fa-briefcase"></i> JOB OVERVIEW</h4>
+                        <p>Tax Assistants are the first point of contact for taxpayers at KRA offices across Kenya. They help citizens file their tax returns, process KRA PIN applications, and answer inquiries about tax matters.</p>
+                        
+                        <h4><i class="fas fa-clock"></i> DAILY TASKS</h4>
                         <ul>
-                            <li>8:30 AM - Open taxpayer counter</li>
-                            <li>9:00 AM - Help taxpayers file returns</li>
-                            <li>10:00 AM - Verify submitted documents</li>
-                            <li>11:00 AM - Answer tax inquiries</li>
-                            <li>12:00 PM - Process KRA PIN applications</li>
-                            <li>2:00 PM - Data entry of tax records</li>
-                            <li>4:00 PM - Generate daily reports</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>8:30 AM</strong> - Open taxpayer counter and prepare workstations</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>9:00 AM</strong> - Assist taxpayers with filing returns (iTax system)</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>10:00 AM</strong> - Verify submitted documents for accuracy</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>11:00 AM</strong> - Answer tax inquiries via phone and counter</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>12:00 PM</strong> - Process KRA PIN applications</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>2:00 PM</strong> - Data entry of tax records into the system</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>3:00 PM</strong> - Follow up on pending applications</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>4:00 PM</strong> - Generate daily reports and close counter</li>
                         </ul>
                         
-                        <h4>🎓 REQUIREMENTS</h4>
+                        <h4><i class="fas fa-graduation-cap"></i> REQUIREMENTS</h4>
                         <ul>
-                            <li>KCSE: C+ and above</li>
-                            <li>Certificate in Taxation (optional)</li>
-                            <li>Computer literacy</li>
+                            <li><i class="fas fa-check"></i> KCSE: <strong>C+ and above</strong></li>
+                            <li><i class="fas fa-check"></i> Certificate in Taxation (added advantage)</li>
+                            <li><i class="fas fa-check"></i> Computer literacy, especially iTax system</li>
+                            <li><i class="fas fa-check"></i> Customer service skills</li>
+                        </ul>
+                        
+                        <h4><i class="fas fa-map-marker-alt"></i> LOCATIONS</h4>
+                        <p>
+                            <span class="agency-tag">Nairobi - Times Tower</span>
+                            <span class="agency-tag">Mombasa</span>
+                            <span class="agency-tag">Kisumu</span>
+                            <span class="agency-tag">Eldoret</span>
+                            <span class="agency-tag">Nakuru</span>
+                            <span class="agency-tag">Thika</span>
+                        </p>
+                        
+                        <h4><i class="fas fa-money-bill"></i> SALARY & BENEFITS</h4>
+                        <p><span class="salary-badge">KSH 45,000 - 65,000 per month</span></p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Housing allowance</li>
+                            <li><i class="fas fa-check"></i> Medical cover</li>
+                            <li><i class="fas fa-check"></i> Pension scheme</li>
+                            <li><i class="fas fa-check"></i> Leave allowance</li>
+                        </ul>
+                        
+                        <h4><i class="fas fa-chart-line"></i> CAREER PROGRESSION</h4>
+                        <ul>
+                            <li><strong>Year 1-3:</strong> Tax Assistant (KSH 45-65k)</li>
+                            <li><strong>Year 4-6:</strong> Tax Officer (KSH 70-90k)</li>
+                            <li><strong>Year 7-10:</strong> Senior Tax Officer (KSH 95-120k)</li>
+                            <li><strong>Year 10+:</strong> Principal Tax Officer (KSH 130-160k)</li>
                         </ul>
                     `,
                     flashcards: [
-                        { front: "What is KRA?", back: "Kenya Revenue Authority - collects taxes for the Kenyan government" },
-                        { front: "What is a KRA PIN?", back: "Personal Identification Number for tax purposes" },
-                        { front: "What is VAT?", back: "Value Added Tax - tax on goods and services" }
+                        { front: "What is KRA?", back: "Kenya Revenue Authority - collects taxes for the Kenyan government. Headquarters: Times Tower, Nairobi." },
+                        { front: "What is a KRA PIN?", back: "Personal Identification Number - a unique number assigned to every taxpayer in Kenya for tax purposes." },
+                        { front: "What is VAT?", back: "Value Added Tax - tax on goods and services. Current rate in Kenya is 16%." },
+                        { front: "What is iTax?", back: "KRA's online tax system where taxpayers file returns, check balances and get compliance certificates." },
+                        { front: "What are the KRA offices in Kenya?", back: "Times Tower (Nairobi), Mombasa, Kisumu, Eldoret, Nakuru, Thika, Nyeri, Meru" },
+                        { front: "What is PAYE?", back: "Pay As You Earn - tax deducted from employee salaries by employers and remitted to KRA." },
+                        { front: "What is the tax deadline in Kenya?", back: "Individual returns are due by 30th June each year for the previous calendar year." },
+                        { front: "What happens if you don't pay taxes?", back: "Penalties, interest, and possible legal action including prosecution." }
                     ],
                     quiz: [
                         {
@@ -1005,40 +1326,113 @@
                             question: "Which KCSE grade is minimum for KRA Tax Assistant?",
                             options: ["D+", "C-", "C+", "B-"],
                             correct: 2
+                        },
+                        {
+                            question: "Where is KRA headquarters located?",
+                            options: ["Mombasa", "Kisumu", "Times Tower Nairobi", "Eldoret"],
+                            correct: 2
+                        },
+                        {
+                            question: "What is the current VAT rate in Kenya?",
+                            options: ["14%", "16%", "18%", "20%"],
+                            correct: 1
+                        },
+                        {
+                            question: "When are individual tax returns due in Kenya?",
+                            options: ["31st December", "30th April", "30th June", "31st October"],
+                            correct: 2
                         }
                     ]
                 },
                 {
                     title: "CBK Currency Analyst",
+                    agency: "Central Bank of Kenya",
+                    location: "Nairobi (Head Office)",
+                    description: "Monitor exchange rates and advise on monetary policy",
                     content: `
-                        <h4>📋 JOB OVERVIEW</h4>
-                        <p>Currency Analysts at Central Bank of Kenya monitor exchange rates and advise on monetary policy.</p>
+                        <div class="kenya-highlight">
+                            <i class="fas fa-university"></i> <strong>CENTRAL BANK OF KENYA</strong> - CBK is responsible for formulating monetary policy, regulating banks, and maintaining price stability.
+                        </div>
                         
-                        <h4>📅 DAILY TASKS</h4>
+                        <h4><i class="fas fa-briefcase"></i> JOB OVERVIEW</h4>
+                        <p>Currency Analysts at Central Bank of Kenya monitor exchange rates, analyze market trends, and advise the Monetary Policy Committee on currency movements affecting the Kenyan economy.</p>
+                        
+                        <h4><i class="fas fa-clock"></i> DAILY TASKS</h4>
                         <ul>
-                            <li>9:00 AM - Check USD/KES exchange rates</li>
-                            <li>10:00 AM - Analyze market trends</li>
-                            <li>11:00 AM - Prepare reports for policy committee</li>
-                            <li>2:00 PM - Monitor regional currency markets</li>
-                            <li>3:00 PM - Forecast currency movements</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>8:00 AM</strong> - Review overnight international market movements</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>9:00 AM</strong> - Check USD/KES, EUR/KES, GBP/KES exchange rates</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>10:00 AM</strong> - Analyze market trends and prepare briefs</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>11:00 AM</strong> - Monitor regional currency markets (TZS, UGX, ETB)</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>2:00 PM</strong> - Prepare reports for Monetary Policy Committee</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>3:00 PM</strong> - Forecast currency movements</li>
+                            <li><i class="fas fa-check-circle"></i> <strong>4:00 PM</strong> - Update exchange rate dashboards</li>
                         </ul>
                         
-                        <h4>🎓 REQUIREMENTS</h4>
+                        <h4><i class="fas fa-graduation-cap"></i> REQUIREMENTS</h4>
                         <ul>
-                            <li>KCSE: A- and above</li>
-                            <li>Degree in Economics/Finance</li>
-                            <li>CFA certification (advantage)</li>
+                            <li><i class="fas fa-check"></i> KCSE: <strong>A- and above</strong></li>
+                            <li><i class="fas fa-check"></i> Bachelor's degree in Economics, Finance or Statistics</li>
+                            <li><i class="fas fa-check"></i> CFA certification (advantage)</li>
+                            <li><i class="fas fa-check"></i> Strong analytical skills</li>
+                        </ul>
+                        
+                        <h4><i class="fas fa-map-marker-alt"></i> LOCATIONS</h4>
+                        <p>
+                            <span class="agency-tag">Nairobi - CBK Head Office</span>
+                        </p>
+                        
+                        <h4><i class="fas fa-money-bill"></i> SALARY & BENEFITS</h4>
+                        <p><span class="salary-badge">KSH 95,000 - 140,000 per month</span></p>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Housing allowance (KSH 40,000)</li>
+                            <li><i class="fas fa-check"></i> Comprehensive medical cover</li>
+                            <li><i class="fas fa-check"></i> Pension (20% employer contribution)</li>
+                            <li><i class="fas fa-check"></i> Leave allowance (KSH 20,000)</li>
+                            <li><i class="fas fa-check"></i> Professional development opportunities</li>
+                        </ul>
+                        
+                        <h4><i class="fas fa-chart-line"></i> CAREER PROGRESSION</h4>
+                        <ul>
+                            <li><strong>Year 1-3:</strong> Currency Analyst (KSH 95-120k)</li>
+                            <li><strong>Year 4-6:</strong> Senior Currency Analyst (KSH 130-160k)</li>
+                            <li><strong>Year 7-10:</strong> Principal Analyst (KSH 170-210k)</li>
+                            <li><strong>Year 10+:</strong> Department Head (KSH 250-350k)</li>
                         </ul>
                     `,
                     flashcards: [
-                        { front: "What is CBK?", back: "Central Bank of Kenya - regulates banks and currency" },
-                        { front: "What is exchange rate?", back: "Value of one currency compared to another" }
+                        { front: "What is CBK?", back: "Central Bank of Kenya - regulates banks and currency. Established in 1966." },
+                        { front: "Who is the Governor of CBK?", back: "Dr. Kamau Thugge (as of 2024)" },
+                        { front: "What is the current exchange rate?", back: "USD/KES approximately 130-150, varies daily." },
+                        { front: "What is the role of CBK?", back: "Formulate monetary policy, regulate banks, issue currency, manage foreign reserves." },
+                        { front: "What is MPC?", back: "Monetary Policy Committee - meets every two months to set interest rates." },
+                        { front: "What is the CBR rate?", back: "Central Bank Rate - the benchmark interest rate in Kenya." },
+                        { front: "What are foreign reserves?", back: "Foreign currencies held by CBK to stabilize the shilling." }
                     ],
                     quiz: [
                         {
                             question: "Which agency regulates Kenyan banks?",
                             options: ["KRA", "CMA", "CBK", "ICT Authority"],
                             correct: 2
+                        },
+                        {
+                            question: "What KCSE grade is required for CBK Currency Analyst?",
+                            options: ["B+", "B", "A-", "C+"],
+                            correct: 2
+                        },
+                        {
+                            question: "Where is CBK headquarters located?",
+                            options: ["Mombasa", "Kisumu", "Nairobi", "Eldoret"],
+                            correct: 2
+                        },
+                        {
+                            question: "How often does MPC meet?",
+                            options: ["Monthly", "Every 2 months", "Quarterly", "Annually"],
+                            correct: 1
+                        },
+                        {
+                            question: "What does CBR stand for?",
+                            options: ["Central Bank Rate", "Currency Base Rate", "Commercial Bank Rate", "Central Banking Regulation"],
+                            correct: 0
                         }
                     ]
                 }
@@ -1065,6 +1459,12 @@
 
         // ===== PAGE NAVIGATION =====
         function showSection(section) {
+            // Close any open modal first
+            if (activeModal) {
+                document.body.removeChild(activeModal);
+                activeModal = null;
+            }
+            
             document.getElementById('heroSection').classList.add('hidden');
             document.getElementById('registerSection').classList.add('hidden');
             document.getElementById('loginSection').classList.add('hidden');
@@ -1193,6 +1593,11 @@
 
         // ===== LOGOUT =====
         function logout() {
+            // Close any open modal
+            if (activeModal) {
+                document.body.removeChild(activeModal);
+                activeModal = null;
+            }
             currentUser = null;
             showSection('hero');
         }
@@ -1206,10 +1611,10 @@
             document.getElementById('displayGrade').textContent = currentUser.kcse;
             
             const courseNames = {
-                'forex': '💰 Finance & Banking',
-                'webdev': '💻 ICT & Digital',
-                'ai': '🤖 AI & Automation',
-                'business': '📊 Business Admin'
+                'forex': '💰 Finance & Banking (KRA, CBK, CMA)',
+                'webdev': '💻 ICT & Digital (ICT Authority, eCitizen)',
+                'ai': '🤖 AI & Automation (Government Innovation)',
+                'business': '📊 Business Admin (Ministries, County Govts)'
             };
             document.getElementById('userCourse').textContent = courseNames[currentUser.course] || currentUser.course;
             
@@ -1253,31 +1658,46 @@
             `;
 
             if (currentUser.status === 'approved') {
-                // Add lessons
+                // Add enhanced lessons
                 const courseLessons = lessons[currentUser.course] || lessons.forex;
                 
                 content += `
                     <h3 style="color: var(--govt-blue); margin: 3rem 0 1rem;">
                         <i class="fas fa-book-open"></i> JOB TRAINING MODULES
                     </h3>
+                    <div class="lessons-container">
                 `;
                 
                 courseLessons.forEach((lesson, index) => {
                     content += `
                         <div class="lesson-card">
-                            <h4>📘 Lesson ${index + 1}: ${lesson.title}</h4>
-                            ${lesson.content}
-                            <div style="margin-top: 1rem;">
-                                <button class="btn btn-primary" style="width: auto; padding: 0.5rem 1.5rem; margin-right: 0.5rem;" onclick="showFlashcards(${index})">
+                            <div class="lesson-header">
+                                <div class="lesson-icon">
+                                    <i class="fas fa-${index === 0 ? 'landmark' : 'university'}"></i>
+                                </div>
+                                <div class="lesson-title">
+                                    <h3>${lesson.title}</h3>
+                                    <p><i class="fas fa-building"></i> ${lesson.agency} • <i class="fas fa-map-marker-alt"></i> ${lesson.location}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="lesson-content">
+                                ${lesson.content}
+                            </div>
+                            
+                            <div class="lesson-actions">
+                                <button onclick="showFlashcards(${index})">
                                     <i class="fas fa-layer-group"></i> Flashcards (${lesson.flashcards.length})
                                 </button>
-                                <button class="btn btn-success" style="width: auto; padding: 0.5rem 1.5rem;" onclick="showQuiz(${index})">
+                                <button onclick="showQuiz(${index})">
                                     <i class="fas fa-question-circle"></i> Take Quiz (${lesson.quiz.length} questions)
                                 </button>
                             </div>
                         </div>
                     `;
                 });
+                
+                content += `</div>`;
                 
                 // Certificate section
                 content += `
@@ -1317,22 +1737,25 @@
                 return;
             }
             
+            // Close any existing modal
+            if (activeModal) {
+                document.body.removeChild(activeModal);
+                activeModal = null;
+            }
+            
             let cardIndex = 0;
             let isFlipped = false;
             
             const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.8); display: flex; align-items: center;
-                justify-content: center; z-index: 2000;
-            `;
+            modal.className = 'modal';
             
             function updateCard() {
                 modal.innerHTML = `
-                    <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 600px; width: 90%;">
-                        <h3 style="color: var(--govt-blue); margin-bottom: 1rem;">
-                            <i class="fas fa-layer-group"></i> Flashcards (${cardIndex + 1}/${cards.length})
-                        </h3>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-layer-group"></i> ${courseLessons[lessonIndex].title} - Flashcards</h3>
+                            <button class="modal-close" onclick="closeModal()">&times;</button>
+                        </div>
                         
                         <div class="flashcard-container">
                             <div class="flashcard ${isFlipped ? 'flipped' : ''}" onclick="this.classList.toggle('flipped')">
@@ -1341,34 +1764,37 @@
                         </div>
                         
                         <div class="flashcard-controls">
-                            <button class="btn-flashcard btn-know" onclick="nextCard(true)">✅ I Know This</button>
-                            <button class="btn-flashcard btn-review" onclick="nextCard(false)">🔄 Review Later</button>
+                            <button class="btn-flashcard btn-know" onclick="handleCardResponse(true)">✅ I Know This</button>
+                            <button class="btn-flashcard btn-review" onclick="handleCardResponse(false)">🔄 Review Later</button>
                         </div>
                         
-                        <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
-                            <button class="btn btn-primary" style="width: auto;" onclick="prevCard()">◀ Previous</button>
-                            <span style="color: #666;">Card ${cardIndex + 1}/${cards.length}</span>
-                            <button class="btn btn-primary" style="width: auto;" onclick="nextCardManual()">Next ▶</button>
+                        <div class="flashcard-nav">
+                            <button onclick="prevCard()" ${cardIndex === 0 ? 'disabled' : ''}>◀ Previous</button>
+                            <span class="flashcard-progress">Card ${cardIndex + 1} of ${cards.length}</span>
+                            <button onclick="nextCard()" ${cardIndex === cards.length - 1 ? 'disabled' : ''}>Next ▶</button>
                         </div>
                         
-                        <button class="btn btn-primary" style="margin-top: 1rem; background: #dc3545;" onclick="document.body.removeChild(modal)">Close</button>
+                        <button class="btn btn-close" onclick="closeModal()">Close</button>
                     </div>
                 `;
             }
             
-            window.nextCard = (known) => {
-                if (known) alert('✅ Great! Card mastered!');
+            // Define handlers
+            window.handleCardResponse = (known) => {
+                if (known) {
+                    alert('✅ Great! Card mastered!');
+                }
                 if (cardIndex < cards.length - 1) {
                     cardIndex++;
                     isFlipped = false;
                     updateCard();
                 } else {
                     alert('🎉 You\'ve completed all flashcards!');
-                    document.body.removeChild(modal);
+                    closeModal();
                 }
             };
             
-            window.nextCardManual = () => {
+            window.nextCard = () => {
                 if (cardIndex < cards.length - 1) {
                     cardIndex++;
                     isFlipped = false;
@@ -1384,8 +1810,16 @@
                 }
             };
             
+            window.closeModal = () => {
+                if (activeModal) {
+                    document.body.removeChild(activeModal);
+                    activeModal = null;
+                }
+            };
+            
             updateCard();
             document.body.appendChild(modal);
+            activeModal = modal;
         }
 
         // ===== QUIZ =====
@@ -1398,61 +1832,90 @@
                 return;
             }
             
+            // Close any existing modal
+            if (activeModal) {
+                document.body.removeChild(activeModal);
+                activeModal = null;
+            }
+            
             let score = 0;
             let currentQ = 0;
+            let selectedOption = null;
             
             const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: rgba(0,0,0,0.8); display: flex; align-items: center;
-                justify-content: center; z-index: 2000;
-            `;
+            modal.className = 'modal';
             
             function updateQuiz() {
                 const q = questions[currentQ];
                 modal.innerHTML = `
-                    <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 600px; width: 90%;">
-                        <h3 style="color: var(--govt-blue); margin-bottom: 1rem;">
-                            <i class="fas fa-question-circle"></i> Quiz (${currentQ + 1}/${questions.length})
-                        </h3>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-question-circle"></i> ${courseLessons[lessonIndex].title} - Quiz</h3>
+                            <button class="modal-close" onclick="closeModal()">&times;</button>
+                        </div>
                         
-                        <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">${q.question}</p>
+                        <p style="font-size: 1.2rem; margin-bottom: 1.5rem; font-weight: 500;">${q.question}</p>
                         
                         <div style="display: grid; gap: 0.5rem; margin-bottom: 1.5rem;">
                             ${q.options.map((opt, i) => `
-                                <button class="btn btn-primary" style="background: #f8f9fa; color: #333; border: 2px solid #e0e0e0; text-align: left;" 
-                                        onclick="checkAnswer(${i}, ${q.correct})">
+                                <button class="quiz-option" onclick="selectAnswer(${i})" id="opt_${i}">
                                     ${String.fromCharCode(65 + i)}. ${opt}
                                 </button>
                             `).join('')}
                         </div>
                         
-                        <p style="font-weight: 600;">Score: ${score}/${questions.length}</p>
+                        <button class="btn btn-primary" onclick="submitAnswer()" style="margin-bottom: 1rem;">Submit Answer</button>
                         
-                        <button class="btn btn-primary" style="margin-top: 1rem; background: #dc3545;" onclick="document.body.removeChild(modal)">Close</button>
+                        <div class="quiz-score">Score: ${score}/${questions.length}</div>
+                        
+                        <button class="btn btn-close" onclick="closeModal()">Close</button>
                     </div>
                 `;
             }
             
-            window.checkAnswer = (selected, correct) => {
-                if (selected === correct) {
+            window.selectAnswer = (index) => {
+                selectedOption = index;
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                document.getElementById(`opt_${index}`).classList.add('selected');
+            };
+            
+            window.submitAnswer = () => {
+                if (selectedOption === null) {
+                    alert('Please select an answer');
+                    return;
+                }
+                
+                const q = questions[currentQ];
+                
+                if (selectedOption === q.correct) {
                     score++;
                     alert('✅ Correct!');
                 } else {
-                    alert(`❌ Incorrect. Correct answer: ${String.fromCharCode(65 + correct)}`);
+                    alert(`❌ Incorrect. Correct answer: ${String.fromCharCode(65 + q.correct)}`);
                 }
                 
                 if (currentQ < questions.length - 1) {
                     currentQ++;
+                    selectedOption = null;
                     updateQuiz();
                 } else {
                     alert(`🎉 Quiz complete! Your score: ${score}/${questions.length}`);
-                    document.body.removeChild(modal);
+                    closeModal();
+                }
+            };
+            
+            window.closeModal = () => {
+                if (activeModal) {
+                    document.body.removeChild(activeModal);
+                    activeModal = null;
                 }
             };
             
             updateQuiz();
             document.body.appendChild(modal);
+            activeModal = modal;
         }
 
         // ===== LOAD ADMIN PANEL =====
@@ -1535,6 +1998,12 @@
         window.purchaseCertificate = purchaseCertificate;
         window.showFlashcards = showFlashcards;
         window.showQuiz = showQuiz;
+        window.closeModal = () => {
+            if (activeModal) {
+                document.body.removeChild(activeModal);
+                activeModal = null;
+            }
+        };
     </script>
 </body>
 </html>
