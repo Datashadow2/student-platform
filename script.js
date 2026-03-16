@@ -8,7 +8,7 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 // ===== GLOBAL VARIABLES =====
 let currentUser = null;
 
-// ===== KENYAN TESTIMONIALS WITH YOUR SPECIFIC FACES =====
+// ===== KENYAN TESTIMONIALS - ONE IMAGE PER PERSON =====
 const testimonials = [
     {
         name: "James Otieno",
@@ -61,60 +61,6 @@ const testimonials = [
         job: "IT Support",
         org: "Huduma Kenya",
         story: "Nililipa KSH 150, KSH 200, na KSH 500 kwa cheti. Yote ilifaa! Sasa niko na kazi nzuri.",
-        image: "https://images.pexels.com/photos/35081993/pexels-photo-35081993.jpeg",
-        stars: 5
-    },
-    {
-        name: "Brian Odhiambo",
-        grade: "B-",
-        job: "Customs Officer",
-        org: "KRA - Customs Department",
-        story: "Nimeajiriwa KRA Customs Mombasa! Kazi nzuri na malipo mazuri. Mungu ni mwema.",
-        image: "https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg",
-        stars: 5
-    },
-    {
-        name: "Sarah Chepkemoi",
-        grade: "C+",
-        job: "Receptionist",
-        org: "Huduma Kenya - Eldoret",
-        story: "Nilikuwa natafuta kazi kwa muda mrefu. Kozi hii ilinionyesha njia ya kuingia Huduma. Asanteni!",
-        image: "https://images.pexels.com/photos/1390128/pexels-photo-1390128.jpeg",
-        stars: 4
-    },
-    {
-        name: "David Mwangi",
-        grade: "D+",
-        job: "Intern",
-        org: "ICT Authority",
-        story: "Nilianza kama intern, sasa nimepata nafasi ya kuapply permanent. SkillForge imenisaidia sana.",
-        image: "https://images.pexels.com/photos/35165475/pexels-photo-35165475.jpeg",
-        stars: 4
-    },
-    {
-        name: "Esther Akoth",
-        grade: "B+",
-        job: "Tax Officer",
-        org: "KRA - Headquarters",
-        story: "Nilimaliza kozi, nikapata cheti cha KSH 500, na sasa niko KRA! Cheti kilinisaidia interview.",
-        image: "https://images.pexels.com/photos/1255010/pexels-photo-1255010.jpeg",
-        stars: 5
-    },
-    {
-        name: "Joseph Kipchoge",
-        grade: "C",
-        job: "Driver",
-        org: "County Government of Uasin Gishu",
-        story: "Sijui kwanini nilidhani C haifai. County zina nafasi nyingi! Niko na kazi sasa.",
-        image: "https://images.pexels.com/photos/29079409/pexels-photo-29079409.jpeg",
-        stars: 4
-    },
-    {
-        name: "Grace Njeri",
-        grade: "Adult",
-        job: "Administrative Assistant",
-        org: "Ministry of Education",
-        story: "Nilianza kama adult learner, sasa niko Ministry of Education. Usiogope kujaribu!",
         image: "https://images.pexels.com/photos/35081993/pexels-photo-35081993.jpeg",
         stars: 5
     }
@@ -316,14 +262,16 @@ function loadFeaturedTestimonials() {
     const container = document.getElementById('featuredTestimonials');
     if (!container) return;
     
+    // Show first 6 testimonials
     const featured = testimonials.slice(0, 6);
     
     container.innerHTML = featured.map(t => `
         <div class="testimonial-card">
             <img src="${t.image}" 
                  alt="${t.name}" 
-                 class="testimonial-image" 
-                 onerror="this.src='https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg'">
+                 class="testimonial-image"
+                 style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;"
+                 onerror="this.onerror=null; this.src='https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg';">
             <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
             <p class="testimonial-text">"${t.story}"</p>
             <div class="testimonial-name">${t.name}</div>
@@ -347,12 +295,14 @@ function loadGradeTestimonials(grade) {
     
     container.innerHTML = filtered.map(t => `
         <div class="testimonial-card">
-            <img src="${t.image}" alt="${t.name}" class="testimonial-image">
+            <img src="${t.image}" 
+                 alt="${t.name}" 
+                 class="testimonial-image"
+                 style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
             <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
             <p class="testimonial-text">"${t.story}"</p>
             <div class="testimonial-name">${t.name}</div>
             <div class="testimonial-job">${t.job} - ${t.org}</div>
-            <div class="testimonial-salary">💰 KSH 45-65k</div>
         </div>
     `).join('');
 }
@@ -369,7 +319,10 @@ function loadAllTestimonials(filter = 'all') {
     
     container.innerHTML = filtered.map(t => `
         <div class="testimonial-card">
-            <img src="${t.image}" alt="${t.name}" class="testimonial-image">
+            <img src="${t.image}" 
+                 alt="${t.name}" 
+                 class="testimonial-image"
+                 style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
             <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
             <p class="testimonial-text">"${t.story}"</p>
             <div class="testimonial-name">${t.name}</div>
@@ -418,7 +371,6 @@ async function submitTestimonial() {
         
         showToast('Testimonial imetumwa! Inasubiri kuidhinishwa.', 'success');
         
-        // Clear form
         document.getElementById('story_job').value = '';
         document.getElementById('story_org').value = '';
         document.getElementById('story_text').value = '';
@@ -500,7 +452,6 @@ async function submitRegistration() {
         const course = document.getElementById('reg_course').value;
         const mpesaMessage = document.getElementById('reg_mpesa').value;
 
-        // Validation
         if (!name || !email || !password || !kcse || !course || !mpesaMessage) {
             showToast('Tafadhali jaza sehemu zote', 'error');
             return;
@@ -511,15 +462,11 @@ async function submitRegistration() {
             return;
         }
 
-        // Extract M-PESA code from message
         const mpesaCode = mpesaMessage.match(/[A-Z0-9]{6,10}/g)?.[0] || 'MANUAL-' + Date.now();
-
-        // Calculate trial dates (2 days from now)
         const now = new Date();
         const trialEnd = new Date(now);
         trialEnd.setDate(trialEnd.getDate() + 2);
 
-        // Save to Supabase with ALL columns
         const { error } = await supabaseClient
             .from('users')
             .insert([{
@@ -543,11 +490,7 @@ async function submitRegistration() {
         if (error) throw error;
 
         showToast('Umefanikiwa! Subiri admin akubali.', 'success');
-        
-        // Clear form
         document.getElementById('registrationForm').reset();
-        
-        // Go to login page
         showLoginPage();
         
     } catch (error) {
@@ -577,14 +520,12 @@ async function login() {
 
         const user = data[0];
         
-        // Check if admin
         if (email === 'admin@skillforge.com') {
             currentUser = user;
             showAdminPanel();
             return;
         }
 
-        // Check if approved
         if (user.status !== 'approved') {
             showToast('Akaunti yako haijaidhinishwa. Subiri admin.', 'info');
             return;
@@ -690,9 +631,7 @@ async function approveUser(email) {
     try {
         const { error } = await supabaseClient
             .from('users')
-            .update({ 
-                status: 'approved'
-            })
+            .update({ status: 'approved' })
             .eq('email', email);
 
         if (error) throw error;
@@ -770,7 +709,6 @@ function renderDashboard() {
     document.getElementById('welcomeName').textContent = `Karibu, ${user.name || 'User'}!`;
     document.getElementById('userGrade').textContent = `KCSE: ${user.kcse || 'N/A'}`;
     
-    // Check trial status
     if (user.trial_end) {
         const now = new Date();
         const trialEnd = new Date(user.trial_end);
@@ -790,7 +728,6 @@ function renderDashboard() {
         document.getElementById('paymentStatus').textContent = 'Active';
     }
     
-    // Load dashboard content
     loadDashboardContent(user);
 }
 
@@ -801,7 +738,6 @@ function loadDashboardContent(user) {
     
     const jobs = governmentJobs[user.kcse] || governmentJobs['B+'];
     
-    // Load grade-specific testimonials
     if (user.kcse) {
         loadGradeTestimonials(user.kcse);
     }
@@ -836,17 +772,17 @@ function loadDashboardContent(user) {
             
             <h4 style="margin: 2rem 0 1rem;">📚 Mafunzo ya Kazi</h4>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
-                <div class="lesson-card" style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
                     <h5>KRA - Tax Assistant</h5>
                     <p>Jifunze kazi za KRA</p>
                     <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson coming soon!')">Fungua</button>
                 </div>
-                <div class="lesson-card" style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
                     <h5>Huduma Kenya</h5>
                     <p>Jifunze kuhudumia wananchi</p>
                     <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson coming soon!')">Fungua</button>
                 </div>
-                <div class="lesson-card" style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px;">
                     <h5>CMA - Compliance</h5>
                     <p>Jifunze kazi za CMA</p>
                     <button style="background: #667eea; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer;" onclick="alert('Lesson coming soon!')">Fungua</button>
