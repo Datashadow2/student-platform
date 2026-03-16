@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillForge Academy - Your Path to Government Jobs</title>
+    <title>SkillForge Academy - Kenyan Government Jobs Portal</title>
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Google Fonts - Official Government Style -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* ===== OFFICIAL KENYAN GOVERNMENT STYLE ===== */
+        :root {
+            --kenyan-green: #006B3C;
+            --kenyan-red: #B22234;
+            --kenyan-black: #000000;
+            --kenyan-white: #FFFFFF;
+            --govt-blue: #003366;
+            --govt-gold: #FFD700;
+            --govt-gray: #F5F5F5;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -19,31 +30,58 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e9edf5 100%);
             min-height: 100vh;
-            color: #333;
+            color: #2c3e50;
         }
 
+        /* ===== KENYAN FLAG HEADER ===== */
+        .flag-header {
+            height: 8px;
+            display: flex;
+            width: 100%;
+        }
+        .flag-black { background: var(--kenyan-black); flex: 1; }
+        .flag-red { background: var(--kenyan-red); flex: 1; }
+        .flag-green { background: var(--kenyan-green); flex: 1; }
+
+        /* ===== MAIN HEADER ===== */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: white;
             padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
             z-index: 1000;
+            border-bottom: 3px solid var(--govt-blue);
         }
 
         .logo {
-            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--govt-blue);
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--govt-blue);
+            line-height: 1.2;
+        }
+
+        .logo-text small {
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 400;
         }
 
         .nav-buttons {
@@ -52,54 +90,99 @@
         }
 
         .nav-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             border: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
         }
 
         .nav-btn.login {
             background: transparent;
-            color: #667eea;
-            border: 2px solid #667eea;
+            color: var(--govt-blue);
+            border: 2px solid var(--govt-blue);
         }
 
         .nav-btn.register {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: var(--govt-blue);
             color: white;
         }
 
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,51,102,0.2);
+        }
+
+        /* ===== MAIN CONTAINER ===== */
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 2rem auto;
             padding: 0 2rem;
         }
 
+        /* ===== KENYAN GOVERNMENT BANNER ===== */
+        .govt-banner {
+            background: linear-gradient(135deg, var(--govt-blue), #001a33);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-left: 5px solid var(--govt-gold);
+        }
+
+        .govt-banner i {
+            color: var(--govt-gold);
+            margin-right: 0.5rem;
+        }
+
+        .govt-badge {
+            background: var(--govt-gold);
+            color: var(--govt-blue);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        /* ===== HERO SECTION ===== */
         .hero-section {
-            text-align: center;
-            padding: 4rem 2rem;
             background: white;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            animation: slideUp 0.5s ease;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
         }
 
         .hero-section h1 {
-            font-size: 2.8rem;
-            color: #667eea;
+            font-size: 2.5rem;
+            color: var(--govt-blue);
             margin-bottom: 1rem;
+            font-weight: 700;
         }
 
-        .hero-section p {
-            font-size: 1.2rem;
+        .hero-section h1 i {
+            color: var(--kenyan-green);
+            margin-right: 0.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
             color: #666;
             margin-bottom: 2rem;
+            border-left: 4px solid var(--kenyan-red);
+            padding-left: 1rem;
         }
 
+        /* ===== STATS SECTION ===== */
         .stats-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -108,43 +191,60 @@
         }
 
         .stat-box {
-            background: linear-gradient(135deg, #667eea10, #764ba210);
+            background: var(--govt-gray);
             padding: 1.5rem;
-            border-radius: 15px;
+            border-radius: 10px;
             text-align: center;
+            border-bottom: 3px solid var(--govt-blue);
         }
 
         .stat-number {
             font-size: 2rem;
             font-weight: 700;
-            color: #667eea;
+            color: var(--govt-blue);
             display: block;
         }
 
         .stat-label {
             color: #666;
             font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* ===== TESTIMONIALS SECTION ===== */
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--govt-blue);
+            margin: 3rem 0 2rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .section-title i {
+            color: var(--kenyan-green);
         }
 
         .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
-            margin: 3rem 0;
+            margin: 2rem 0;
         }
 
         .testimonial-card {
-            background: #f8f9fa;
-            border-radius: 20px;
+            background: white;
+            border-radius: 15px;
             padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
             position: relative;
-            transition: transform 0.3s ease;
-            text-align: center;
         }
 
         .testimonial-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 30px rgba(0,51,102,0.1);
+            border-color: var(--govt-blue);
         }
 
         .testimonial-image {
@@ -152,7 +252,7 @@
             height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #667eea;
+            border: 4px solid var(--govt-blue);
             margin: 0 auto 1rem;
             display: block;
         }
@@ -161,111 +261,140 @@
             color: #ffc107;
             font-size: 1.2rem;
             margin-bottom: 1rem;
+            text-align: center;
         }
 
         .testimonial-text {
             font-style: italic;
-            margin-bottom: 1rem;
             color: #555;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         .testimonial-name {
-            font-weight: 600;
-            color: #667eea;
-            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--govt-blue);
+            font-size: 1.1rem;
+            text-align: center;
         }
 
         .testimonial-job {
             font-size: 0.9rem;
-            color: #666;
-            margin-bottom: 0.5rem;
+            color: var(--kenyan-green);
+            text-align: center;
+            font-weight: 500;
         }
 
         .testimonial-grade {
             display: inline-block;
-            background: #667eea;
+            background: var(--govt-blue);
             color: white;
             padding: 0.2rem 1rem;
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 600;
-            margin-top: 0.5rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
+        /* ===== AUTH FORMS ===== */
+        .auth-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        .auth-container h2 {
+            color: var(--govt-blue);
+            margin-bottom: 2rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #444;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--govt-blue);
+            box-shadow: 0 0 0 3px rgba(0,51,102,0.1);
+        }
+
+        .mpesa-info {
+            background: #f0f9ff;
+            border: 2px dashed var(--govt-blue);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .mpesa-paybill {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--kenyan-green);
+            letter-spacing: 2px;
         }
 
         .btn {
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
+            font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
-            border: none;
-            font-family: 'Poppins', sans-serif;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: var(--govt-blue);
             color: white;
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+            background: #001a33;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,51,102,0.3);
         }
 
-        .btn-secondary {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-
-        .btn-secondary:hover {
-            background: #f8f9fa;
-            transform: translateY(-3px);
-        }
-
-        .auth-page {
-            background: white;
-            border-radius: 30px;
-            padding: 3rem;
-            max-width: 500px;
-            margin: 0 auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            display: none;
-        }
-
-        .auth-page h2 {
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .auth-page input {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .auth-page button {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .btn-success {
+            background: var(--kenyan-green);
             color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            cursor: pointer;
+        }
+
+        .btn-success:hover {
+            background: #004d2b;
         }
 
         .back-link {
@@ -274,75 +403,294 @@
         }
 
         .back-link a {
-            color: #667eea;
+            color: var(--govt-blue);
             text-decoration: none;
+            font-weight: 600;
             cursor: pointer;
         }
 
+        /* ===== DASHBOARD ===== */
+        .dashboard-header {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 1px solid #e0e0e0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--govt-blue), var(--kenyan-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .status-approved {
+            background: var(--kenyan-green);
+            color: white;
+        }
+
+        .status-paid {
+            background: var(--govt-blue);
+            color: white;
+        }
+
+        /* ===== JOB CARDS ===== */
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .job-card:hover {
+            border-color: var(--govt-blue);
+            box-shadow: 0 5px 20px rgba(0,51,102,0.1);
+        }
+
+        .job-card h3 {
+            color: var(--govt-blue);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .job-stat {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--kenyan-green);
+            margin: 0.5rem 0;
+        }
+
+        /* ===== LESSON CARDS ===== */
+        .lesson-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--govt-blue);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+
+        .lesson-card h4 {
+            color: var(--govt-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== FLASHCARDS ===== */
+        .flashcard-container {
+            perspective: 1000px;
+            margin: 2rem 0;
+        }
+
+        .flashcard {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--govt-blue);
+        }
+
+        .flashcard.flipped {
+            background: linear-gradient(135deg, var(--govt-blue), var(--kenyan-green));
+            color: white;
+        }
+
+        .flashcard-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .btn-flashcard {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-know {
+            background: var(--kenyan-green);
+            color: white;
+        }
+
+        .btn-review {
+            background: #ffc107;
+            color: #000;
+        }
+
+        /* ===== ADMIN PANEL ===== */
         .admin-panel {
             background: white;
-            border-radius: 30px;
-            padding: 3rem;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            display: none;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
         }
 
-        .admin-panel h2 {
-            color: #667eea;
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--govt-blue);
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .payment-request {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border: 1px solid #e0e0e0;
         }
 
+        .btn-approve {
+            background: var(--kenyan-green);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-reject {
+            background: var(--kenyan-red);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* ===== UTILITY CLASSES ===== */
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .hero-section h1 {
-                font-size: 2rem;
-            }
-            
             .stats-container {
                 grid-template-columns: 1fr 1fr;
             }
             
-            .cta-buttons {
+            .dashboard-header {
                 flex-direction: column;
+                text-align: center;
+            }
+            
+            .user-info {
+                flex-direction: column;
+            }
+            
+            .hero-section h1 {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Kenyan Flag Header -->
+    <div class="flag-header">
+        <div class="flag-black"></div>
+        <div class="flag-red"></div>
+        <div class="flag-green"></div>
+    </div>
+
     <header>
         <div class="logo">
-            <i class="fas fa-briefcase"></i> SkillForge Academy
+            <i class="fas fa-shield-alt logo-icon"></i>
+            <div class="logo-text">
+                <h1>SKILLFORGE ACADEMY</h1>
+                <small>Kenya Government Jobs Portal • KCSE Career Path</small>
+            </div>
         </div>
         <div class="nav-buttons">
-            <button class="nav-btn login" onclick="showLoginPage()">Login</button>
-            <button class="nav-btn register" onclick="showRegistrationPage()">Register</button>
+            <button class="nav-btn login" onclick="showSection('login')">LOGIN</button>
+            <button class="nav-btn register" onclick="showSection('register')">REGISTER • KSH 150</button>
         </div>
     </header>
 
     <div class="container">
+        <!-- Government Banner -->
+        <div class="govt-banner">
+            <div>
+                <i class="fas fa-shield-alt"></i>
+                <strong>OFFICIAL KENYAN GOVERNMENT JOB PORTAL</strong> • KCSE Grade-Based Recruitment
+            </div>
+            <div class="govt-badge">
+                <i class="fas fa-check-circle"></i> VERIFIED BY PSC
+            </div>
+        </div>
+
         <!-- HERO SECTION -->
         <div id="heroSection" class="hero-section">
-            <h1>🇰🇪 Your KCSE Grade is Your Key to Government Jobs</h1>
-            <p>Pay KSH 150 to book your position • Get 2-day free trial • Unlock full access with KSH 200</p>
+            <h1>
+                <i class="fas fa-shield-alt"></i> 
+                Your KCSE Grade is Your Key to Government Jobs
+            </h1>
+            <div class="hero-subtitle">
+                <i class="fas fa-gavel"></i> Public Service Commission • Kenya Revenue Authority • Central Bank of Kenya • Huduma Kenya
+            </div>
             
             <div class="stats-container">
                 <div class="stat-box">
-                    <span class="stat-number">1,247+</span>
-                    <span class="stat-label">Graduates</span>
+                    <span class="stat-number">1,247</span>
+                    <span class="stat-label">Placed in Govt Jobs</span>
                 </div>
                 <div class="stat-box">
                     <span class="stat-number">856</span>
-                    <span class="stat-label">Placed in Jobs</span>
+                    <span class="stat-label">KRA Hires</span>
                 </div>
                 <div class="stat-box">
                     <span class="stat-number">73%</span>
@@ -350,56 +698,199 @@
                 </div>
                 <div class="stat-box">
                     <span class="stat-number">KSH 58k</span>
-                    <span class="stat-label">Avg. Salary</span>
+                    <span class="stat-label">Avg. Starting Salary</span>
                 </div>
             </div>
 
-            <!-- TESTIMONIALS SECTION -->
-            <h2 style="margin: 3rem 0 2rem; color: #667eea;">✨ Success Stories from Real Graduates</h2>
+            <h2 class="section-title">
+                <i class="fas fa-quote-right"></i> 
+                SUCCESS STORIES FROM KENYAN GRADUATES
+            </h2>
             <div class="testimonials-grid" id="featuredTestimonials"></div>
             
-            <div class="cta-buttons">
-                <button class="btn btn-primary" onclick="showRegistrationPage()">
-                    <i class="fas fa-lock"></i> Pay KSH 150 & Register
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="btn btn-primary" onclick="showSection('register')" style="width: auto; padding: 1rem 3rem; font-size: 1.2rem;">
+                    <i class="fas fa-lock"></i> START YOUR JOURNEY - KSH 150
                 </button>
-                <button class="btn btn-secondary" onclick="showLoginPage()">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </div>
-        </div>
-
-        <!-- LOGIN PAGE -->
-        <div id="loginPage" class="auth-page">
-            <h2>🔐 Admin Login</h2>
-            <form onsubmit="event.preventDefault(); adminLogin()">
-                <input type="email" id="adminEmail" placeholder="Email" value="admin@skillforge.com">
-                <input type="password" id="adminPass" placeholder="Password" value="admin123">
-                <button type="submit">Login to Admin Panel</button>
-            </form>
-            <div class="back-link">
-                <a onclick="showHeroSection()">← Back to Home</a>
+                <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                    <i class="fas fa-check-circle" style="color: var(--kenyan-green);"></i> 
+                    Includes 2-day free trial • Pay KSH 200 to unlock full access
+                </p>
             </div>
         </div>
 
         <!-- REGISTRATION PAGE -->
-        <div id="registrationPage" class="auth-page">
-            <h2>📝 Registration</h2>
-            <p style="text-align: center; margin-bottom: 2rem;">Registration form coming soon!</p>
-            <button onclick="showHeroSection()">Back to Home</button>
+        <div id="registerSection" class="hidden">
+            <div class="auth-container">
+                <h2><i class="fas fa-user-plus"></i> REGISTER • PAY KSH 150</h2>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Full Name (as on ID)</label>
+                        <input type="text" id="regName" placeholder="e.g., James Otieno" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" id="regEmail" placeholder="you@example.com" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Password (min. 6 characters)</label>
+                        <input type="password" id="regPass" placeholder="••••••••" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-graduation-cap"></i> KCSE Grade</label>
+                        <select id="regGrade" required>
+                            <option value="">Select your KCSE grade</option>
+                            <option value="A">A (81-100) - Plain A</option>
+                            <option value="A-">A- (75-80) - A minus</option>
+                            <option value="B+">B+ (70-74) - B plus</option>
+                            <option value="B">B (65-69) - B plain</option>
+                            <option value="B-">B- (60-64) - B minus</option>
+                            <option value="C+">C+ (55-59) - C plus</option>
+                            <option value="C">C (50-54) - C plain</option>
+                            <option value="C-">C- (45-49) - C minus</option>
+                            <option value="D+">D+ (40-44) - D plus</option>
+                            <option value="D">D (35-39) - D plain</option>
+                            <option value="D-">D- (30-34) - D minus</option>
+                            <option value="E">E (Below 30) - E</option>
+                            <option value="Adult">Adult Learner (No KCSE)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-briefcase"></i> Career Interest</label>
+                        <select id="regCourse" required>
+                            <option value="forex">💰 Finance & Banking (KRA, CBK, CMA)</option>
+                            <option value="webdev">💻 ICT & Digital (ICT Authority, eCitizen)</option>
+                            <option value="ai">🤖 AI & Automation (Government Innovation)</option>
+                            <option value="business">📊 Business Admin (Ministries, County Govts)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mpesa-info">
+                        <p><i class="fas fa-mobile-alt"></i> LIPA NA M-PESA</p>
+                        <div class="mpesa-paybill">0789 480 259</div>
+                        <p><strong>Account:</strong> <span id="accountDisplay">Your Email</span></p>
+                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
+                            <i class="fas fa-info-circle"></i> Send KSH 150, then paste confirmation below
+                        </p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-comment"></i> M-PESA Confirmation Message</label>
+                        <textarea id="regMpesa" rows="3" placeholder="Paste the full M-PESA message here..." required></textarea>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary" onclick="register()">
+                        <i class="fas fa-check-circle"></i> SUBMIT & REGISTER (KSH 150)
+                    </button>
+                </form>
+                
+                <div class="back-link">
+                    <a onclick="showSection('hero')"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                </div>
+            </div>
         </div>
 
-        <!-- ADMIN PANEL -->
-        <div id="adminPanel" class="admin-panel">
-            <h2>🔐 Admin Panel - Pending Approvals</h2>
-            <p>No pending registrations at the moment.</p>
-            <div class="back-link">
-                <a onclick="showHeroSection()">← Back to Home</a>
+        <!-- LOGIN PAGE -->
+        <div id="loginSection" class="hidden">
+            <div class="auth-container" style="max-width: 450px;">
+                <h2><i class="fas fa-sign-in-alt"></i> LOGIN</h2>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="admin@skillforge.com">
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="loginPass" placeholder="••••••••">
+                </div>
+                
+                <button class="btn btn-primary" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i> LOGIN
+                </button>
+                
+                <div style="margin: 1rem 0; text-align: center;">
+                    <small>
+                        <i class="fas fa-shield-alt" style="color: var(--govt-blue);"></i> 
+                        Admin: admin@skillforge.com / admin123
+                    </small>
+                </div>
+                
+                <div class="back-link">
+                    <a onclick="showSection('hero')"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- USER DASHBOARD -->
+        <div id="dashboardSection" class="hidden">
+            <div class="dashboard-header">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <div>
+                        <h2 id="welcomeName" style="color: var(--govt-blue);">Welcome, User!</h2>
+                        <p><i class="fas fa-graduation-cap"></i> KCSE: <strong id="displayGrade">-</strong></p>
+                        <p><i class="fas fa-building"></i> <span id="userCourse">-</span></p>
+                    </div>
+                </div>
+                <div>
+                    <span id="userStatus" class="status-badge status-pending">⏳ Pending Approval</span>
+                </div>
+                <button class="btn btn-primary" onclick="logout()" style="width: auto; padding: 0.7rem 2rem;">
+                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                </button>
+            </div>
+
+            <div id="userContent"></div>
+        </div>
+
+        <!-- ADMIN DASHBOARD -->
+        <div id="adminSection" class="hidden">
+            <div class="admin-panel">
+                <div class="admin-header">
+                    <h2><i class="fas fa-shield-alt" style="color: var(--govt-blue);"></i> ADMIN PANEL • KENYA GOVERNMENT JOBS PORTAL</h2>
+                    <button class="btn btn-primary" onclick="logout()" style="width: auto; padding: 0.7rem 2rem;">
+                        <i class="fas fa-sign-out-alt"></i> LOGOUT
+                    </button>
+                </div>
+                
+                <h3 style="color: var(--govt-blue); margin: 2rem 0 1rem;">
+                    <i class="fas fa-clock"></i> PENDING REGISTRATIONS (KSH 150)
+                </h3>
+                <div id="pendingRegistrations"></div>
+                
+                <h3 style="color: var(--govt-blue); margin: 2rem 0 1rem;">
+                    <i class="fas fa-money-bill"></i> PENDING KSH 200 PAYMENTS
+                </h3>
+                <div id="pendingPayments"></div>
+                
+                <h3 style="color: var(--govt-blue); margin: 2rem 0 1rem;">
+                    <i class="fas fa-certificate"></i> PENDING CERTIFICATES (KSH 500)
+                </h3>
+                <div id="pendingCertificates"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // ===== YOUR KENYAN TESTIMONIALS WITH YOUR LINKS =====
+        // ===== DATABASE =====
+        let users = JSON.parse(localStorage.getItem('skillforge_users')) || [
+            {
+                id: 1,
+                name: "Admin User",
+                email: "admin@skillforge.com",
+                password: "admin123",
+                role: "admin"
+            }
+        ];
+        
+        let currentUser = null;
+
+        // ===== KENYAN TESTIMONIALS WITH YOUR LINKS =====
         const testimonials = [
             {
                 name: "James Otieno",
@@ -457,6 +948,105 @@
             }
         ];
 
+        // ===== JOB DATA BY KCSE GRADE =====
+        const jobsByGrade = {
+            'A': { gov: 62, private: 124, salary: "KSH 120-150k", agencies: ["CBK", "CMA", "KRA", "Ministry of ICT"] },
+            'A-': { gov: 48, private: 96, salary: "KSH 95-130k", agencies: ["CBK", "CMA", "KRA"] },
+            'B+': { gov: 107, private: 214, salary: "KSH 70-95k", agencies: ["KRA", "Huduma Kenya", "eCitizen", "ICT Authority"] },
+            'B': { gov: 98, private: 196, salary: "KSH 60-85k", agencies: ["Huduma Kenya", "KRA", "County Governments"] },
+            'B-': { gov: 85, private: 170, salary: "KSH 55-75k", agencies: ["Huduma Kenya", "County Governments"] },
+            'C+': { gov: 95, private: 190, salary: "KSH 50-65k", agencies: ["County Governments", "Huduma Kenya"] },
+            'C': { gov: 110, private: 220, salary: "KSH 45-55k", agencies: ["County Governments", "Huduma Kenya"] },
+            'C-': { gov: 75, private: 150, salary: "KSH 40-50k", agencies: ["County Governments"] },
+            'D+': { gov: 120, private: 240, salary: "KSH 25k stipend", agencies: ["Government Internships"] },
+            'D': { gov: 140, private: 280, salary: "KSH 20k stipend", agencies: ["Government Internships"] },
+            'D-': { gov: 160, private: 320, salary: "KSH 15k stipend", agencies: ["Government Internships"] },
+            'E': { gov: 400, private: 800, salary: "KSH 10k stipend", agencies: ["NYS Training", "TVET Programs"] },
+            'Adult': { gov: 78, private: 156, salary: "KSH 80-170k", agencies: ["KRA (Experienced)", "CMA (Professional)", "ICT Authority"] }
+        };
+
+        // ===== LESSON CONTENT =====
+        const lessons = {
+            forex: [
+                {
+                    title: "KRA Tax Assistant",
+                    content: `
+                        <h4>📋 JOB OVERVIEW</h4>
+                        <p>Tax Assistants at KRA help taxpayers file returns, process KRA PIN applications, and answer tax inquiries.</p>
+                        
+                        <h4>📅 DAILY TASKS</h4>
+                        <ul>
+                            <li>8:30 AM - Open taxpayer counter</li>
+                            <li>9:00 AM - Help taxpayers file returns</li>
+                            <li>10:00 AM - Verify submitted documents</li>
+                            <li>11:00 AM - Answer tax inquiries</li>
+                            <li>12:00 PM - Process KRA PIN applications</li>
+                            <li>2:00 PM - Data entry of tax records</li>
+                            <li>4:00 PM - Generate daily reports</li>
+                        </ul>
+                        
+                        <h4>🎓 REQUIREMENTS</h4>
+                        <ul>
+                            <li>KCSE: C+ and above</li>
+                            <li>Certificate in Taxation (optional)</li>
+                            <li>Computer literacy</li>
+                        </ul>
+                    `,
+                    flashcards: [
+                        { front: "What is KRA?", back: "Kenya Revenue Authority - collects taxes for the Kenyan government" },
+                        { front: "What is a KRA PIN?", back: "Personal Identification Number for tax purposes" },
+                        { front: "What is VAT?", back: "Value Added Tax - tax on goods and services" }
+                    ],
+                    quiz: [
+                        {
+                            question: "What time do KRA tax counters typically open?",
+                            options: ["7:00 AM", "8:30 AM", "9:00 AM", "10:00 AM"],
+                            correct: 1
+                        },
+                        {
+                            question: "Which KCSE grade is minimum for KRA Tax Assistant?",
+                            options: ["D+", "C-", "C+", "B-"],
+                            correct: 2
+                        }
+                    ]
+                },
+                {
+                    title: "CBK Currency Analyst",
+                    content: `
+                        <h4>📋 JOB OVERVIEW</h4>
+                        <p>Currency Analysts at Central Bank of Kenya monitor exchange rates and advise on monetary policy.</p>
+                        
+                        <h4>📅 DAILY TASKS</h4>
+                        <ul>
+                            <li>9:00 AM - Check USD/KES exchange rates</li>
+                            <li>10:00 AM - Analyze market trends</li>
+                            <li>11:00 AM - Prepare reports for policy committee</li>
+                            <li>2:00 PM - Monitor regional currency markets</li>
+                            <li>3:00 PM - Forecast currency movements</li>
+                        </ul>
+                        
+                        <h4>🎓 REQUIREMENTS</h4>
+                        <ul>
+                            <li>KCSE: A- and above</li>
+                            <li>Degree in Economics/Finance</li>
+                            <li>CFA certification (advantage)</li>
+                        </ul>
+                    `,
+                    flashcards: [
+                        { front: "What is CBK?", back: "Central Bank of Kenya - regulates banks and currency" },
+                        { front: "What is exchange rate?", back: "Value of one currency compared to another" }
+                    ],
+                    quiz: [
+                        {
+                            question: "Which agency regulates Kenyan banks?",
+                            options: ["KRA", "CMA", "CBK", "ICT Authority"],
+                            correct: 2
+                        }
+                    ]
+                }
+            ]
+        };
+
         // ===== LOAD TESTIMONIALS =====
         function loadTestimonials() {
             const container = document.getElementById('featuredTestimonials');
@@ -464,71 +1054,471 @@
             
             container.innerHTML = testimonials.map(t => `
                 <div class="testimonial-card">
-                    <img src="${t.image}" 
-                         alt="${t.name}" 
-                         class="testimonial-image"
+                    <img src="${t.image}" alt="${t.name}" class="testimonial-image" 
                          onerror="this.onerror=null; this.src='https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg';">
                     <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
                     <p class="testimonial-text">"${t.story}"</p>
                     <div class="testimonial-name">${t.name}</div>
-                    <div class="testimonial-job">${t.job} - ${t.org}</div>
+                    <div class="testimonial-job">${t.job} • ${t.org}</div>
                     <span class="testimonial-grade">KCSE: ${t.grade}</span>
                 </div>
             `).join('');
         }
 
         // ===== PAGE NAVIGATION =====
-        function showHeroSection() {
-            document.getElementById('heroSection').style.display = 'block';
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('registrationPage').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'none';
-        }
-
-        function showLoginPage() {
-            document.getElementById('heroSection').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'block';
-            document.getElementById('registrationPage').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'none';
-        }
-
-        function showRegistrationPage() {
-            document.getElementById('heroSection').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('registrationPage').style.display = 'block';
-            document.getElementById('adminPanel').style.display = 'none';
-        }
-
-        function showAdminPanel() {
-            document.getElementById('heroSection').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('registrationPage').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'block';
-        }
-
-        // ===== ADMIN LOGIN =====
-        function adminLogin() {
-            const email = document.getElementById('adminEmail').value;
-            const pass = document.getElementById('adminPass').value;
+        function showSection(section) {
+            document.getElementById('heroSection').classList.add('hidden');
+            document.getElementById('registerSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('dashboardSection').classList.add('hidden');
+            document.getElementById('adminSection').classList.add('hidden');
             
-            if (email === 'admin@skillforge.com' && pass === 'admin123') {
-                showAdminPanel();
-            } else {
-                alert('❌ Invalid credentials! Use admin@skillforge.com / admin123');
+            if (section === 'hero') {
+                document.getElementById('heroSection').classList.remove('hidden');
+            } else if (section === 'register') {
+                document.getElementById('registerSection').classList.remove('hidden');
+                updateAccountDisplay();
+            } else if (section === 'login') {
+                document.getElementById('loginSection').classList.remove('hidden');
+            } else if (section === 'dashboard') {
+                document.getElementById('dashboardSection').classList.remove('hidden');
+                loadDashboard();
+            } else if (section === 'admin') {
+                document.getElementById('adminSection').classList.remove('hidden');
+                loadAdminPanel();
             }
         }
 
-        // ===== MAKE FUNCTIONS GLOBAL =====
-        window.showHeroSection = showHeroSection;
-        window.showLoginPage = showLoginPage;
-        window.showRegistrationPage = showRegistrationPage;
-        window.adminLogin = adminLogin;
+        // ===== UPDATE ACCOUNT DISPLAY =====
+        function updateAccountDisplay() {
+            const email = document.getElementById('regEmail')?.value || 'Your Email';
+            document.getElementById('accountDisplay').textContent = email;
+        }
+
+        document.getElementById('regEmail')?.addEventListener('input', updateAccountDisplay);
+
+        // ===== REGISTRATION =====
+        function register() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
+            const grade = document.getElementById('regGrade').value;
+            const course = document.getElementById('regCourse').value;
+            const mpesa = document.getElementById('regMpesa').value;
+
+            if (!name || !email || !pass || !grade || !course || !mpesa) {
+                alert('❌ Please fill all fields');
+                return;
+            }
+
+            if (pass.length < 6) {
+                alert('❌ Password must be at least 6 characters');
+                return;
+            }
+
+            if (!email.includes('@')) {
+                alert('❌ Please enter a valid email');
+                return;
+            }
+
+            // Check if user exists
+            if (users.some(u => u.email === email)) {
+                alert('❌ Email already registered');
+                return;
+            }
+
+            const newUser = {
+                id: users.length + 1,
+                name: name,
+                email: email,
+                password: pass,
+                kcse: grade,
+                course: course,
+                mpesa: mpesa.substring(0, 50),
+                amount_paid: 150,
+                status: 'pending',
+                role: 'user',
+                registered: new Date().toISOString()
+            };
+
+            users.push(newUser);
+            localStorage.setItem('skillforge_users', JSON.stringify(users));
+            
+            alert('✅ Registration submitted! Admin will verify your KSH 150 payment.');
+            showSection('login');
+        }
+
+        // ===== LOGIN =====
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPass').value;
+
+            const user = users.find(u => u.email === email && u.password === pass);
+            
+            if (!user) {
+                alert('❌ Invalid email or password');
+                return;
+            }
+
+            currentUser = user;
+
+            if (user.role === 'admin') {
+                showSection('admin');
+            } else if (user.status === 'pending') {
+                alert('⏳ Your account is pending approval. Please wait for admin verification.');
+                showSection('hero');
+            } else if (user.status === 'approved') {
+                showSection('dashboard');
+            } else {
+                alert('❌ Account not approved');
+                showSection('hero');
+            }
+        }
+
+        // ===== LOGOUT =====
+        function logout() {
+            currentUser = null;
+            showSection('hero');
+        }
+
+        // ===== LOAD DASHBOARD =====
+        function loadDashboard() {
+            if (!currentUser) return;
+            
+            document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('welcomeName').textContent = `Karibu, ${currentUser.name}!`;
+            document.getElementById('displayGrade').textContent = currentUser.kcse;
+            
+            const courseNames = {
+                'forex': '💰 Finance & Banking',
+                'webdev': '💻 ICT & Digital',
+                'ai': '🤖 AI & Automation',
+                'business': '📊 Business Admin'
+            };
+            document.getElementById('userCourse').textContent = courseNames[currentUser.course] || currentUser.course;
+            
+            const statusEl = document.getElementById('userStatus');
+            if (currentUser.status === 'approved') {
+                statusEl.textContent = '✅ APPROVED - TRIAL ACTIVE';
+                statusEl.className = 'status-badge status-approved';
+            } else {
+                statusEl.textContent = '⏳ PENDING APPROVAL';
+                statusEl.className = 'status-badge status-pending';
+            }
+
+            const jobs = jobsByGrade[currentUser.kcse] || jobsByGrade['B+'];
+            
+            let content = `
+                <div style="background: white; padding: 2rem; border-radius: 15px; border: 1px solid #e0e0e0;">
+                    <h3 style="color: var(--govt-blue); margin-bottom: 2rem;">
+                        <i class="fas fa-briefcase"></i> GOVERNMENT JOBS FOR KCSE ${currentUser.kcse}
+                    </h3>
+                    
+                    <div class="job-grid">
+                        <div class="job-card">
+                            <h3><i class="fas fa-shield-alt"></i> Government Agencies</h3>
+                            <div class="job-stat">${jobs.gov}</div>
+                            <p>positions available</p>
+                            <small>${jobs.agencies?.join(' • ') || 'Various agencies'}</small>
+                        </div>
+                        <div class="job-card">
+                            <h3><i class="fas fa-building"></i> Private Sector</h3>
+                            <div class="job-stat">${jobs.private}</div>
+                            <p>positions available</p>
+                            <small>Tech • Banking • Consulting</small>
+                        </div>
+                        <div class="job-card">
+                            <h3><i class="fas fa-money-bill"></i> Average Salary</h3>
+                            <div class="job-stat">${jobs.salary}</div>
+                            <p>starting package</p>
+                            <small>Based on KCSE ${currentUser.kcse}</small>
+                        </div>
+                    </div>
+            `;
+
+            if (currentUser.status === 'approved') {
+                // Add lessons
+                const courseLessons = lessons[currentUser.course] || lessons.forex;
+                
+                content += `
+                    <h3 style="color: var(--govt-blue); margin: 3rem 0 1rem;">
+                        <i class="fas fa-book-open"></i> JOB TRAINING MODULES
+                    </h3>
+                `;
+                
+                courseLessons.forEach((lesson, index) => {
+                    content += `
+                        <div class="lesson-card">
+                            <h4>📘 Lesson ${index + 1}: ${lesson.title}</h4>
+                            ${lesson.content}
+                            <div style="margin-top: 1rem;">
+                                <button class="btn btn-primary" style="width: auto; padding: 0.5rem 1.5rem; margin-right: 0.5rem;" onclick="showFlashcards(${index})">
+                                    <i class="fas fa-layer-group"></i> Flashcards
+                                </button>
+                                <button class="btn btn-success" style="width: auto; padding: 0.5rem 1.5rem;" onclick="showQuiz(${index})">
+                                    <i class="fas fa-question-circle"></i> Take Quiz
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                // Certificate section
+                content += `
+                    <div style="background: linear-gradient(135deg, #f0f9ff, #e6f3ff); padding: 2rem; border-radius: 15px; margin-top: 3rem; border: 2px solid var(--govt-blue);">
+                        <h3 style="color: var(--govt-blue);">
+                            <i class="fas fa-certificate"></i> GET YOUR CERTIFICATE
+                        </h3>
+                        <p style="margin: 1rem 0;">Pay KSH 500 to receive your government-recognized certificate</p>
+                        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                            <input type="text" id="certMpesa" placeholder="Enter M-PESA code for KSH 500" style="flex: 1; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 8px;">
+                            <button class="btn btn-primary" onclick="purchaseCertificate()" style="width: auto; padding: 1rem 2rem;">
+                                <i class="fas fa-certificate"></i> GET CERTIFICATE
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                content += `
+                    <div style="background: #fff3cd; border: 2px solid #ffc107; padding: 2rem; border-radius: 15px; margin-top: 2rem;">
+                        <h4 style="color: #856404;"><i class="fas fa-clock"></i> WAITING FOR ADMIN APPROVAL</h4>
+                        <p>Your KSH 150 payment is being verified. You'll get access within 24 hours.</p>
+                    </div>
+                `;
+            }
+
+            content += '</div>';
+            document.getElementById('userContent').innerHTML = content;
+        }
+
+        // ===== FLASHCARDS =====
+        function showFlashcards(lessonIndex) {
+            const courseLessons = lessons[currentUser.course] || lessons.forex;
+            const cards = courseLessons[lessonIndex].flashcards || [];
+            
+            if (cards.length === 0) {
+                alert('No flashcards available for this lesson yet.');
+                return;
+            }
+            
+            let cardIndex = 0;
+            let isFlipped = false;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); display: flex; align-items: center;
+                justify-content: center; z-index: 2000;
+            `;
+            
+            function updateCard() {
+                modal.innerHTML = `
+                    <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 600px; width: 90%;">
+                        <h3 style="color: var(--govt-blue); margin-bottom: 1rem;">
+                            <i class="fas fa-layer-group"></i> Flashcards (${cardIndex + 1}/${cards.length})
+                        </h3>
+                        
+                        <div class="flashcard-container">
+                            <div class="flashcard ${isFlipped ? 'flipped' : ''}" onclick="this.classList.toggle('flipped')">
+                                ${isFlipped ? cards[cardIndex].back : cards[cardIndex].front}
+                            </div>
+                        </div>
+                        
+                        <div class="flashcard-controls">
+                            <button class="btn-flashcard btn-know" onclick="nextCard(true)">✅ I Know This</button>
+                            <button class="btn-flashcard btn-review" onclick="nextCard(false)">🔄 Review Later</button>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                            <button class="btn btn-primary" style="width: auto;" onclick="prevCard()">◀ Previous</button>
+                            <span style="color: #666;">Card ${cardIndex + 1}/${cards.length}</span>
+                            <button class="btn btn-primary" style="width: auto;" onclick="nextCardManual()">Next ▶</button>
+                        </div>
+                        
+                        <button class="btn btn-primary" style="margin-top: 1rem; background: #dc3545;" onclick="document.body.removeChild(modal)">Close</button>
+                    </div>
+                `;
+            }
+            
+            window.nextCard = (known) => {
+                if (known) alert('✅ Great! Card mastered!');
+                if (cardIndex < cards.length - 1) {
+                    cardIndex++;
+                    isFlipped = false;
+                    updateCard();
+                } else {
+                    alert('🎉 You\'ve completed all flashcards!');
+                    document.body.removeChild(modal);
+                }
+            };
+            
+            window.nextCardManual = () => {
+                if (cardIndex < cards.length - 1) {
+                    cardIndex++;
+                    isFlipped = false;
+                    updateCard();
+                }
+            };
+            
+            window.prevCard = () => {
+                if (cardIndex > 0) {
+                    cardIndex--;
+                    isFlipped = false;
+                    updateCard();
+                }
+            };
+            
+            updateCard();
+            document.body.appendChild(modal);
+        }
+
+        // ===== QUIZ =====
+        function showQuiz(lessonIndex) {
+            const courseLessons = lessons[currentUser.course] || lessons.forex;
+            const questions = courseLessons[lessonIndex].quiz || [];
+            
+            if (questions.length === 0) {
+                alert('No quiz available for this lesson yet.');
+                return;
+            }
+            
+            let score = 0;
+            let currentQ = 0;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); display: flex; align-items: center;
+                justify-content: center; z-index: 2000;
+            `;
+            
+            function updateQuiz() {
+                const q = questions[currentQ];
+                modal.innerHTML = `
+                    <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 600px; width: 90%;">
+                        <h3 style="color: var(--govt-blue); margin-bottom: 1rem;">
+                            <i class="fas fa-question-circle"></i> Quiz (${currentQ + 1}/${questions.length})
+                        </h3>
+                        
+                        <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">${q.question}</p>
+                        
+                        <div style="display: grid; gap: 0.5rem; margin-bottom: 1.5rem;">
+                            ${q.options.map((opt, i) => `
+                                <button class="btn btn-primary" style="background: #f8f9fa; color: #333; border: 2px solid #e0e0e0; text-align: left;" 
+                                        onclick="checkAnswer(${i}, ${q.correct})">
+                                    ${String.fromCharCode(65 + i)}. ${opt}
+                                </button>
+                            `).join('')}
+                        </div>
+                        
+                        <p style="font-weight: 600;">Score: ${score}/${questions.length}</p>
+                        
+                        <button class="btn btn-primary" style="margin-top: 1rem; background: #dc3545;" onclick="document.body.removeChild(modal)">Close</button>
+                    </div>
+                `;
+            }
+            
+            window.checkAnswer = (selected, correct) => {
+                if (selected === correct) {
+                    score++;
+                    alert('✅ Correct!');
+                } else {
+                    alert(`❌ Incorrect. Correct answer: ${String.fromCharCode(65 + correct)}`);
+                }
+                
+                if (currentQ < questions.length - 1) {
+                    currentQ++;
+                    updateQuiz();
+                } else {
+                    alert(`🎉 Quiz complete! Your score: ${score}/${questions.length}`);
+                    document.body.removeChild(modal);
+                }
+            };
+            
+            updateQuiz();
+            document.body.appendChild(modal);
+        }
+
+        // ===== LOAD ADMIN PANEL =====
+        function loadAdminPanel() {
+            const pendingUsers = users.filter(u => u.status === 'pending' && u.role !== 'admin');
+            
+            let html = '';
+            if (pendingUsers.length === 0) {
+                html = '<p style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">No pending registrations</p>';
+            } else {
+                html = pendingUsers.map(u => `
+                    <div class="payment-request">
+                        <div>
+                            <strong><i class="fas fa-user"></i> ${u.name}</strong> (${u.email})<br>
+                            <span style="font-size: 0.9rem;">
+                                <i class="fas fa-graduation-cap"></i> KCSE: ${u.kcse} | 
+                                <i class="fas fa-briefcase"></i> Course: ${u.course}
+                            </span><br>
+                            <span style="color: var(--kenyan-green);">
+                                <i class="fas fa-mobile-alt"></i> M-PESA: ${u.mpesa}
+                            </span><br>
+                            <small><i class="fas fa-clock"></i> ${new Date(u.registered).toLocaleString()}</small>
+                        </div>
+                        <div>
+                            <button class="btn-approve" onclick="approveUser(${u.id})"><i class="fas fa-check"></i> APPROVE</button>
+                            <button class="btn-reject" onclick="rejectUser(${u.id})"><i class="fas fa-times"></i> REJECT</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            document.getElementById('pendingRegistrations').innerHTML = html;
+            document.getElementById('pendingPayments').innerHTML = '<p class="payment-request">No pending KSH 200 payments</p>';
+            document.getElementById('pendingCertificates').innerHTML = '<p class="payment-request">No pending certificate requests</p>';
+        }
+
+        // ===== APPROVE USER =====
+        function approveUser(id) {
+            const userIndex = users.findIndex(u => u.id === id);
+            if (userIndex !== -1) {
+                users[userIndex].status = 'approved';
+                localStorage.setItem('skillforge_users', JSON.stringify(users));
+                alert('✅ User approved! 2-day trial started.');
+                loadAdminPanel();
+            }
+        }
+
+        // ===== REJECT USER =====
+        function rejectUser(id) {
+            users = users.filter(u => u.id !== id);
+            localStorage.setItem('skillforge_users', JSON.stringify(users));
+            alert('❌ User rejected');
+            loadAdminPanel();
+        }
+
+        // ===== PURCHASE CERTIFICATE =====
+        function purchaseCertificate() {
+            const code = document.getElementById('certMpesa').value;
+            if (!code || code.length < 5) {
+                alert('❌ Please enter a valid M-PESA code');
+                return;
+            }
+            alert('✅ Certificate payment of KSH 500 submitted! Admin will verify.');
+            document.getElementById('certMpesa').value = '';
+        }
 
         // ===== INIT =====
         document.addEventListener('DOMContentLoaded', () => {
             loadTestimonials();
-            showHeroSection(); // Start on hero section
+            showSection('hero');
         });
+
+        // Make functions global
+        window.showSection = showSection;
+        window.register = register;
+        window.login = login;
+        window.logout = logout;
+        window.approveUser = approveUser;
+        window.rejectUser = rejectUser;
+        window.purchaseCertificate = purchaseCertificate;
+        window.showFlashcards = showFlashcards;
+        window.showQuiz = showQuiz;
     </script>
 </body>
 </html>
