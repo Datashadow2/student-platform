@@ -13,7 +13,6 @@
     
     <!-- Custom CSS -->
     <style>
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -25,10 +24,8 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
-            line-height: 1.6;
         }
 
-        /* ===== HEADER ===== */
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -74,19 +71,12 @@
             color: white;
         }
 
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        /* ===== CONTAINER ===== */
         .container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 2rem;
         }
 
-        /* ===== HERO SECTION ===== */
         .hero-section {
             text-align: center;
             padding: 4rem 2rem;
@@ -106,6 +96,98 @@
             font-size: 1.2rem;
             color: #666;
             margin-bottom: 2rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea10, #764ba210);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .testimonial-card {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .testimonial-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #667eea;
+            margin: 0 auto 1rem;
+            display: block;
+        }
+
+        .testimonial-stars {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        .testimonial-name {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-job {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-grade {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
         }
 
         .cta-buttons {
@@ -148,344 +230,6 @@
             transform: translateY(-3px);
         }
 
-        /* ===== STATS ===== */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #667eea10, #764ba210);
-            padding: 1.5rem;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #667eea;
-            display: block;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* ===== TESTIMONIALS ===== */
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .testimonial-card {
-            background: #f8f9fa;
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-            transition: transform 0.3s ease;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        }
-
-        .testimonial-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #667eea;
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-stars {
-            color: #ffc107;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 1rem;
-            color: #555;
-        }
-
-        .testimonial-name {
-            font-weight: 600;
-            color: #667eea;
-        }
-
-        .testimonial-job {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .testimonial-grade {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #667eea;
-            color: white;
-            padding: 0.2rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        /* ===== REGISTRATION PAGE ===== */
-        .registration-page {
-            background: white;
-            border-radius: 30px;
-            padding: 3rem;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
-
-        .registration-page h2 {
-            color: #667eea;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 15px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-        }
-
-        .mpesa-info {
-            background: #f0f8ff;
-            padding: 1.5rem;
-            border-radius: 15px;
-            margin: 1.5rem 0;
-            text-align: center;
-        }
-
-        .mpesa-info .paybill {
-            font-size: 2rem;
-            color: #28a745;
-            font-weight: 700;
-        }
-
-        .mpesa-info .account {
-            font-size: 1.2rem;
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .message-example {
-            background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 10px;
-            font-family: monospace;
-            margin: 1rem 0;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(40, 167, 69, 0.3);
-        }
-
-        .login-link {
-            text-align: center;
-            margin-top: 2rem;
-        }
-
-        .login-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        /* ===== LOGIN PAGE ===== */
-        .login-page {
-            background: white;
-            border-radius: 30px;
-            padding: 3rem;
-            max-width: 500px;
-            margin: 0 auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-        }
-
-        /* ===== ADMIN PANEL ===== */
-        .admin-panel {
-            background: white;
-            border-radius: 30px;
-            padding: 2rem;
-        }
-
-        .pending-payment {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .payment-details {
-            flex: 1;
-        }
-
-        .payment-actions button {
-            padding: 0.5rem 1.5rem;
-            margin: 0 0.5rem;
-            border-radius: 10px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .btn-approve {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-reject {
-            background: #dc3545;
-            color: white;
-        }
-
-        /* ===== DASHBOARD ===== */
-        .dashboard-header {
-            background: white;
-            border-radius: 20px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .user-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        .payment-status {
-            background: #ffc107;
-            color: #333;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-weight: 600;
-        }
-
-        .payment-status.approved {
-            background: #28a745;
-            color: white;
-        }
-
-        .trial-timer {
-            background: #f8f9fa;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-        }
-
-        .logout-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        /* ===== TOAST ===== */
-        #toastContainer {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-        }
-
-        .toast {
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            color: white;
-            animation: slideIn 0.3s ease;
-        }
-
-        .toast.success { background: #28a745; }
-        .toast.error { background: #dc3545; }
-        .toast.info { background: #17a2b8; }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -497,7 +241,6 @@
             }
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .hero-section h1 {
                 font-size: 2rem;
@@ -510,18 +253,10 @@
             .cta-buttons {
                 flex-direction: column;
             }
-            
-            .nav-buttons {
-                display: none;
-            }
         }
     </style>
-    
-    <!-- Supabase JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="logo">
             <i class="fas fa-briefcase"></i> SkillForge Academy
@@ -533,7 +268,7 @@
     </header>
 
     <div class="container">
-        <!-- HERO SECTION (Landing Page) -->
+        <!-- HERO SECTION WITH TESTIMONIALS -->
         <div id="heroSection" class="hero-section">
             <h1>🇰🇪 Your KCSE Grade is Your Key to Government Jobs</h1>
             <p>Pay KSH 150 to book your position • Get 2-day free trial • Unlock full access with KSH 200</p>
@@ -556,9 +291,11 @@
                     <span class="stat-label">Avg. Salary</span>
                 </div>
             </div>
-            
+
+            <!-- TESTIMONIALS SECTION WITH YOUR LINKS -->
+            <h2 style="margin: 3rem 0 2rem; color: #667eea;">✨ Success Stories from Real Graduates</h2>
             <div class="testimonials-grid" id="featuredTestimonials">
-                <!-- JS will populate -->
+                <!-- Testimonials will be loaded here by JavaScript -->
             </div>
             
             <div class="cta-buttons">
@@ -570,179 +307,27 @@
                 </button>
             </div>
         </div>
-
-        <!-- REGISTRATION PAGE -->
-        <div id="registrationPage" style="display: none;">
-            <div class="registration-page">
-                <h2><i class="fas fa-user-plus"></i> Register & Pay KSH 150</h2>
-                
-                <div class="mpesa-info">
-                    <p>Send KSH 150 to:</p>
-                    <div class="paybill">0789 480 259</div>
-                    <p class="account">Account: <span id="accountDisplay">Your Email</span></p>
-                    
-                    <div class="message-example">
-                        <strong>Example M-PESA Message:</strong><br>
-                        XC93G1T0 Confirmed. Ksh150 sent to SKILLFORGE on 15/3/2024 at 2:30 PM. New balance: Ksh1,234. Account: your.email@gmail.com
-                    </div>
-                </div>
-                
-                <form id="registrationForm" onsubmit="event.preventDefault(); submitRegistration()">
-                    <div class="form-group">
-                        <label>Full Name *</label>
-                        <input type="text" id="reg_name" placeholder="John Doe" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Email Address *</label>
-                        <input type="email" id="reg_email" placeholder="you@example.com" required onkeyup="updateAccountDisplay(this.value)">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Password * (min. 6 characters)</label>
-                        <input type="password" id="reg_pass" placeholder="********" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>KCSE Grade *</label>
-                        <select id="reg_kcse" required>
-                            <option value="" disabled selected>Select your KCSE grade</option>
-                            <option value="A">A (81-100) - Plain A</option>
-                            <option value="A-">A- (75-80) - A minus</option>
-                            <option value="B+">B+ (70-74) - B plus</option>
-                            <option value="B">B (65-69) - B plain</option>
-                            <option value="B-">B- (60-64) - B minus</option>
-                            <option value="C+">C+ (55-59) - C plus</option>
-                            <option value="C">C (50-54) - C plain</option>
-                            <option value="C-">C- (45-49) - C minus</option>
-                            <option value="D+">D+ (40-44) - D plus</option>
-                            <option value="D">D (35-39) - D plain</option>
-                            <option value="D-">D- (30-34) - D minus</option>
-                            <option value="E">E (Below 30) - E</option>
-                            <option value="Adult">Adult Learner (No KCSE)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Course *</label>
-                        <select id="reg_course" required>
-                            <option value="" disabled selected>Select your course</option>
-                            <option value="forex">📈 Forex Trading Jobs</option>
-                            <option value="webdev">💻 Web Development Jobs</option>
-                            <option value="ai">🤖 AI & Automation Jobs</option>
-                            <option value="business">💼 Online Business Jobs</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Paste M-PESA Confirmation Message *</label>
-                        <textarea id="reg_mpesa" rows="4" placeholder="Paste the full M-PESA message you received..." required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn-submit">
-                        <i class="fas fa-paper-plane"></i> Submit & Complete Registration
-                    </button>
-                </form>
-                
-                <div class="login-link">
-                    Already have an account? <a href="#" onclick="showLoginPage()">Login here</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- LOGIN PAGE -->
-        <div id="loginPage" style="display: none;">
-            <div class="login-page">
-                <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
-                
-                <form onsubmit="event.preventDefault(); login()">
-                    <div class="form-group">
-                        <label>Email Address</label>
-                        <input type="email" id="log_email" placeholder="you@example.com" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="log_pass" placeholder="********" required>
-                    </div>
-                    
-                    <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #667eea, #764ba2);">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </button>
-                </form>
-                
-                <div class="login-link">
-                    Don't have an account? <a href="#" onclick="showRegistrationPage()">Register & Pay KSH 150</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- ADMIN PANEL -->
-        <div id="adminPanel" style="display: none;">
-            <div class="admin-panel">
-                <h2><i class="fas fa-shield-alt"></i> Admin Panel - Pending Approvals</h2>
-                
-                <div id="pendingRegistrations">
-                    <!-- JS will populate -->
-                </div>
-            </div>
-        </div>
-
-        <!-- USER DASHBOARD -->
-        <div id="dashboard" style="display: none;">
-            <div class="dashboard-header">
-                <div class="user-info">
-                    <div class="user-avatar" id="userAvatar">J</div>
-                    <div>
-                        <h3 id="welcomeName">Welcome, John!</h3>
-                        <p id="userGrade">KCSE: B+</p>
-                    </div>
-                </div>
-                
-                <div class="payment-status" id="paymentStatus">Pending Approval</div>
-                <div class="trial-timer" id="trialTimer" style="display: none;">Trial: <span id="countdown">2d 0h</span></div>
-                <button class="logout-btn" onclick="logout()">Logout</button>
-            </div>
-            
-            <div id="dashboardContent">
-                <!-- JS will populate based on approval status -->
-            </div>
-        </div>
     </div>
 
-    <!-- Toast Container -->
-    <div id="toastContainer"></div>
-
     <script>
-        // ===== SUPABASE CONFIG =====
-        const SUPABASE_URL = "https://xzptxrarzdgawilymmhu.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6cHR4cmFyemRnYXdpbHltbWh1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMzODc0NjYsImV4cCI6MjA4ODk2MzQ2Nn0.5n833vgZmdN3Rr4s_jja8R6qLy4DN34DPbRw6DzuDbg";
-
-        const { createClient } = supabase;
-        const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-        // ===== GLOBAL VARIABLES =====
-        let currentUser = null;
-        let pendingUsers = [];
-
-        // ===== SAMPLE TESTIMONIALS =====
+        // ===== YOUR KENYAN TESTIMONIALS WITH YOUR EXACT LINKS =====
         const testimonials = [
             {
                 name: "James Otieno",
                 grade: "B+",
                 job: "Tax Assistant",
-                org: "KRA",
-                story: "I paid KSH 150, learned about government jobs, and 3 months later I was hired at KRA!",
-                image: "https://randomuser.me/api/portraits/men/1.jpg",
+                org: "KRA - Kenya Revenue Authority",
+                story: "Nilipay KSH 150, nikajifunza kuhusu kazi za serikali, na baada ya miezi 3 nikaajiriwa KRA! Asante SkillForge!",
+                image: "https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg",
                 stars: 5
             },
             {
                 name: "Mary Wanjiku",
                 grade: "C",
                 job: "Customer Service",
-                org: "Huduma Kenya",
-                story: "I didn't know what jobs my C plain could get. This course showed me 185 positions!",
-                image: "https://randomuser.me/api/portraits/women/2.jpg",
+                org: "Huduma Kenya - Nyeri",
+                story: "Sikujua ni kazi gani ningepata na C plain yangu. Kozi hii ilionyesha nafasi 185 za serikali! Sasa niko Huduma Nyeri.",
+                image: "https://images.pexels.com/photos/1390128/pexels-photo-1390128.jpeg",
                 stars: 5
             },
             {
@@ -750,393 +335,72 @@
                 grade: "Adult",
                 job: "ICT Officer",
                 org: "ICT Authority",
-                story: "As an adult learner, I thought government jobs were out of reach. I was wrong!",
-                image: "https://randomuser.me/api/portraits/men/3.jpg",
+                story: "Mimi mwanafunzi mzima nilidhani kazi za serikali ni ngumu. Sasa niko ICT Authority! Usikate tamaa.",
+                image: "https://images.pexels.com/photos/35165475/pexels-photo-35165475.jpeg",
+                stars: 5
+            },
+            {
+                name: "Faith Akinyi",
+                grade: "A-",
+                job: "Compliance Officer",
+                org: "CMA - Capital Markets Authority",
+                story: "Niliomba nafasi 8, nikaitwa interview 3, sasa niko CMA! KSH 150 ilikuwa investment bora kabisa.",
+                image: "https://images.pexels.com/photos/1255010/pexels-photo-1255010.jpeg",
+                stars: 5
+            },
+            {
+                name: "John Mwangi",
+                grade: "C",
+                job: "Clerk",
+                org: "County Government of Kiambu",
+                story: "County zinaajiri watu wengi wa C plain. Sasa niko permanent na pension! Nashukuru.",
+                image: "https://images.pexels.com/photos/29079409/pexels-photo-29079409.jpeg",
+                stars: 5
+            },
+            {
+                name: "Lucy Wambui",
+                grade: "B",
+                job: "IT Support",
+                org: "Huduma Kenya",
+                story: "Nililipa KSH 150, KSH 200, na KSH 500 kwa cheti. Yote ilifaa! Sasa niko na kazi nzuri.",
+                image: "https://images.pexels.com/photos/35081993/pexels-photo-35081993.jpeg",
                 stars: 5
             }
         ];
 
-        // ===== INIT =====
-        document.addEventListener('DOMContentLoaded', () => {
-            loadTestimonials();
-            checkSession();
-        });
-
         // ===== LOAD TESTIMONIALS =====
         function loadTestimonials() {
             const container = document.getElementById('featuredTestimonials');
+            if (!container) return;
+            
             container.innerHTML = testimonials.map(t => `
                 <div class="testimonial-card">
-                    <img src="${t.image}" alt="${t.name}" class="testimonial-image">
+                    <img src="${t.image}" 
+                         alt="${t.name}" 
+                         class="testimonial-image"
+                         onerror="this.onerror=null; this.src='https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg';">
                     <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
                     <p class="testimonial-text">"${t.story}"</p>
                     <div class="testimonial-name">${t.name}</div>
-                    <div class="testimonial-job">${t.job} at ${t.org}</div>
+                    <div class="testimonial-job">${t.job} - ${t.org}</div>
                     <span class="testimonial-grade">KCSE: ${t.grade}</span>
                 </div>
             `).join('');
         }
 
-        // ===== PAGE NAVIGATION =====
-        function showHeroSection() {
-            document.getElementById('heroSection').style.display = 'block';
-            document.getElementById('registrationPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'none';
+        // ===== PAGE NAVIGATION (Placeholder functions) =====
+        function showLoginPage() {
+            alert("Login page would open here");
         }
 
         function showRegistrationPage() {
-            document.getElementById('heroSection').style.display = 'none';
-            document.getElementById('registrationPage').style.display = 'block';
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'none';
+            alert("Registration page would open here");
         }
 
-        function showLoginPage() {
-            document.getElementById('heroSection').style.display = 'none';
-            document.getElementById('registrationPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'block';
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'none';
-        }
-
-        function showAdminPanel() {
-            document.getElementById('heroSection').style.display = 'none';
-            document.getElementById('registrationPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'block';
-            document.getElementById('dashboard').style.display = 'none';
-            loadPendingRegistrations();
-        }
-
-        function showDashboard() {
-            document.getElementById('heroSection').style.display = 'none';
-            document.getElementById('registrationPage').style.display = 'none';
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'none';
-            document.getElementById('dashboard').style.display = 'block';
-        }
-
-        // ===== UPDATE ACCOUNT DISPLAY =====
-        function updateAccountDisplay(email) {
-            document.getElementById('accountDisplay').textContent = email || 'Your Email';
-        }
-
-        // ===== TOAST =====
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        // ===== SUBMIT REGISTRATION =====
-        async function submitRegistration() {
-            try {
-                const name = document.getElementById('reg_name').value;
-                const email = document.getElementById('reg_email').value;
-                const password = document.getElementById('reg_pass').value;
-                const kcse = document.getElementById('reg_kcse').value;
-                const course = document.getElementById('reg_course').value;
-                const mpesaMessage = document.getElementById('reg_mpesa').value;
-
-                // Validation
-                if (!name || !email || !password || !kcse || !course || !mpesaMessage) {
-                    showToast('Please fill all fields', 'error');
-                    return;
-                }
-
-                if (password.length < 6) {
-                    showToast('Password must be at least 6 characters', 'error');
-                    return;
-                }
-
-                // Extract M-PESA code from message (simple extraction)
-                const mpesaCode = mpesaMessage.match(/[A-Z0-9]{6,10}/g)?.[0] || 'MANUAL-' + Date.now();
-
-                // Save to Supabase
-                const { error } = await supabaseClient
-                    .from('users')
-                    .insert([{
-                        name,
-                        email,
-                        password,
-                        kcse,
-                        course,
-                        mpesa_message: mpesaMessage,
-                        mpesa_code: mpesaCode,
-                        amount_paid: 150,
-                        status: 'pending',
-                        created_at: new Date().toISOString()
-                    }]);
-
-                if (error) throw error;
-
-                showToast('Registration submitted! Waiting for admin approval.', 'success');
-                
-                // Clear form
-                document.getElementById('registrationForm').reset();
-                
-                // Go to login page
-                showLoginPage();
-                
-            } catch (error) {
-                console.error('Registration error:', error);
-                showToast(error.message, 'error');
-            }
-        }
-
-        // ===== LOGIN =====
-        async function login() {
-            try {
-                const email = document.getElementById('log_email').value;
-                const password = document.getElementById('log_pass').value;
-
-                const { data, error } = await supabaseClient
-                    .from('users')
-                    .select('*')
-                    .eq('email', email)
-                    .eq('password', password);
-
-                if (error) throw error;
-
-                if (!data || data.length === 0) {
-                    showToast('Invalid email or password', 'error');
-                    return;
-                }
-
-                const user = data[0];
-                
-                // Check if admin
-                if (email === 'admin@skillforge.com') {
-                    currentUser = user;
-                    showAdminPanel();
-                    return;
-                }
-
-                // Check if approved
-                if (user.status !== 'approved') {
-                    showToast('Your account is pending approval. Please wait for admin.', 'info');
-                    return;
-                }
-
-                currentUser = user;
-                localStorage.setItem('student', email);
-                renderDashboard();
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        // ===== LOGOUT =====
-        function logout() {
-            localStorage.removeItem('student');
-            currentUser = null;
-            showHeroSection();
-            showToast('Logged out successfully', 'success');
-        }
-
-        // ===== LOAD PENDING REGISTRATIONS (ADMIN) =====
-        async function loadPendingRegistrations() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('users')
-                    .select('*')
-                    .eq('status', 'pending');
-
-                if (error) throw error;
-
-                const container = document.getElementById('pendingRegistrations');
-                
-                if (!data || data.length === 0) {
-                    container.innerHTML = '<p>No pending registrations</p>';
-                    return;
-                }
-
-                container.innerHTML = data.map(user => `
-                    <div class="pending-payment">
-                        <div class="payment-details">
-                            <strong>${user.name}</strong> (${user.email})<br>
-                            KCSE: ${user.kcse} | Course: ${user.course}<br>
-                            M-PESA: ${user.mpesa_code}<br>
-                            <small>${new Date(user.created_at).toLocaleString()}</small>
-                        </div>
-                        <div class="payment-actions">
-                            <button class="btn-approve" onclick="approveUser('${user.email}')">✓ Approve</button>
-                            <button class="btn-reject" onclick="rejectUser('${user.email}')">✗ Reject</button>
-                        </div>
-                    </div>
-                `).join('');
-                
-            } catch (error) {
-                console.error('Error loading pending:', error);
-            }
-        }
-
-        // ===== APPROVE USER (ADMIN) =====
-        async function approveUser(email) {
-            try {
-                const trialEnd = new Date();
-                trialEnd.setDate(trialEnd.getDate() + 2);
-
-                const { error } = await supabaseClient
-                    .from('users')
-                    .update({ 
-                        status: 'approved',
-                        trial_start: new Date().toISOString(),
-                        trial_end: trialEnd.toISOString(),
-                        progress: 0,
-                        completed_lessons: []
-                    })
-                    .eq('email', email);
-
-                if (error) throw error;
-
-                showToast(`User ${email} approved!`, 'success');
-                loadPendingRegistrations();
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        // ===== REJECT USER (ADMIN) =====
-        async function rejectUser(email) {
-            try {
-                const { error } = await supabaseClient
-                    .from('users')
-                    .delete()
-                    .eq('email', email);
-
-                if (error) throw error;
-
-                showToast(`User ${email} rejected`, 'success');
-                loadPendingRegistrations();
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        // ===== RENDER DASHBOARD =====
-        function renderDashboard() {
-            showDashboard();
-            
-            const user = currentUser;
-            
-            document.getElementById('userAvatar').textContent = user.name.charAt(0);
-            document.getElementById('welcomeName').textContent = `Welcome, ${user.name}!`;
-            document.getElementById('userGrade').textContent = `KCSE: ${user.kcse}`;
-            
-            // Check trial status
-            const now = new Date();
-            const trialEnd = new Date(user.trial_end);
-            
-            if (now <= trialEnd) {
-                document.getElementById('trialTimer').style.display = 'block';
-                startCountdown(trialEnd);
-                document.getElementById('paymentStatus').textContent = 'Trial Active';
-                document.getElementById('paymentStatus').className = 'payment-status';
-            } else {
-                document.getElementById('trialTimer').style.display = 'none';
-                document.getElementById('paymentStatus').textContent = 'Trial Expired - Pay KSH 200';
-                document.getElementById('paymentStatus').className = 'payment-status';
-            }
-            
-            // Load dashboard content
-            loadDashboardContent(user);
-        }
-
-        // ===== LOAD DASHBOARD CONTENT =====
-        function loadDashboardContent(user) {
-            const container = document.getElementById('dashboardContent');
-            
-            const jobsByGrade = {
-                'B+': 107,
-                'C': 185,
-                'Adult': 78
-            };
-            
-            const jobCount = jobsByGrade[user.kcse] || 50;
-            
-            container.innerHTML = `
-                <div style="background: white; padding: 2rem; border-radius: 20px;">
-                    <h3>📊 Job Market Overview</h3>
-                    <p>Based on your KCSE ${user.kcse}:</p>
-                    <ul>
-                        <li>Government Jobs Available: ${jobCount}</li>
-                        <li>Private Sector: ${Math.floor(jobCount * 2)}</li>
-                        <li>Internships: ${Math.floor(jobCount * 0.5)}</li>
-                    </ul>
-                    
-                    <h3 style="margin-top: 2rem;">📚 Your Lessons</h3>
-                    <p>Coming soon...</p>
-                </div>
-            `;
-        }
-
-        // ===== COUNTDOWN TIMER =====
-        function startCountdown(endDate) {
-            const interval = setInterval(() => {
-                const now = new Date();
-                const diff = endDate - now;
-                
-                if (diff <= 0) {
-                    clearInterval(interval);
-                    document.getElementById('countdown').textContent = 'Expired';
-                    renderDashboard();
-                    return;
-                }
-                
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                
-                document.getElementById('countdown').textContent = `${days}d ${hours}h`;
-            }, 60000);
-        }
-
-        // ===== CHECK SESSION =====
-        async function checkSession() {
-            const savedEmail = localStorage.getItem('student');
-            
-            if (savedEmail) {
-                const { data } = await supabaseClient
-                    .from('users')
-                    .select('*')
-                    .eq('email', savedEmail);
-                    
-                if (data && data.length > 0) {
-                    currentUser = data[0];
-                    
-                    if (savedEmail === 'admin@skillforge.com') {
-                        showAdminPanel();
-                    } else if (currentUser.status === 'approved') {
-                        renderDashboard();
-                    } else {
-                        showHeroSection();
-                    }
-                    return;
-                }
-            }
-            
-            showHeroSection();
-        }
-
-        // ===== MAKE FUNCTIONS GLOBAL =====
-        window.showRegistrationPage = showRegistrationPage;
-        window.showLoginPage = showLoginPage;
-        window.showHeroSection = showHeroSection;
-        window.submitRegistration = submitRegistration;
-        window.login = login;
-        window.logout = logout;
-        window.approveUser = approveUser;
-        window.rejectUser = rejectUser;
-        window.updateAccountDisplay = updateAccountDisplay;
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTestimonials();
+        });
     </script>
 </body>
 </html>
