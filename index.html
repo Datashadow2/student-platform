@@ -21,7 +21,6 @@
             --govt-blue: #003366;
             --govt-gold: #FFD700;
             --govt-gray: #F5F5F5;
-            --govt-light-blue: #e6f0ff;
             --heart-red: #ff4444;
             --heart-gray: #cccccc;
         }
@@ -79,10 +78,265 @@
             color: var(--govt-blue);
         }
 
+        .logo-text small {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .nav-btn.login {
+            background: transparent;
+            color: var(--govt-blue);
+            border: 2px solid var(--govt-blue);
+        }
+
+        .nav-btn.register {
+            background: var(--govt-blue);
+            color: white;
+        }
+
         .container {
             max-width: 1280px;
             margin: 2rem auto;
             padding: 0 2rem;
+        }
+
+        /* ===== GOVERNMENT BANNER ===== */
+        .govt-banner {
+            background: linear-gradient(135deg, var(--govt-blue), #001a33);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-left: 5px solid var(--govt-gold);
+        }
+
+        .govt-badge {
+            background: var(--govt-gold);
+            color: var(--govt-blue);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            color: var(--govt-blue);
+            margin-bottom: 1rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-box {
+            background: var(--govt-gray);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border-bottom: 3px solid var(--govt-blue);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--govt-blue);
+            display: block;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid #e0e0e0;
+            position: relative;
+            text-align: center;
+        }
+
+        .testimonial-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--govt-blue);
+            margin: 0 auto 1rem;
+        }
+
+        .testimonial-stars {
+            color: #ffc107;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            color: var(--govt-blue);
+        }
+
+        .testimonial-grade {
+            display: inline-block;
+            background: var(--govt-blue);
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        /* ===== AUTH FORMS ===== */
+        .auth-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .auth-container h2 {
+            color: var(--govt-blue);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        .btn {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .btn-primary {
+            background: var(--govt-blue);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--kenyan-green);
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .back-link a {
+            color: var(--govt-blue);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard-header {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border: 1px solid #e0e0e0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--govt-blue), var(--kenyan-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .status-badge {
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-approved {
+            background: var(--kenyan-green);
+            color: white;
         }
 
         /* ===== HEARTS DISPLAY ===== */
@@ -99,7 +353,6 @@
         .heart {
             font-size: 1.5rem;
             color: var(--heart-red);
-            transition: all 0.3s ease;
         }
 
         .heart.empty {
@@ -115,49 +368,25 @@
             font-size: 0.9rem;
         }
 
-        /* ===== DASHBOARD HEADER ===== */
-        .dashboard-header {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+        /* ===== JOB CARDS ===== */
+        .job-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
-            border: 1px solid #e0e0e0;
+            margin: 1rem 0;
         }
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
+        .job-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
         }
 
-        .user-avatar {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--govt-blue), var(--kenyan-green));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
+        .job-stat {
             font-size: 2rem;
-            font-weight: 600;
-        }
-
-        .status-badge {
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-approved {
-            background: var(--kenyan-green);
-            color: white;
+            font-weight: 700;
+            color: var(--kenyan-green);
         }
 
         /* ===== LESSON CARDS ===== */
@@ -168,11 +397,9 @@
         .lesson-card {
             background: white;
             border-radius: 15px;
-            padding: 2rem;
-            margin: 1.5rem 0;
-            border-left: 6px solid var(--govt-blue);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--govt-blue);
             position: relative;
         }
 
@@ -183,7 +410,6 @@
 
         .lesson-card.locked {
             opacity: 0.7;
-            filter: grayscale(0.5);
             border-left-color: #ccc;
         }
 
@@ -196,14 +422,13 @@
             padding: 0.3rem 1rem;
             border-radius: 50px;
             font-size: 0.8rem;
-            font-weight: 600;
         }
 
         .lesson-header {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .lesson-icon {
@@ -220,12 +445,10 @@
 
         .lesson-title h3 {
             color: var(--govt-blue);
-            font-size: 1.4rem;
         }
 
         .lesson-progress {
             margin: 1rem 0;
-            font-size: 0.9rem;
             color: #666;
         }
 
@@ -247,7 +470,7 @@
             background: white;
             border-radius: 20px;
             padding: 2rem;
-            max-width: 600px;
+            max-width: 500px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
@@ -257,7 +480,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .modal-header h3 {
@@ -272,11 +495,6 @@
             color: #666;
         }
 
-        .modal-close:hover {
-            color: var(--kenyan-red);
-        }
-
-        /* ===== HEARTS IN QUIZ ===== */
         .quiz-hearts {
             display: flex;
             gap: 0.5rem;
@@ -300,50 +518,36 @@
             background: #f8f9fa;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
-            text-align: left;
-            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            text-align: left;
         }
 
         .quiz-option:hover {
             background: #e0e0e0;
-            border-color: var(--govt-blue);
         }
 
         .quiz-option.selected {
             background: var(--govt-blue);
             color: white;
-            border-color: var(--govt-blue);
         }
 
         .quiz-option.correct {
             background: var(--kenyan-green);
             color: white;
-            border-color: var(--kenyan-green);
         }
 
         .quiz-option.wrong {
             background: var(--kenyan-red);
             color: white;
-            border-color: var(--kenyan-red);
-        }
-
-        .quiz-timer {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--govt-blue);
-            text-align: center;
-            margin: 1rem 0;
         }
 
         .lockout-message {
             background: var(--kenyan-red);
             color: white;
-            padding: 2rem;
-            border-radius: 15px;
+            padding: 1.5rem;
+            border-radius: 10px;
             text-align: center;
-            margin: 2rem 0;
+            margin: 1rem 0;
         }
 
         .certificate-section {
@@ -355,41 +559,13 @@
             text-align: center;
         }
 
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background: var(--govt-blue);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #001a33;
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: var(--kenyan-green);
-            color: white;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
         .hidden {
             display: none !important;
         }
     </style>
 </head>
 <body>
+    <!-- Kenyan Flag Header -->
     <div class="flag-header">
         <div class="flag-black"></div>
         <div class="flag-red"></div>
@@ -401,7 +577,7 @@
             <i class="fas fa-shield-alt logo-icon"></i>
             <div class="logo-text">
                 <h1>SKILLFORGE ACADEMY</h1>
-                <small>Kenya Government Jobs Portal</small>
+                <small>Kenya Government Jobs Portal • KCSE Career Path</small>
             </div>
         </div>
         <div class="nav-buttons">
@@ -411,7 +587,7 @@
     </header>
 
     <div class="container" id="mainContainer">
-        <!-- Sections will be loaded here -->
+        <!-- Content will be dynamically loaded here -->
     </div>
 
     <script>
@@ -429,13 +605,336 @@
                 status: "approved",
                 completedLessons: [],
                 hearts: 5,
-                lastHeartRegen: null
+                lastHeartRegen: Date.now()
             });
             localStorage.setItem('skillforge_users', JSON.stringify(users));
         }
         
         let currentUser = null;
         let activeModal = null;
+
+        // ===== TESTIMONIALS =====
+        const testimonials = [
+            {
+                name: "James Otieno",
+                grade: "B+",
+                job: "Tax Assistant",
+                org: "KRA",
+                story: "Nilipay KSH 150, nikajifunza kuhusu kazi za serikali, na baada ya miezi 3 nikaajiriwa KRA!",
+                image: "https://images.pexels.com/photos/5792980/pexels-photo-5792980.jpeg",
+                stars: 5
+            },
+            {
+                name: "Mary Wanjiku",
+                grade: "C",
+                job: "Customer Service",
+                org: "Huduma Kenya",
+                story: "Sikujua ni kazi gani ningepata na C plain yangu. Sasa niko Huduma Nyeri!",
+                image: "https://images.pexels.com/photos/1390128/pexels-photo-1390128.jpeg",
+                stars: 5
+            },
+            {
+                name: "Peter Kamau",
+                grade: "Adult",
+                job: "ICT Officer",
+                org: "ICT Authority",
+                story: "Mimi mwanafunzi mzima nilidhani kazi za serikali ni ngumu. Sasa niko ICT Authority!",
+                image: "https://images.pexels.com/photos/35165475/pexels-photo-35165475.jpeg",
+                stars: 5
+            },
+            {
+                name: "Faith Akinyi",
+                grade: "A-",
+                job: "Compliance Officer",
+                org: "CMA",
+                story: "Niliomba nafasi 8, nikaitwa interview 3, sasa niko CMA!",
+                image: "https://images.pexels.com/photos/1255010/pexels-photo-1255010.jpeg",
+                stars: 5
+            },
+            {
+                name: "John Mwangi",
+                grade: "C",
+                job: "Clerk",
+                org: "County Government",
+                story: "County zinaajiri watu wengi wa C plain. Sasa niko permanent!",
+                image: "https://images.pexels.com/photos/29079409/pexels-photo-29079409.jpeg",
+                stars: 5
+            },
+            {
+                name: "Lucy Wambui",
+                grade: "B",
+                job: "IT Support",
+                org: "Huduma Kenya",
+                story: "Nililipa KSH 150, KSH 200, na KSH 500 kwa cheti. Yote ilifaa!",
+                image: "https://images.pexels.com/photos/35081993/pexels-photo-35081993.jpeg",
+                stars: 5
+            }
+        ];
+
+        // ===== JOB DATA BY KCSE GRADE =====
+        const jobsByGrade = {
+            'A': { gov: 62, private: 124, salary: "KSH 120-150k" },
+            'A-': { gov: 48, private: 96, salary: "KSH 95-130k" },
+            'B+': { gov: 107, private: 214, salary: "KSH 70-95k" },
+            'B': { gov: 98, private: 196, salary: "KSH 60-85k" },
+            'C+': { gov: 95, private: 190, salary: "KSH 50-65k" },
+            'C': { gov: 110, private: 220, salary: "KSH 45-55k" }
+        };
+
+        // ===== 6 COMPLETE LESSONS WITH DETAILED NOTES =====
+        const lessons = [
+            {
+                id: 1,
+                title: "KRA Tax Assistant",
+                agency: "Kenya Revenue Authority",
+                icon: "landmark",
+                description: "Learn to help taxpayers file returns and process KRA PIN applications",
+                content: `
+                    <h4>📋 JOB OVERVIEW</h4>
+                    <p>Tax Assistants are the first point of contact for taxpayers at KRA offices across Kenya. They help citizens file their tax returns, process KRA PIN applications, and answer inquiries about tax matters.</p>
+                    
+                    <h4>📅 DAILY TASKS</h4>
+                    <ul>
+                        <li>8:30 AM - Open taxpayer counter and prepare workstations</li>
+                        <li>9:00 AM - Assist taxpayers with filing returns (iTax system)</li>
+                        <li>10:00 AM - Verify submitted documents for accuracy</li>
+                        <li>11:00 AM - Answer tax inquiries via phone and counter</li>
+                        <li>12:00 PM - Process KRA PIN applications</li>
+                        <li>2:00 PM - Data entry of tax records into the system</li>
+                        <li>3:00 PM - Follow up on pending applications</li>
+                        <li>4:00 PM - Generate daily reports and close counter</li>
+                    </ul>
+                    
+                    <h4>📍 LOCATIONS</h4>
+                    <p>Times Tower (Nairobi), Mombasa, Kisumu, Eldoret, Nakuru, Thika</p>
+                    
+                    <h4>💰 SALARY & BENEFITS</h4>
+                    <p><strong>KSH 45,000 - 65,000 per month</strong></p>
+                    <ul>
+                        <li>Housing allowance included</li>
+                        <li>Medical cover</li>
+                        <li>Pension scheme</li>
+                    </ul>
+                    
+                    <h4>🎓 REQUIREMENTS</h4>
+                    <ul>
+                        <li>KCSE: C+ and above</li>
+                        <li>Certificate in Taxation (advantage)</li>
+                        <li>Computer literacy, especially iTax system</li>
+                    </ul>
+                `,
+                quiz: [
+                    { question: "What time do KRA tax counters typically open?", options: ["7:00 AM", "8:30 AM", "9:00 AM"], correct: 1 },
+                    { question: "Which KCSE grade is minimum for KRA Tax Assistant?", options: ["C", "C+", "B-"], correct: 1 },
+                    { question: "Where is KRA headquarters located?", options: ["Mombasa", "Times Tower Nairobi", "Kisumu"], correct: 1 },
+                    { question: "What is iTax?", options: ["Tax filing system", "Banking app", "Insurance"], correct: 0 },
+                    { question: "What does KRA collect?", options: ["Taxes", "Tolls", "Fees"], correct: 0 }
+                ]
+            },
+            {
+                id: 2,
+                title: "CBK Currency Analyst",
+                agency: "Central Bank of Kenya",
+                icon: "university",
+                description: "Monitor exchange rates and advise on monetary policy",
+                content: `
+                    <h4>📋 JOB OVERVIEW</h4>
+                    <p>Currency Analysts at Central Bank of Kenya monitor exchange rates, analyze market trends, and advise the Monetary Policy Committee on currency movements affecting the Kenyan economy.</p>
+                    
+                    <h4>📅 DAILY TASKS</h4>
+                    <ul>
+                        <li>8:00 AM - Review overnight international market movements</li>
+                        <li>9:00 AM - Check USD/KES, EUR/KES exchange rates</li>
+                        <li>10:00 AM - Analyze market trends and prepare briefs</li>
+                        <li>11:00 AM - Monitor regional currency markets</li>
+                        <li>2:00 PM - Prepare reports for Monetary Policy Committee</li>
+                        <li>3:00 PM - Forecast currency movements</li>
+                        <li>4:00 PM - Update exchange rate dashboards</li>
+                    </ul>
+                    
+                    <h4>📍 LOCATIONS</h4>
+                    <p>CBK Head Office, Nairobi</p>
+                    
+                    <h4>💰 SALARY & BENEFITS</h4>
+                    <p><strong>KSH 95,000 - 140,000 per month</strong></p>
+                    <ul>
+                        <li>Housing allowance (KSH 40,000)</li>
+                        <li>Comprehensive medical cover</li>
+                        <li>Pension (20% employer contribution)</li>
+                    </ul>
+                    
+                    <h4>🎓 REQUIREMENTS</h4>
+                    <ul>
+                        <li>KCSE: A- and above</li>
+                        <li>Degree in Economics/Finance</li>
+                        <li>CFA certification (advantage)</li>
+                    </ul>
+                `,
+                quiz: [
+                    { question: "Which agency regulates Kenyan banks?", options: ["KRA", "CBK", "CMA"], correct: 1 },
+                    { question: "What KCSE grade is required for CBK Currency Analyst?", options: ["B+", "A-", "A"], correct: 1 },
+                    { question: "Where is CBK headquarters?", options: ["Nairobi", "Mombasa", "Kisumu"], correct: 0 },
+                    { question: "What does MPC stand for?", options: ["Monetary Policy Committee", "Money Payment Council", "Market Price Control"], correct: 0 },
+                    { question: "What does CBR stand for?", options: ["Central Bank Rate", "Currency Base Rate", "Cash Bank Rate"], correct: 0 }
+                ]
+            },
+            {
+                id: 3,
+                title: "CMA Compliance Officer",
+                agency: "Capital Markets Authority",
+                icon: "chart-line",
+                description: "Ensure companies comply with capital market regulations",
+                content: `
+                    <h4>📋 JOB OVERVIEW</h4>
+                    <p>Compliance Officers ensure companies follow CMA regulations and protect investors in Kenya's capital markets.</p>
+                    
+                    <h4>📅 DAILY TASKS</h4>
+                    <ul>
+                        <li>9:00 AM - Review company filings and reports</li>
+                        <li>10:00 AM - Inspect compliance with regulations</li>
+                        <li>11:00 AM - Investigate investor complaints</li>
+                        <li>2:00 PM - Prepare enforcement actions</li>
+                        <li>3:00 PM - Conduct market surveillance</li>
+                    </ul>
+                    
+                    <h4>📍 LOCATIONS</h4>
+                    <p>CMA Headquarters, Nairobi</p>
+                    
+                    <h4>💰 SALARY & BENEFITS</h4>
+                    <p><strong>KSH 80,000 - 120,000 per month</strong></p>
+                    
+                    <h4>🎓 REQUIREMENTS</h4>
+                    <ul>
+                        <li>KCSE: B+ and above</li>
+                        <li>Degree in Finance/Law</li>
+                    </ul>
+                `,
+                quiz: [
+                    { question: "What does CMA regulate?", options: ["Capital markets", "Banks", "Insurance"], correct: 0 },
+                    { question: "Required KCSE grade for CMA?", options: ["B", "B+", "A-"], correct: 1 },
+                    { question: "CMA protects?", options: ["Investors", "Banks", "Companies"], correct: 0 },
+                    { question: "CMA headquarters is in?", options: ["Nairobi", "Mombasa", "Kisumu"], correct: 0 },
+                    { question: "What is a compliance officer?", options: ["Enforces rules", "Collects tax", "Manages currency"], correct: 0 }
+                ]
+            },
+            {
+                id: 4,
+                title: "Huduma Kenya Customer Service",
+                agency: "Huduma Kenya",
+                icon: "hands-helping",
+                description: "Serve citizens at Huduma centres across Kenya",
+                content: `
+                    <h4>📋 JOB OVERVIEW</h4>
+                    <p>Customer Service Representatives help citizens access government services at Huduma centres nationwide.</p>
+                    
+                    <h4>📅 DAILY TASKS</h4>
+                    <ul>
+                        <li>8:00 AM - Open service counter</li>
+                        <li>9:00 AM - Process ID applications</li>
+                        <li>10:00 AM - Handle passport inquiries</li>
+                        <li>11:00 AM - Assist with birth certificates</li>
+                        <li>2:00 PM - Help with driving license applications</li>
+                    </ul>
+                    
+                    <h4>📍 LOCATIONS</h4>
+                    <p>Huduma centres in all 47 counties</p>
+                    
+                    <h4>💰 SALARY & BENEFITS</h4>
+                    <p><strong>KSH 35,000 - 55,000 per month</strong></p>
+                    
+                    <h4>🎓 REQUIREMENTS</h4>
+                    <ul>
+                        <li>KCSE: C+ and above</li>
+                        <li>Customer service skills</li>
+                    </ul>
+                `,
+                quiz: [
+                    { question: "What is Huduma Kenya?", options: ["Government services", "Bank", "School"], correct: 0 },
+                    { question: "Required KCSE grade for Huduma?", options: ["C", "C+", "B-"], correct: 1 },
+                    { question: "What can you get at Huduma?", options: ["ID card", "Money", "Food"], correct: 0 },
+                    { question: "Huduma centres are in?", options: ["All counties", "Nairobi only", "Major cities"], correct: 0 },
+                    { question: "What does Huduma mean in Swahili?", options: ["Service", "Help", "Both"], correct: 2 }
+                ]
+            },
+            {
+                id: 5,
+                title: "ICT Authority Technical Officer",
+                agency: "ICT Authority",
+                icon: "laptop-code",
+                description: "Maintain government ICT infrastructure",
+                content: `
+                    <h4>📋 JOB OVERVIEW</h4>
+                    <p>Technical Officers maintain and support ICT systems across government ministries and departments.</p>
+                    
+                    <h4>📅 DAILY TASKS</h4>
+                    <ul>
+                        <li>8:30 AM - Check server status and backups</li>
+                        <li>9:30 AM - Respond to IT support tickets</li>
+                        <li>11:00 AM - Install software updates</li>
+                        <li>2:00 PM - Network maintenance</li>
+                        <li>3:30 PM - User training and support</li>
+                    </ul>
+                    
+                    <h4>📍 LOCATIONS</h4>
+                    <p>ICT Authority, Nairobi & County offices</p>
+                    
+                    <h4>💰 SALARY & BENEFITS</h4>
+                    <p><strong>KSH 50,000 - 80,000 per month</strong></p>
+                    
+                    <h4>🎓 REQUIREMENTS</h4>
+                    <ul>
+                        <li>KCSE: C+ and above</li>
+                        <li>Diploma/Degree in IT</li>
+                    </ul>
+                `,
+                quiz: [
+                    { question: "What does ICT Authority do?", options: ["Manages government ICT", "Collects tax", "Regulates banks"], correct: 0 },
+                    { question: "Required KCSE grade?", options: ["C+", "B-", "B"], correct: 0 },
+                    { question: "Technical officers work with?", options: ["Computers", "Cars", "Buildings"], correct: 0 },
+                    { question: "ICT Authority is under which ministry?", options: ["ICT", "Finance", "Education"], correct: 0 },
+                    { question: "What is a server?", options: ["Network computer", "Desk", "Chair"], correct: 0 }
+                ]
+            },
+            {
+                id: 6,
+                title: "eCitizen Support Staff",
+                agency: "eCitizen Kenya",
+                icon: "globe",
+                description: "Help citizens access online government services",
+                content: `
+                    <h4>📋 JOB OVERVIEW</h4>
+                    <p>Support staff help citizens register and use eCitizen portal for government services online.</p>
+                    
+                    <h4>📅 DAILY TASKS</h4>
+                    <ul>
+                        <li>8:30 AM - Assist with account creation</li>
+                        <li>10:00 AM - Troubleshoot login issues</li>
+                        <li>11:30 AM - Help with online payments</li>
+                        <li>2:00 PM - Answer email inquiries</li>
+                        <li>3:30 PM - Update help documentation</li>
+                    </ul>
+                    
+                    <h4>📍 LOCATIONS</h4>
+                    <p>eCitizen support centres, Nairobi</p>
+                    
+                    <h4>💰 SALARY & BENEFITS</h4>
+                    <p><strong>KSH 40,000 - 60,000 per month</strong></p>
+                    
+                    <h4>🎓 REQUIREMENTS</h4>
+                    <ul>
+                        <li>KCSE: C+ and above</li>
+                        <li>Computer literacy</li>
+                    </ul>
+                `,
+                quiz: [
+                    { question: "What is eCitizen?", options: ["Government portal", "Bank app", "School website"], correct: 0 },
+                    { question: "Required KCSE grade?", options: ["C", "C+", "B-"], correct: 1 },
+                    { question: "What can you do on eCitizen?", options: ["Apply for passport", "Send money", "Buy food"], correct: 0 },
+                    { question: "eCitizen is managed by?", options: ["ICT Authority", "KRA", "CBK"], correct: 0 },
+                    { question: "Support staff help with?", options: ["Technical issues", "Tax returns", "Banking"], correct: 0 }
+                ]
+            }
+        ];
 
         // ===== HEARTS SYSTEM =====
         function getHearts(user) {
@@ -444,7 +943,7 @@
             
             // Check if 2.5 hours passed (2.5 * 60 * 60 * 1000 = 9,000,000 ms)
             const timeSinceLastRegen = Date.now() - user.lastHeartRegen;
-            const regenInterval = 2.5 * 60 * 60 * 1000; // 2.5 hours
+            const regenInterval = 2.5 * 60 * 60 * 1000;
             
             if (timeSinceLastRegen >= regenInterval && user.hearts < 5) {
                 user.hearts = 5;
@@ -471,7 +970,7 @@
             if (user.hearts > 0) return 0;
             
             const timeSinceLastRegen = Date.now() - user.lastHeartRegen;
-            const regenInterval = 2.5 * 60 * 60 * 1000; // 2.5 hours
+            const regenInterval = 2.5 * 60 * 60 * 1000;
             const timeRemaining = regenInterval - timeSinceLastRegen;
             
             return Math.max(0, timeRemaining);
@@ -490,186 +989,46 @@
             };
         }
 
-        // ===== 6 COMPLETE LESSONS =====
-        const lessons = [
-            {
-                id: 1,
-                title: "KRA Tax Assistant",
-                agency: "Kenya Revenue Authority",
-                icon: "landmark",
-                description: "Learn to help taxpayers file returns and process KRA PIN applications",
-                content: `
-                    <h4>📋 JOB OVERVIEW</h4>
-                    <p>Tax Assistants are the first point of contact for taxpayers at KRA offices across Kenya.</p>
+        // ===== LOAD HERO SECTION =====
+        function loadHeroSection() {
+            const heroHtml = `
+                <div class="hero-section">
+                    <h1><i class="fas fa-shield-alt"></i> Your KCSE Grade is Your Key to Government Jobs</h1>
                     
-                    <h4>📅 DAILY TASKS</h4>
-                    <ul>
-                        <li>8:30 AM - Open taxpayer counter</li>
-                        <li>9:00 AM - Help with iTax returns</li>
-                        <li>10:00 AM - Verify documents</li>
-                        <li>11:00 AM - Answer inquiries</li>
-                        <li>12:00 PM - Process PIN applications</li>
-                    </ul>
-                    
-                    <h4>💰 SALARY</h4>
-                    <p>KSH 45,000 - 65,000 per month</p>
-                `,
-                quiz: [
-                    { question: "What time do KRA counters open?", options: ["7:00 AM", "8:30 AM", "9:00 AM"], correct: 1 },
-                    { question: "What is the minimum KCSE grade?", options: ["C", "C+", "B-"], correct: 1 },
-                    { question: "Where is KRA headquarters?", options: ["Mombasa", "Times Tower", "Kisumu"], correct: 1 },
-                    { question: "What is iTax?", options: ["Tax system", "Bank", "Insurance"], correct: 0 },
-                    { question: "What does KRA collect?", options: ["Taxes", "Tolls", "Fees"], correct: 0 }
-                ]
-            },
-            {
-                id: 2,
-                title: "CBK Currency Analyst",
-                agency: "Central Bank of Kenya",
-                icon: "university",
-                description: "Monitor exchange rates and advise on monetary policy",
-                content: `
-                    <h4>📋 JOB OVERVIEW</h4>
-                    <p>Currency Analysts monitor exchange rates and advise the Monetary Policy Committee.</p>
-                    
-                    <h4>📅 DAILY TASKS</h4>
-                    <ul>
-                        <li>8:00 AM - Review international markets</li>
-                        <li>9:00 AM - Check USD/KES rates</li>
-                        <li>10:00 AM - Analyze trends</li>
-                        <li>11:00 AM - Prepare reports</li>
-                    </ul>
-                    
-                    <h4>💰 SALARY</h4>
-                    <p>KSH 95,000 - 140,000 per month</p>
-                `,
-                quiz: [
-                    { question: "What does CBK regulate?", options: ["Banks", "Schools", "Hospitals"], correct: 0 },
-                    { question: "Required KCSE grade?", options: ["B+", "A-", "A"], correct: 1 },
-                    { question: "CBK headquarters location?", options: ["Nairobi", "Mombasa", "Kisumu"], correct: 0 },
-                    { question: "What is MPC?", options: ["Monetary Policy Committee", "Money Policy Council", "Market Price Control"], correct: 0 },
-                    { question: "What does CBR stand for?", options: ["Central Bank Rate", "Currency Base Rate", "Cash Bank Rate"], correct: 0 }
-                ]
-            },
-            {
-                id: 3,
-                title: "CMA Compliance Officer",
-                agency: "Capital Markets Authority",
-                icon: "chart-line",
-                description: "Ensure companies comply with capital market regulations",
-                content: `
-                    <h4>📋 JOB OVERVIEW</h4>
-                    <p>Compliance Officers ensure companies follow CMA regulations and protect investors.</p>
-                    
-                    <h4>📅 DAILY TASKS</h4>
-                    <ul>
-                        <li>9:00 AM - Review company filings</li>
-                        <li>10:00 AM - Inspect compliance</li>
-                        <li>11:00 AM - Investigate complaints</li>
-                        <li>2:00 PM - Prepare enforcement actions</li>
-                    </ul>
-                    
-                    <h4>💰 SALARY</h4>
-                    <p>KSH 80,000 - 120,000 per month</p>
-                `,
-                quiz: [
-                    { question: "What does CMA regulate?", options: ["Capital markets", "Banks", "Insurance"], correct: 0 },
-                    { question: "Required KCSE grade?", options: ["B", "B+", "A-"], correct: 1 },
-                    { question: "CMA protects?", options: ["Investors", "Banks", "Companies"], correct: 0 },
-                    { question: "What is a compliance officer?", options: ["Enforces rules", "Collects tax", "Manages currency"], correct: 0 },
-                    { question: "CMA headquarters?", options: ["Nairobi", "Mombasa", "Kisumu"], correct: 0 }
-                ]
-            },
-            {
-                id: 4,
-                title: "Huduma Kenya Customer Service",
-                agency: "Huduma Kenya",
-                icon: "hands-helping",
-                description: "Serve citizens at Huduma centres across Kenya",
-                content: `
-                    <h4>📋 JOB OVERVIEW</h4>
-                    <p>Customer Service Representatives help citizens access government services at Huduma centres.</p>
-                    
-                    <h4>📅 DAILY TASKS</h4>
-                    <ul>
-                        <li>8:00 AM - Open service counter</li>
-                        <li>9:00 AM - Process ID applications</li>
-                        <li>10:00 AM - Handle passport inquiries</li>
-                        <li>11:00 AM - Assist with birth certificates</li>
-                    </ul>
-                    
-                    <h4>💰 SALARY</h4>
-                    <p>KSH 35,000 - 55,000 per month</p>
-                `,
-                quiz: [
-                    { question: "What is Huduma Kenya?", options: ["Government services", "Bank", "School"], correct: 0 },
-                    { question: "Required KCSE grade?", options: ["C", "C+", "B-"], correct: 1 },
-                    { question: "What can you get at Huduma?", options: ["ID card", "Money", "Food"], correct: 0 },
-                    { question: "Huduma centres are in?", options: ["All counties", "Nairobi only", "Major cities"], correct: 0 },
-                    { question: "What does Huduma mean?", options: ["Service", "Help", "Both"], correct: 2 }
-                ]
-            },
-            {
-                id: 5,
-                title: "ICT Authority Technical Officer",
-                agency: "ICT Authority",
-                icon: "laptop-code",
-                description: "Maintain government ICT infrastructure",
-                content: `
-                    <h4>📋 JOB OVERVIEW</h4>
-                    <p>Technical Officers maintain and support ICT systems across government ministries.</p>
-                    
-                    <h4>📅 DAILY TASKS</h4>
-                    <ul>
-                        <li>8:30 AM - Check server status</li>
-                        <li>9:30 AM - Respond to IT tickets</li>
-                        <li>11:00 AM - Install software updates</li>
-                        <li>2:00 PM - Network maintenance</li>
-                    </ul>
-                    
-                    <h4>💰 SALARY</h4>
-                    <p>KSH 50,000 - 80,000 per month</p>
-                `,
-                quiz: [
-                    { question: "What does ICT Authority do?", options: ["Manages government ICT", "Collects tax", "Regulates banks"], correct: 0 },
-                    { question: "Required KCSE grade?", options: ["C+", "B-", "B"], correct: 0 },
-                    { question: "Technical officers work with?", options: ["Computers", "Cars", "Buildings"], correct: 0 },
-                    { question: "ICT Authority is under which ministry?", options: ["ICT", "Finance", "Education"], correct: 0 },
-                    { question: "What is a server?", options: ["Network computer", "Desk", "Chair"], correct: 0 }
-                ]
-            },
-            {
-                id: 6,
-                title: "eCitizen Support Staff",
-                agency: "eCitizen Kenya",
-                icon: "globe",
-                description: "Help citizens access online government services",
-                content: `
-                    <h4>📋 JOB OVERVIEW</h4>
-                    <p>Support staff help citizens register and use eCitizen portal for government services.</p>
-                    
-                    <h4>📅 DAILY TASKS</h4>
-                    <ul>
-                        <li>8:30 AM - Assist with account creation</li>
-                        <li>10:00 AM - Troubleshoot login issues</li>
-                        <li>11:30 AM - Help with payments</li>
-                        <li>2:00 PM - Answer email inquiries</li>
-                    </ul>
-                    
-                    <h4>💰 SALARY</h4>
-                    <p>KSH 40,000 - 60,000 per month</p>
-                `,
-                quiz: [
-                    { question: "What is eCitizen?", options: ["Government portal", "Bank app", "School website"], correct: 0 },
-                    { question: "Required KCSE grade?", options: ["C", "C+", "B-"], correct: 1 },
-                    { question: "What can you do on eCitizen?", options: ["Apply for passport", "Send money", "Buy food"], correct: 0 },
-                    { question: "eCitizen is managed by?", options: ["ICT Authority", "KRA", "CBK"], correct: 0 },
-                    { question: "Support staff help with?", options: ["Technical issues", "Tax returns", "Banking"], correct: 0 }
-                ]
-            }
-        ];
+                    <div class="stats-container">
+                        <div class="stat-box"><span class="stat-number">1,247</span>Placed in Govt Jobs</div>
+                        <div class="stat-box"><span class="stat-number">856</span>KRA Hires</div>
+                        <div class="stat-box"><span class="stat-number">73%</span>Success Rate</div>
+                        <div class="stat-box"><span class="stat-number">KSH 58k</span>Avg. Salary</div>
+                    </div>
 
-        // ===== LOAD DASHBOARD WITH HEARTS =====
+                    <h2 style="margin: 2rem 0;">✨ SUCCESS STORIES</h2>
+                    <div class="testimonials-grid" id="testimonialsGrid"></div>
+                    
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn btn-primary" onclick="showSection('register')" style="width: auto; padding: 1rem 3rem;">
+                            START YOUR JOURNEY - KSH 150
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('mainContainer').innerHTML = heroHtml;
+            
+            // Load testimonials
+            const grid = document.getElementById('testimonialsGrid');
+            grid.innerHTML = testimonials.map(t => `
+                <div class="testimonial-card">
+                    <img src="${t.image}" class="testimonial-image">
+                    <div class="testimonial-stars">${'⭐'.repeat(t.stars)}</div>
+                    <p>"${t.story}"</p>
+                    <div class="testimonial-name">${t.name}</div>
+                    <div>${t.job} - ${t.org}</div>
+                    <span class="testimonial-grade">KCSE: ${t.grade}</span>
+                </div>
+            `).join('');
+        }
+
+        // ===== LOAD DASHBOARD =====
         function loadDashboard() {
             if (!currentUser) return;
             
@@ -682,7 +1041,14 @@
                 heartsHtml += `<i class="fas fa-heart heart ${i < hearts ? '' : 'empty'}"></i>`;
             }
             
-            let content = `
+            const jobs = jobsByGrade[currentUser.kcse] || jobsByGrade['B+'];
+            
+            let dashboardHtml = `
+                <div class="govt-banner">
+                    <div><i class="fas fa-shield-alt"></i> OFFICIAL KENYAN GOVERNMENT JOB PORTAL</div>
+                    <div class="govt-badge">VERIFIED BY PSC</div>
+                </div>
+                
                 <div class="dashboard-header">
                     <div class="user-info">
                         <div class="user-avatar">${currentUser.name.charAt(0)}</div>
@@ -694,24 +1060,30 @@
                     <div class="hearts-container">
                         ${heartsHtml}
                     </div>
-                    <button class="btn btn-primary" onclick="logout()">Logout</button>
+                    <button class="btn btn-primary" onclick="logout()" style="width: auto;">Logout</button>
                 </div>
                 
-                <div class="lessons-container">
-                    <h3>📚 JOB TRAINING MODULES (${completedLessons.length}/${lessons.length} Completed)</h3>
+                <div style="background: white; padding: 2rem; border-radius: 15px;">
+                    <h3>📊 GOVERNMENT JOBS FOR KCSE ${currentUser.kcse}</h3>
+                    <div class="job-grid">
+                        <div class="job-card"><div class="job-stat">${jobs.gov}</div>Government Jobs</div>
+                        <div class="job-card"><div class="job-stat">${jobs.private}</div>Private Sector</div>
+                        <div class="job-card"><div class="job-stat">${jobs.salary}</div>Avg. Salary</div>
+                    </div>
+                    
+                    <h3 style="margin-top: 2rem;">📚 JOB TRAINING MODULES (${completedLessons.length}/${lessons.length})</h3>
+                    <div class="lessons-container">
             `;
             
             lessons.forEach((lesson, index) => {
                 const isCompleted = completedLessons.includes(lesson.id);
-                const isLocked = index > 0 && !completedLessons.includes(lessons[index - 1].id);
+                const isLocked = index > 0 && !completedLessons.includes(lessons[index - 1].id) && !isCompleted;
                 
-                content += `
+                dashboardHtml += `
                     <div class="lesson-card ${isCompleted ? 'completed' : ''} ${isLocked ? 'locked' : ''}">
                         ${isCompleted ? '<span class="lesson-complete-badge">✅ COMPLETED</span>' : ''}
                         <div class="lesson-header">
-                            <div class="lesson-icon">
-                                <i class="fas fa-${lesson.icon}"></i>
-                            </div>
+                            <div class="lesson-icon"><i class="fas fa-${lesson.icon}"></i></div>
                             <div class="lesson-title">
                                 <h3>${lesson.title}</h3>
                                 <p>${lesson.agency}</p>
@@ -720,37 +1092,46 @@
                         
                         <p>${lesson.description}</p>
                         
+                        <div class="lesson-progress">
+                            <strong>5 questions • ${lesson.quiz.length} topics</strong>
+                        </div>
+                        
                         ${!isCompleted && !isLocked ? `
-                            <div style="margin-top: 1rem;">
-                                <button class="btn btn-primary" onclick="startLesson(${index})" ${hearts === 0 ? 'disabled' : ''}>
-                                    <i class="fas fa-play"></i> Start Lesson
-                                </button>
-                            </div>
+                            <button class="btn btn-primary" onclick="startLesson(${index})" style="width: auto;" ${hearts === 0 ? 'disabled' : ''}>
+                                <i class="fas fa-play"></i> START LESSON
+                            </button>
                         ` : ''}
                         
                         ${isLocked ? '<p style="color: #666; margin-top: 1rem;">🔒 Complete previous lesson to unlock</p>' : ''}
+                        
+                        ${isCompleted ? `
+                            <button class="btn btn-success" style="width: auto; background: #28a745;" disabled>
+                                <i class="fas fa-check"></i> COMPLETED
+                            </button>
+                        ` : ''}
                     </div>
                 `;
             });
             
-            content += `</div>`;
+            dashboardHtml += `</div>`;
             
             // Show certificate option only after all lessons completed
             if (allLessonsCompleted) {
-                content += `
+                dashboardHtml += `
                     <div class="certificate-section">
                         <i class="fas fa-certificate" style="font-size: 3rem; color: var(--govt-gold);"></i>
                         <h3>🎓 GET YOUR CERTIFICATE</h3>
                         <p>You've completed all ${lessons.length} lessons! Pay KSH 500 to receive your verified certificate.</p>
                         <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
                             <input type="text" id="certMpesa" placeholder="Enter M-PESA code" style="padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; width: 300px;">
-                            <button class="btn btn-success" onclick="purchaseCertificate()">GET CERTIFICATE</button>
+                            <button class="btn btn-success" onclick="purchaseCertificate()" style="width: auto;">GET CERTIFICATE</button>
                         </div>
                     </div>
                 `;
             }
             
-            document.getElementById('mainContainer').innerHTML = content;
+            dashboardHtml += `</div>`;
+            document.getElementById('mainContainer').innerHTML = dashboardHtml;
         }
 
         // ===== START LESSON WITH QUIZ =====
@@ -761,7 +1142,7 @@
             if (hearts === 0) {
                 const lockout = getLockoutTimeRemaining(currentUser);
                 const timeData = formatLockoutTime(lockout);
-                alert(`❌ No hearts left! Come back at ${timeData.unlockTime} (${timeData.display} remaining)`);
+                alert(`❌ No hearts left! Come back at ${timeData.unlockTime}`);
                 return;
             }
             
@@ -778,7 +1159,33 @@
             const modal = document.createElement('div');
             modal.className = 'modal';
             
-            function updateQuiz() {
+            function showLessonContent() {
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3><i class="fas fa-${lesson.icon}"></i> ${lesson.title}</h3>
+                            <button class="modal-close" onclick="closeModal()">&times;</button>
+                        </div>
+                        
+                        <div style="max-height: 400px; overflow-y: auto; padding: 1rem; background: #f8f9fa; border-radius: 8px; margin: 1rem 0;">
+                            ${lesson.content}
+                        </div>
+                        
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <button class="btn btn-primary" onclick="startQuiz()">START QUIZ (5 Questions)</button>
+                            <button class="btn" style="background: #6c757d; color: white;" onclick="closeModal()">CLOSE</button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            function startQuiz() {
+                currentQuestion = 0;
+                quizHearts = hearts;
+                showQuestion();
+            }
+            
+            function showQuestion() {
                 if (currentQuestion >= lesson.quiz.length) {
                     // Lesson completed
                     if (!currentUser.completedLessons) currentUser.completedLessons = [];
@@ -793,11 +1200,11 @@
                                 <h3>🎉 LESSON COMPLETE!</h3>
                                 <button class="modal-close" onclick="closeModal()">&times;</button>
                             </div>
-                            <p style="text-align: center; margin: 2rem;">
+                            <div style="text-align: center; padding: 2rem;">
                                 <i class="fas fa-trophy" style="font-size: 4rem; color: var(--govt-gold);"></i>
-                            </p>
-                            <p style="text-align: center; font-size: 1.2rem;">You've completed ${lesson.title}!</p>
-                            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 1rem;">Continue</button>
+                                <p style="font-size: 1.2rem; margin: 1rem 0;">You've completed ${lesson.title}!</p>
+                                <button class="btn btn-primary" onclick="closeModal()">CONTINUE</button>
+                            </div>
                         </div>
                     `;
                     return;
@@ -805,7 +1212,6 @@
                 
                 const q = lesson.quiz[currentQuestion];
                 
-                // Show hearts in quiz
                 let heartsHtml = '';
                 for (let i = 0; i < 5; i++) {
                     heartsHtml += `<i class="fas fa-heart quiz-heart ${i < quizHearts ? '' : 'empty'}"></i>`;
@@ -818,13 +1224,11 @@
                             <button class="modal-close" onclick="closeModal()">&times;</button>
                         </div>
                         
-                        <div class="quiz-hearts">
-                            ${heartsHtml}
-                        </div>
+                        <div class="quiz-hearts">${heartsHtml}</div>
                         
-                        <p style="font-size: 1.2rem; margin: 1.5rem 0;">${q.question}</p>
+                        <p style="font-size: 1.2rem; margin: 1rem 0;">${q.question}</p>
                         
-                        <div style="display: grid; gap: 0.5rem;">
+                        <div>
                             ${q.options.map((opt, i) => `
                                 <button class="quiz-option" onclick="selectAnswer(${i})" id="opt_${i}">
                                     ${String.fromCharCode(65 + i)}. ${opt}
@@ -832,7 +1236,7 @@
                             `).join('')}
                         </div>
                         
-                        <button class="btn btn-primary" onclick="submitAnswer()" style="margin-top: 1.5rem;">Submit Answer</button>
+                        <button class="btn btn-primary" onclick="submitAnswer()" style="margin-top: 1rem;" id="submitBtn">SUBMIT ANSWER</button>
                     </div>
                 `;
                 
@@ -845,7 +1249,7 @@
                 };
                 
                 window.submitAnswer = () => {
-                    if (window.selectedAnswer === null || window.selectedAnswer === undefined) {
+                    if (window.selectedAnswer === undefined || window.selectedAnswer === null) {
                         alert('Please select an answer');
                         return;
                     }
@@ -860,9 +1264,10 @@
                     
                     if (!isCorrect) {
                         quizHearts--;
+                        useHeart(currentUser);
+                        
                         if (quizHearts === 0) {
-                            // Game over - use a heart
-                            useHeart(currentUser);
+                            // Game over
                             setTimeout(() => {
                                 const lockout = getLockoutTimeRemaining(currentUser);
                                 const timeData = formatLockoutTime(lockout);
@@ -889,22 +1294,25 @@
                     setTimeout(() => {
                         if (isCorrect) {
                             currentQuestion++;
-                            updateQuiz();
+                            showQuestion();
                         } else {
                             // Wrong answer - retry same question
-                            alert('❌ Wrong answer. Try again!');
-                            // Reset UI for same question
                             document.querySelectorAll('.quiz-option').forEach(opt => {
                                 opt.classList.remove('correct', 'wrong', 'selected');
                             });
+                            document.getElementById('submitBtn').disabled = false;
                         }
                     }, 1500);
+                    
+                    document.getElementById('submitBtn').disabled = true;
                 };
             }
             
-            updateQuiz();
+            showLessonContent();
             document.body.appendChild(modal);
             activeModal = modal;
+            
+            window.startQuiz = startQuiz;
         }
 
         // ===== CLOSE MODAL =====
@@ -913,7 +1321,7 @@
                 document.body.removeChild(activeModal);
                 activeModal = null;
             }
-            loadDashboard(); // Refresh to show updated progress
+            loadDashboard();
         }
 
         // ===== SAVE USERS =====
@@ -932,7 +1340,7 @@
             document.getElementById('certMpesa').value = '';
         }
 
-        // ===== LOGIN FUNCTION =====
+        // ===== LOGIN =====
         function login() {
             const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPass').value;
@@ -947,14 +1355,13 @@
             currentUser = user;
             
             if (user.role === 'admin') {
-                // Show admin panel (simplified for now)
                 document.getElementById('mainContainer').innerHTML = '<h2>Admin Panel</h2><p>Admin functions here</p>';
             } else {
                 loadDashboard();
             }
         }
 
-        // ===== REGISTRATION =====
+        // ===== REGISTER =====
         function register() {
             const name = document.getElementById('regName').value;
             const email = document.getElementById('regEmail').value;
@@ -978,7 +1385,7 @@
                 password: pass,
                 kcse: grade,
                 role: 'user',
-                status: 'approved', // Auto-approve for demo
+                status: 'approved',
                 completedLessons: [],
                 hearts: 5,
                 lastHeartRegen: Date.now()
@@ -992,20 +1399,25 @@
 
         // ===== SHOW SECTION =====
         function showSection(section) {
-            if (section === 'login') {
+            if (section === 'hero') {
+                loadHeroSection();
+            } else if (section === 'login') {
                 document.getElementById('mainContainer').innerHTML = `
                     <div class="auth-container">
                         <h2>LOGIN</h2>
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" id="loginEmail">
+                            <input type="email" id="loginEmail" placeholder="Enter your email">
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" id="loginPass">
+                            <input type="password" id="loginPass" placeholder="Enter your password">
                         </div>
-                        <button class="btn btn-primary" onclick="login()">Login</button>
-                        <p>Admin: admin@skillforge.com / admin123</p>
+                        <button class="btn btn-primary" onclick="login()">LOGIN</button>
+                        <div class="back-link">
+                            <a onclick="showSection('hero')">← Back to Home</a>
+                        </div>
+                        <p style="text-align: center; margin-top: 1rem; color: #666;">Admin: admin@skillforge.com / admin123</p>
                     </div>
                 `;
             } else if (section === 'register') {
@@ -1014,15 +1426,15 @@
                         <h2>REGISTER - KSH 150</h2>
                         <div class="form-group">
                             <label>Full Name</label>
-                            <input type="text" id="regName">
+                            <input type="text" id="regName" placeholder="e.g., James Otieno">
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" id="regEmail">
+                            <input type="email" id="regEmail" placeholder="you@example.com">
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="regPass">
+                            <label>Password (min. 6 chars)</label>
+                            <input type="password" id="regPass" placeholder="••••••••">
                         </div>
                         <div class="form-group">
                             <label>KCSE Grade</label>
@@ -1032,19 +1444,28 @@
                                 <option value="B+">B+</option>
                                 <option value="B">B</option>
                                 <option value="C+">C+</option>
+                                <option value="C">C</option>
                             </select>
                         </div>
-                        <button class="btn btn-primary" onclick="register()">Register</button>
+                        <button class="btn btn-primary" onclick="register()">REGISTER</button>
+                        <div class="back-link">
+                            <a onclick="showSection('hero')">← Back to Home</a>
+                        </div>
                     </div>
                 `;
             }
         }
 
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('hero');
+        });
+
         // Make functions global
         window.showSection = showSection;
         window.login = login;
         window.register = register;
-        window.logout = () => { currentUser = null; showSection('login'); };
+        window.logout = () => { currentUser = null; showSection('hero'); };
         window.startLesson = startLesson;
         window.closeModal = closeModal;
         window.purchaseCertificate = purchaseCertificate;
